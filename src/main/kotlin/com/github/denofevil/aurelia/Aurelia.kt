@@ -18,13 +18,15 @@ import com.intellij.psi.PsiManager
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
 
-    val INJECTABLE = arrayOf("bind", "one-way", "two-way", "one-time", "delegate", "trigger", "call")
+    val INJECTABLE = arrayOf("bind", "one-way", "two-way", "one-time", "delegate", "trigger", "call", "from-view")
     const val REPEAT_FOR = "repeat.for"
     const val VIRTUAL_REPEAT_FOR = "virtual-repeat.for"
     const val AURELIA_APP = "aurelia-app"
     const val CASE = "case"
     const val REF = "ref"
     const val ELSE = "else"
+    const val PROMISE = "promise"
+    const val THEN = "then"
 
     fun present(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {
         val aureliaLoaded = hasDependency(project)

@@ -38,7 +38,13 @@ class AttributesProvider : XmlAttributeDescriptorsProvider {
     }
 
     private fun containsAureliaAttribute(name: String): Boolean {
-        return Aurelia.REPEAT_FOR == name || Aurelia.VIRTUAL_REPEAT_FOR == name || Aurelia.AURELIA_APP == name || Aurelia.CASE == name || Aurelia.REF == name
+        return Aurelia.REPEAT_FOR == name
+                || Aurelia.VIRTUAL_REPEAT_FOR == name
+                || Aurelia.AURELIA_APP == name
+                || Aurelia.CASE == name
+                || Aurelia.REF == name
+                || Aurelia.PROMISE == name
+                || Aurelia.THEN == name
     }
 
     private class AttributeDescriptor(private val name: String) : BasicXmlAttributeDescriptor(),
