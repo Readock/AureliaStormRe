@@ -22,7 +22,7 @@ class AttributesProvider : XmlAttributeDescriptorsProvider {
         for (attr in Aurelia.INJECTABLE) {
             if (name.endsWith(".$attr")) {
                 val attrName = name.substring(0, name.length - attr.length - 1)
-                if ("if" == attrName || "show" == attrName || "switch" == attrName) {
+                if ("if" == attrName || "show" == attrName || "switch" == attrName || Aurelia.ELSE == attrName) {
                     return AttributeDescriptor(name)
                 }
                 val descriptor = xmlTag.descriptor
@@ -32,9 +32,13 @@ class AttributesProvider : XmlAttributeDescriptorsProvider {
                 }
             }
         }
-        return if (Aurelia.REPEAT_FOR == name || Aurelia.VIRTUAL_REPEAT_FOR == name || Aurelia.AURELIA_APP == name || Aurelia.CASE == name || Aurelia.REF == name) AttributeDescriptor(
-            name
-        ) else null
+        return if (containsAureliaAttribute(name)) {
+            AttributeDescriptor(name)
+        } else null
+    }
+
+    private fun containsAureliaAttribute(name: String): Boolean {
+        return Aurelia.REPEAT_FOR == name || Aurelia.VIRTUAL_REPEAT_FOR == name || Aurelia.AURELIA_APP == name || Aurelia.CASE == name || Aurelia.REF == name
     }
 
     private class AttributeDescriptor(private val name: String) : BasicXmlAttributeDescriptor(),
