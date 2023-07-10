@@ -18,6 +18,11 @@
     <depends>com.intellij.modules.lang</depends>
     <depends>JavaScript</depends>
     <depends>com.intellij.modules.xml</depends>
+    <change-notes>
+        <![CDATA[
+            <a href="https://github.com/CollinHerber/AureliaStorm/blob/master/CHANGELOG.md">Changelog</a>
+        ]]>
+    </change-notes>
     <extensions defaultExtensionNs="com.intellij">
         <xml.xmlSuppressionProvider implementation="com.github.denofevil.aurelia.HtmlXmlSuppressionProvider"/>
         <multiHostInjector implementation="com.github.denofevil.aurelia.Injector"/>
