@@ -27,6 +27,7 @@ object Aurelia {
     const val ELSE = "else"
     const val PROMISE = "promise"
     const val THEN = "then"
+    val CUSTOM_ELEMENTS = arrayOf("let")
 
     fun present(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {
         val aureliaLoaded = hasDependency(project)
