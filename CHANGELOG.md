@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.2.1
+* Updated since build to support older versions
+
 ### 1.2.0
 #### Features
 * Support <let> element recognition
