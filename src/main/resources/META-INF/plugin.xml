@@ -39,6 +39,7 @@
                 implementation="com.github.denofevil.aurelia.cli.ProjectGenerator"/>  <!-- works in WebStorm and other SmallIDEs -->
         <projectTemplatesFactory
                 implementation="com.github.denofevil.aurelia.cli.ProjectTemplateFactory"/> <!-- works in IntelliJ IDEA -->
+        <daemon.highlightInfoFilter implementation="com.github.denofevil.aurelia.AureliaAttributesFilter"/>
     </extensions>
     <extensions defaultExtensionNs="JavaScript">
         <frameworkIndexingHandler implementation="com.github.denofevil.aurelia.FrameworkHandler"/>
