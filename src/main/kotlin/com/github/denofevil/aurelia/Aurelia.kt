@@ -44,14 +44,12 @@ object Aurelia {
                     val jsonFile = PsiManager.getInstance(project).findFile(virtualFile)
                     val jsonObject = (jsonFile as? JsonFile)?.topLevelValue as? JsonObject
 
-                    jsonObject?.findProperty("dependencies")?.let { dependenciesProp ->
-                        val dependenciesObject = dependenciesProp.value as? JsonObject
-                        val aureliaDependency = dependenciesObject?.findProperty("aurelia")
-                        val aureliaCliDependency = dependenciesObject?.findProperty("aurelia-cli")
-                        if (aureliaCliDependency != null || aureliaDependency != null) {
-                            hasDependency = true
-                            return@iterateChildrenRecursively false
-                        }
+                    val dependencies = jsonObject?.findProperty("dependencies")?.value as? JsonObject
+                    val devDependencies = jsonObject?.findProperty("devDependencies")?.value as? JsonObject
+
+                    if (hasAureliaDependency(dependencies) || hasAureliaDependency(devDependencies)) {
+                        hasDependency = true
+                        return@iterateChildrenRecursively false
                     }
                 }
 
@@ -60,5 +58,14 @@ object Aurelia {
         }
 
         return hasDependency
+    }
+
+    private fun hasAureliaDependency(jsonObject: JsonObject?): Boolean {
+        if (jsonObject == null) return false
+
+        val aureliaDependency = jsonObject.findProperty("aurelia")
+        val aureliaCliDependency = jsonObject.findProperty("aurelia-cli")
+
+        return aureliaDependency != null || aureliaCliDependency != null
     }
 }
