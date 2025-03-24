@@ -1,3 +1,4 @@
+<!-- Plugin description -->
 # AureliaStorm
 This plugin brings support for [Aurelia](http://aurelia.io) framework to the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide).
 
@@ -11,9 +12,14 @@ Features:
 
 Either `aurelia` (v2), or `aurelia-cli` (v1) must be present in the project npm dependencies
 
+<!-- Plugin description end -->
+
 ## Contributing
 ### Prerequisites
 * JDK version 17 or later suggested
 
 ### Running the plugin
 In order to test your plugin use the [runIde](https://plugins.jetbrains.com/docs/intellij/configuring-plugin-project.html#run-ide-task) Gradle. This will launch an instance of intellij with the plugin loaded.
+
+
+dk install gradle 8.13

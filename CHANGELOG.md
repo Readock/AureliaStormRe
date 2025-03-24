@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### 1.3.0
+* Support for 2024.3.5
+
 ### 1.2.1
 * Updated since build to support older versions
 
