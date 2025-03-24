@@ -64,8 +64,9 @@ object Aurelia {
         if (jsonObject == null) return false
 
         val aureliaDependency = jsonObject.findProperty("aurelia")
+        val aureliaFrameworkDependency = jsonObject.findProperty("aurelia-framework")
         val aureliaCliDependency = jsonObject.findProperty("aurelia-cli")
 
-        return aureliaDependency != null || aureliaCliDependency != null
+        return aureliaDependency != null || aureliaFrameworkDependency != null || aureliaCliDependency != null
     }
 }
