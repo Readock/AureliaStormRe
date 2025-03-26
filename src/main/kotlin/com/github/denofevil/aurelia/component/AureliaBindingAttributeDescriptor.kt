@@ -1,20 +1,16 @@
 package com.github.denofevil.aurelia.component
 
+import com.github.denofevil.aurelia.AureliaAttributeDescriptor
 import com.intellij.psi.PsiElement
 import com.intellij.xml.XmlAttributeDescriptor
-import com.intellij.xml.impl.BasicXmlAttributeDescriptor
 
 class AureliaBindingAttributeDescriptor(
-    private val attributeName: String,
+    private var attributeName: String,
     private val baseDescriptor: XmlAttributeDescriptor,
-) : BasicXmlAttributeDescriptor() {
+) : AureliaAttributeDescriptor(attributeName) {
 
 
     override fun getDeclaration(): PsiElement = baseDescriptor.declaration
-    override fun getName() = attributeName
-    override fun init(element: PsiElement?) {
-        throw UnsupportedOperationException()
-    }
 
     override fun getDefaultValue() = baseDescriptor.defaultValue
     override fun isEnumerated() = baseDescriptor.isEnumerated

@@ -31,6 +31,7 @@ object Aurelia {
     const val PROMISE = "promise"
     const val THEN = "then"
     val CUSTOM_ELEMENTS = arrayOf("let", "require", "template")
+    val COMPONENT_ATTRIBUTES = arrayOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
 
     fun isPresentFor(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {
         val aureliaRootFolders = getAureliaRootFolders(project)
@@ -57,6 +58,10 @@ object Aurelia {
             }
             CachedValueProvider.Result.create(isPresent, VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS)
         }
+    }
+
+    fun camelToKebabCase(camel: String): String {
+        return camel.replace(Regex("([a-z])([A-Z])"), "$1-$2").lowercase()
     }
 
     private fun isChildOf(source: VirtualFile, target: VirtualFile): Boolean {

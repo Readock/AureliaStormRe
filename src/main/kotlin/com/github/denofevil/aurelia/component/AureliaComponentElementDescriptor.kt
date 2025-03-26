@@ -1,13 +1,13 @@
 package com.github.denofevil.aurelia.component
 
+import com.github.denofevil.aurelia.AttributesProvider
 import com.github.denofevil.aurelia.Aurelia
+import com.github.denofevil.aurelia.AureliaAttributeDescriptor
 import com.intellij.lang.javascript.frameworks.jsx.tsx.TypeScriptJSXTagUtil
 import com.intellij.lang.javascript.psi.JSElement
 import com.intellij.lang.javascript.psi.JSRecordType.PropertySignature
 import com.intellij.lang.javascript.psi.ecmal4.JSAttributeListOwner
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
-import com.intellij.openapi.util.Condition
-import com.intellij.openapi.util.Conditions
 import com.intellij.openapi.vfs.findPsiFile
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -19,16 +19,18 @@ import com.intellij.psi.xml.XmlElementDecl
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.containers.orNull
 import com.intellij.xml.XmlAttributeDescriptor
+import com.intellij.xml.XmlCustomElementDescriptor
 import com.intellij.xml.XmlElementDescriptor
 import com.intellij.xml.XmlNSDescriptor
 import com.intellij.xml.impl.dtd.BaseXmlElementDescriptorImpl
 import com.intellij.xml.util.XmlUtil
 import kotlin.jvm.optionals.getOrNull
 
-class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlElementDescriptorImpl() {
+class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
     private var myElementDecl: XmlElementDecl? = null
     private var myName: String = tag.name
     private var declaration: PsiElement?
+    private var attributesProvider = AttributesProvider()
 
     init {
         this.declaration = resolveDeclarationClass()
@@ -93,56 +95,59 @@ class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlEleme
         }
     }
 
-    override fun getContentType(): Int {
-        return if (myElementDecl!!.contentSpecElement.isAny) {
-            1
-        } else if (myElementDecl!!.contentSpecElement.hasChildren()) {
-            2
-        } else if (myElementDecl!!.contentSpecElement.isEmpty) {
-            0
-        } else {
-            if (myElementDecl!!.contentSpecElement.isMixed) 3 else 1
+    override fun getAttributeDescriptor(attributeName: String?, context: XmlTag?): XmlAttributeDescriptor? {
+        if (attributeName != null && context != null) {
+            return attributesProvider.getAttributeDescriptor(attributeName, context)
+                ?: super.getAttributeDescriptor(attributeName, context)
         }
+        return super.getAttributeDescriptor(attributeName, context)
     }
 
-    override fun doCollectXmlDescriptors(tag: XmlTag?): Array<XmlElementDescriptor> {
-        return emptyArray() // No predefined child elements
+    public override fun collectAttributeDescriptors(tag: XmlTag?): Array<XmlAttributeDescriptor> {
+        val bindables = collectBindableAttributeDescriptors(this.declaration as JSClass?)
+        val globals = emptyArray<XmlAttributeDescriptor>()
+        val componentAttributes = Aurelia.COMPONENT_ATTRIBUTES.map { AureliaAttributeDescriptor(it) }.toTypedArray()
+        return bindables + globals + componentAttributes
     }
 
-    override fun collectAttributeDescriptors(tag: XmlTag?): Array<XmlAttributeDescriptor> {
-        return getXmlAttributeDescriptors(this.declaration as JSClass?, Conditions.alwaysTrue())
-    }
-
-    private fun getXmlAttributeDescriptors(jsClass: JSClass?, filter: Condition<in PropertySignature?>): Array<XmlAttributeDescriptor> {
+    private fun collectBindableAttributeDescriptors(
+        jsClass: JSClass?
+    ): Array<XmlAttributeDescriptor> {
         val members: ArrayList<XmlAttributeDescriptor?> = ArrayList()
-        if (jsClass?.members == null) {
-            return emptyArray()
-        }
-        for (jsMember in jsClass.members) {
-            if (hasBindableAnnotation(jsMember) && jsMember is PropertySignature) {
-                val descriptor = TypeScriptJSXTagUtil.createAttributeDescriptor(jsMember, true)
-                members.add(AureliaBindingAttributeDescriptor(camelToKebabCase(descriptor.name), descriptor))
+        findBindableAttributes(jsClass).forEach { attr ->
+            val descriptor = TypeScriptJSXTagUtil.createAttributeDescriptor(attr, true)
+            members.add(AureliaBindingAttributeDescriptor(Aurelia.camelToKebabCase(descriptor.name), descriptor))
 
-                // To support bindings of properties
-                Aurelia.INJECTABLE.forEach { suffix ->
-                    members.add(AureliaBindingAttributeDescriptor("${camelToKebabCase(descriptor.name)}.$suffix", descriptor))
-                }
+            // To support bindings of properties
+            Aurelia.INJECTABLE.forEach { suffix ->
+                members.add(AureliaBindingAttributeDescriptor("${Aurelia.camelToKebabCase(descriptor.name)}.$suffix", descriptor))
             }
         }
         return members.toArray(XmlAttributeDescriptor.EMPTY) as Array<XmlAttributeDescriptor>
     }
 
-    private fun hasCustomComponentAnnotation(jsClass: JSClass, componentName: String): Boolean {
-        val matchingClassName = jsClass.name != null && (camelToKebabCase(jsClass.name!!)) == componentName
-        return jsClass.attributeList?.decorators?.any {
-            (it.decoratorName == "customElement" && it.expression?.text?.contains(componentName) == true)
-                    || (it.decoratorName == "containerless" && matchingClassName)
-        } ?: false
+    fun findBindableAttributes(jsClass: JSClass?): ArrayList<PropertySignature> {
+        val members = arrayListOf<PropertySignature>()
+        jsClass ?: return members;
+        for (jsMember in jsClass.members) {
+            if (hasBindableAnnotation(jsMember) && jsMember is PropertySignature) {
+                members.add(jsMember)
+            }
+        }
+        return members
     }
 
     private fun hasBindableAnnotation(member: JSElement): Boolean {
         if (member !is JSAttributeListOwner) return false
         return member.attributeList?.decorators?.any { it.decoratorName == "bindable" } ?: false
+    }
+
+    private fun hasCustomComponentAnnotation(jsClass: JSClass, componentName: String): Boolean {
+        val matchingClassName = jsClass.name != null && (Aurelia.camelToKebabCase(jsClass.name!!)) == componentName
+        return jsClass.attributeList?.decorators?.any {
+            (it.decoratorName == "customElement" && it.expression?.text?.contains(componentName) == true)
+                    || (it.decoratorName == "containerless" && matchingClassName)
+        } ?: false
     }
 
     override fun collectAttributeDescriptorsMap(tag: XmlTag?): HashMap<String, XmlAttributeDescriptor> {
@@ -155,15 +160,15 @@ class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlEleme
         return attributeMap
     }
 
-    private fun camelToKebabCase(camel: String): String {
-        return camel.replace(Regex("([a-z])([A-Z])"), "$1-$2").lowercase()
-    }
-
-    override fun collectElementDescriptorsMap(tag: XmlTag?): HashMap<String, XmlElementDescriptor> {
-        return hashMapOf() // No nested elements
-    }
-
     override fun getQualifiedName(): String {
         return tag.name
     }
+
+    override fun isCustomElement() = true
+
+    override fun getContentType() = CONTENT_TYPE_ANY
+
+    override fun doCollectXmlDescriptors(tag: XmlTag?) = emptyArray<XmlElementDescriptor>()
+
+    override fun collectElementDescriptorsMap(tag: XmlTag?) = hashMapOf<String, XmlElementDescriptor>()
 }
