@@ -1,9 +1,9 @@
 <idea-plugin>
-    <name>AureliaStorm Community</name>
-    <id>AureliaStormCommunity</id>
-    <idea-version since-build="232.0" until-build="241.*"/>
-    <vendor email="rustaddicts@gmail.com" url="https://github.com/CollinHerber/AureliaStorm">Collin Herber</vendor>
-    <description><![CDATA[
+	<name>AureliaStorm Community</name>
+	<id>AureliaStormCommunity</id>
+	<idea-version since-build="232.0" until-build="241.*" />
+	<vendor email="rustaddicts@gmail.com" url="https://github.com/CollinHerber/AureliaStorm">Collin Herber</vendor>
+	<description><![CDATA[
         This plugin is a fork from <a href="https://plugins.jetbrains.com/plugin/8567-aureliastorm">AureliaStorm</a>
         This plugin brings support for <a href="https://aurelia.io/">Aurelia</a> framework to the IntelliJ platform
         Features:
@@ -15,33 +15,34 @@
         </ul>
         Either aurelia or aurelia-cli must be included as a dependency in package.json.
     ]]></description>
-    <depends>com.intellij.modules.lang</depends>
-    <depends>JavaScript</depends>
-    <depends>com.intellij.modules.xml</depends>
-    <change-notes>
-        <![CDATA[
+	<depends>com.intellij.modules.lang</depends>
+	<depends>JavaScript</depends>
+	<depends>com.intellij.modules.xml</depends>
+	<change-notes>
+		<![CDATA[
             <a href="https://github.com/CollinHerber/AureliaStorm/blob/master/CHANGELOG.md">Changelog</a>
         ]]>
-    </change-notes>
-    <extensions defaultExtensionNs="com.intellij">
-        <xml.xmlSuppressionProvider implementation="com.github.denofevil.aurelia.HtmlXmlSuppressionProvider"/>
-        <multiHostInjector implementation="com.github.denofevil.aurelia.Injector"/>
-        <xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.AttributesProvider"/>
-        <psi.referenceProvider language="HTML" providerClass="com.github.denofevil.aurelia.ReferenceProvider">
-            <pattern type="xml">xmlAttributeValue("aurelia-app", "data-aurelia-app")</pattern>
-        </psi.referenceProvider>
-        <javascript.rename.extension implementation="com.github.denofevil.aurelia.RenameExtension"/>
-        <lang.inspectionSuppressor language="JavaScript"
-                                   implementationClass="com.github.denofevil.aurelia.InspectionSuppressor"
-                                   order="first"/>
+	</change-notes>
+	<extensions defaultExtensionNs="com.intellij">
+		<xml.xmlSuppressionProvider implementation="com.github.denofevil.aurelia.HtmlXmlSuppressionProvider" />
+		<multiHostInjector implementation="com.github.denofevil.aurelia.Injector" />
+		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.AttributesProvider" order="first" />
+		<xml.elementDescriptorProvider implementation="com.github.denofevil.aurelia.component.ComponentTagDescriptorProvider" order="first" />
+		<psi.referenceProvider language="HTML" providerClass="com.github.denofevil.aurelia.ReferenceProvider">
+			<pattern type="xml">xmlAttributeValue("aurelia-app", "data-aurelia-app")</pattern>
+		</psi.referenceProvider>
+		<javascript.rename.extension implementation="com.github.denofevil.aurelia.RenameExtension" />
+		<lang.inspectionSuppressor language="JavaScript"
+			implementationClass="com.github.denofevil.aurelia.InspectionSuppressor"
+			order="first" />
 
-        <directoryProjectGenerator
-                implementation="com.github.denofevil.aurelia.cli.ProjectGenerator"/>  <!-- works in WebStorm and other SmallIDEs -->
-        <projectTemplatesFactory
-                implementation="com.github.denofevil.aurelia.cli.ProjectTemplateFactory"/> <!-- works in IntelliJ IDEA -->
-        <daemon.highlightInfoFilter implementation="com.github.denofevil.aurelia.AureliaAttributesFilter"/>
-    </extensions>
-    <extensions defaultExtensionNs="JavaScript">
-        <frameworkIndexingHandler implementation="com.github.denofevil.aurelia.FrameworkHandler"/>
-    </extensions>
+		<directoryProjectGenerator
+			implementation="com.github.denofevil.aurelia.cli.ProjectGenerator" />  <!-- works in WebStorm and other SmallIDEs -->
+		<projectTemplatesFactory
+			implementation="com.github.denofevil.aurelia.cli.ProjectTemplateFactory" /> <!-- works in IntelliJ IDEA -->
+		<daemon.highlightInfoFilter implementation="com.github.denofevil.aurelia.AureliaAttributesFilter" />
+	</extensions>
+	<extensions defaultExtensionNs="JavaScript">
+		<frameworkIndexingHandler implementation="com.github.denofevil.aurelia.FrameworkHandler" />
+	</extensions>
 </idea-plugin>

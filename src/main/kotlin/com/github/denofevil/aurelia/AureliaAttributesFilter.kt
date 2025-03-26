@@ -18,7 +18,7 @@ class AureliaAttributesFilter : HighlightInfoFilter {
         }
 
         val project: Project = file.project
-        if (!Aurelia.present(project)) {
+        if (!Aurelia.isPresentFor(project)) {
             return true
         }
 

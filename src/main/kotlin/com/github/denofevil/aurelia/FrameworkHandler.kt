@@ -32,10 +32,11 @@ class FrameworkHandler : FrameworkIndexingHandler() {
         if (context !is JSReferenceExpression || context.qualifier != null) {
             return null
         }
-        if (!Aurelia.present(context.getProject())) return null
+        if (!Aurelia.isPresentFor(context.getProject())) return null
 
         val original = CompletionUtil.getOriginalOrSelf<PsiElement>(context)
-        val hostFile = FileContextUtil.getContextFile(if (original !== context) original else context.getContainingFile().originalFile) ?: return null
+        val hostFile =
+            FileContextUtil.getContextFile(if (original !== context) original else context.getContainingFile().originalFile) ?: return null
 
         val directory = hostFile.originalFile.parent ?: return null
 

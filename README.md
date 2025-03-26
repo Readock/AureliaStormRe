@@ -1,9 +1,14 @@
 <!-- Plugin description -->
+
 # AureliaStorm
-This plugin brings support for [Aurelia](http://aurelia.io) framework to the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide).
+
+This plugin brings support for [Aurelia](http://aurelia.io) framework to
+the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide).
 
 Features:
 
+* Custom component recognition (using `@customComponent` or `@containerless`)
+* Custom component bindable property recognition (using `@bindable` annotation)
 * Code insight for specific Aurelia attributes (such as `*.bind` or `*.trigger`)
 * Syntax highlighting in `${}` interpolations
 * Controller properties completion and navigation
@@ -15,11 +20,14 @@ Either `aurelia` (v2), or `aurelia-cli` (v1) must be present in the project npm 
 <!-- Plugin description end -->
 
 ## Contributing
+
 ### Prerequisites
+
 * JDK version 17 or later suggested
 
 ### Running the plugin
-In order to test your plugin use the [runIde](https://plugins.jetbrains.com/docs/intellij/configuring-plugin-project.html#run-ide-task) Gradle. This will launch an instance of intellij with the plugin loaded.
 
+In order to test your plugin use the [runIde](https://plugins.jetbrains.com/docs/intellij/configuring-plugin-project.html#run-ide-task)
+Gradle. This will launch an instance of intellij with the plugin loaded.
 
 dk install gradle 8.13

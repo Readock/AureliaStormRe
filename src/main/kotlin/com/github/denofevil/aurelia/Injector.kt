@@ -22,7 +22,7 @@ import java.util.*
  */
 class Injector : MultiHostInjector {
     override fun getLanguagesToInject(registrar: MultiHostRegistrar, host: PsiElement) {
-        if (!Aurelia.present(host.project)) return
+        if (!Aurelia.isPresentFor(host.project)) return
 
         val range = ElementManipulators.getValueTextRange(host)
         if (host is XmlAttributeValue) {
@@ -32,8 +32,8 @@ class Injector : MultiHostInjector {
                 for (attr in Aurelia.INJECTABLE) {
                     if (name.endsWith(".$attr")) {
                         registrar.startInjecting(JavascriptLanguage.INSTANCE)
-                                .addPlace(null, null, host as PsiLanguageInjectionHost, range)
-                                .doneInjecting()
+                            .addPlace(null, null, host as PsiLanguageInjectionHost, range)
+                            .doneInjecting()
                         return
                     }
                 }
@@ -56,15 +56,18 @@ class Injector : MultiHostInjector {
             while (injectionCandidate is PsiWhiteSpace) injectionCandidate = injectionCandidate.getNextSibling()
 
             if (injectionCandidate != null &&
-                    injectionCandidate.startOffsetInParent <= end &&
-                    !XmlTokenType.COMMENTS.contains(injectionCandidate.node.elementType) &&
-                    injectionCandidate.node.elementType !== XmlElementType.XML_COMMENT &&
-                    injectionCandidate !is OuterLanguageElement) {
+                injectionCandidate.startOffsetInParent <= end &&
+                !XmlTokenType.COMMENTS.contains(injectionCandidate.node.elementType) &&
+                injectionCandidate.node.elementType !== XmlElementType.XML_COMMENT &&
+                injectionCandidate !is OuterLanguageElement
+            ) {
 
                 registrar.startInjecting(JavascriptLanguage.INSTANCE)
-                        .addPlace(null, null, host as PsiLanguageInjectionHost,
-                                TextRange(range.startOffset + start + 2, range.startOffset + end))
-                        .doneInjecting()
+                    .addPlace(
+                        null, null, host as PsiLanguageInjectionHost,
+                        TextRange(range.startOffset + start + 2, range.startOffset + end)
+                    )
+                    .doneInjecting()
             }
             start = text.indexOf("\${", end)
         }

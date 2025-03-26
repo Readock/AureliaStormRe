@@ -1,16 +1,19 @@
 package com.github.denofevil.aurelia
 
 import com.intellij.json.psi.JsonFile
+import com.intellij.json.psi.JsonObject
+import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.project.rootManager
 import com.intellij.openapi.roots.ProjectRootModificationTracker
 import com.intellij.openapi.util.IconLoader
+import com.intellij.openapi.vfs.VfsUtilCore
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
+import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiManager
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
-import com.intellij.openapi.vfs.VfsUtilCore
-import com.intellij.json.psi.JsonObject
-import com.intellij.openapi.project.guessProjectDir
-import com.intellij.psi.PsiManager
 
 /**
  * @author Dennis.Ushakov
@@ -18,7 +21,7 @@ import com.intellij.psi.PsiManager
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
 
-    val INJECTABLE = arrayOf("bind", "one-way", "two-way", "one-time", "delegate", "trigger", "call", "from-view")
+    val INJECTABLE = arrayOf("bind", "one-way", "two-way", "one-time", "delegate", "trigger", "call", "from-view", "to-view")
     const val REPEAT_FOR = "repeat.for"
     const val VIRTUAL_REPEAT_FOR = "virtual-repeat.for"
     const val AURELIA_APP = "aurelia-app"
@@ -27,37 +30,84 @@ object Aurelia {
     const val ELSE = "else"
     const val PROMISE = "promise"
     const val THEN = "then"
-    val CUSTOM_ELEMENTS = arrayOf("let")
+    val CUSTOM_ELEMENTS = arrayOf("let", "require", "template")
 
-    fun present(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {
-        val aureliaLoaded = hasDependency(project)
+    fun isPresentFor(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {
+        val aureliaRootFolders = getAureliaRootFolders(project)
         CachedValueProvider.Result
-            .create(aureliaLoaded, VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS, ProjectRootModificationTracker.getInstance(project))
+            .create(
+                aureliaRootFolders.isNotEmpty(),
+                VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS,
+                ProjectRootModificationTracker.getInstance(project)
+            )
     }!!
 
-    private fun hasDependency(project: Project): Boolean {
-        var hasDependency = false
+    fun isPresentFor(element: PsiFile?): Boolean {
+        if (element == null) {
+            return false;
+        }
+        return CachedValuesManager.getManager(element.project).getCachedValue(element) {
+            var isPresent = false
+            val project = element.project
+            val aureliaRootFolders = getAureliaRootFolders(project)
 
-        project.guessProjectDir()?.let {
-            VfsUtilCore.iterateChildrenRecursively(it, null) { virtualFile ->
-                if (!virtualFile.isDirectory && virtualFile.name == "package.json") {
-                    val jsonFile = PsiManager.getInstance(project).findFile(virtualFile)
-                    val jsonObject = (jsonFile as? JsonFile)?.topLevelValue as? JsonObject
+            if (aureliaRootFolders.isNotEmpty()) {
+                val fileVirtualFile: VirtualFile? = element.virtualFile
+                isPresent = fileVirtualFile != null && aureliaRootFolders.stream().anyMatch { isChildOf(fileVirtualFile, it) }
+            }
+            CachedValueProvider.Result.create(isPresent, VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS)
+        }
+    }
 
-                    val dependencies = jsonObject?.findProperty("dependencies")?.value as? JsonObject
-                    val devDependencies = jsonObject?.findProperty("devDependencies")?.value as? JsonObject
+    private fun isChildOf(source: VirtualFile, target: VirtualFile): Boolean {
+        var currentFile = source.parent
+        while (currentFile != null) {
+            if (currentFile == target) {
+                return true
+            }
+            currentFile = currentFile.parent
+        }
+        return false
+    }
 
-                    if (hasAureliaDependency(dependencies) || hasAureliaDependency(devDependencies)) {
-                        hasDependency = true
-                        return@iterateChildrenRecursively false
+    private fun getAureliaRootFolders(project: Project): ArrayList<VirtualFile> {
+        return CachedValuesManager.getManager(project).getCachedValue(project) {
+            val aureliaRootFolder = findAureliaRootFolders(project)
+            CachedValueProvider.Result.create(aureliaRootFolder, VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS)
+        }
+    }
+
+    private fun findAureliaRootFolders(project: Project): ArrayList<VirtualFile> {
+        val aureliaRoots: ArrayList<VirtualFile> = arrayListOf()
+        for (moduleRoot in getModuleRootDirs(project)) {
+            moduleRoot.let { it ->
+                VfsUtilCore.iterateChildrenRecursively(it, null) { virtualFile ->
+                    val isPackageJson = !virtualFile.isDirectory && virtualFile.name == "package.json"
+                    if (isPackageJson && hasPackageJsonAureliaDependencies(project, virtualFile)) {
+                        aureliaRoots.add(virtualFile.parent);
                     }
+                    true
                 }
-
-                true
             }
         }
+        return aureliaRoots
+    }
 
-        return hasDependency
+    private fun hasPackageJsonAureliaDependencies(project: Project, virtualFile: VirtualFile): Boolean {
+        val jsonFile = PsiManager.getInstance(project).findFile(virtualFile)
+        val jsonObject = (jsonFile as? JsonFile)?.topLevelValue as? JsonObject
+
+        val dependencies = jsonObject?.findProperty("dependencies")?.value as? JsonObject
+        val devDependencies = jsonObject?.findProperty("devDependencies")?.value as? JsonObject
+
+        return hasAureliaDependency(dependencies) || hasAureliaDependency(devDependencies)
+    }
+
+    private fun getModuleRootDirs(project: Project): List<VirtualFile> {
+        val modules = ModuleManager.getInstance(project).modules
+        return modules.mapNotNull { module ->
+            module.rootManager.contentRoots.firstOrNull()
+        }
     }
 
     private fun hasAureliaDependency(jsonObject: JsonObject?): Boolean {
