@@ -7,8 +7,8 @@ the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js
 
 Features:
 
-* Custom component recognition (using `@customComponent` or `@containerless`)
-* Custom component bindable property recognition (using `@bindable` annotation)
+* Custom component recognition (matching by require tags or file name)
+* Custom component bindable property recognition (`@bindable` annotation)
 * Code insight for specific Aurelia attributes (such as `*.bind` or `*.trigger`)
 * Syntax highlighting in `${}` interpolations
 * Controller properties completion and navigation
