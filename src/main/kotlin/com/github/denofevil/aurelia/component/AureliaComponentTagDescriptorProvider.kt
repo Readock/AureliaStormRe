@@ -9,16 +9,18 @@ import org.jetbrains.annotations.Nullable
 import javax.swing.text.html.HTML
 
 
-class ComponentTagDescriptorProvider : XmlElementDescriptorProvider {
+class AureliaComponentTagDescriptorProvider : XmlElementDescriptorProvider {
     private val htmlTags = HTML.getAllTags().map { it.toString().lowercase() }
 
     @Nullable
     override fun getDescriptor(tag: XmlTag): XmlElementDescriptor? {
-        val isCommonHtmlTag = htmlTags.stream().anyMatch { it.equals(tag.name.lowercase()) };
-        if (tag is HtmlTag && !isCommonHtmlTag && Aurelia.isPresentFor(tag.containingFile)) {
+        val tagName = tag.name.lowercase()
+        val isExcludedTag = htmlTags.stream().anyMatch { it.equals(tagName) }
+                || Aurelia.CUSTOM_ELEMENTS.contains(tagName) || tagName == "require"
+        if (tag is HtmlTag && !isExcludedTag && Aurelia.isPresentFor(tag.containingFile)) {
             val descriptor = AureliaComponentElementDescriptor(tag)
             if (descriptor.declaration != null) {
-                return descriptor // only apply when there was a declaration
+                return descriptor
             }
         }
         return null

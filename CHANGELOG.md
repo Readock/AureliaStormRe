@@ -10,6 +10,7 @@
     * Gets resolved over <require from=""> tags
     * Without require a ts with the same names component gets used
     * Checks for matching @customElement and class names
+* require and import tag support
 * Custom component bindable property recognition (by @bindable)
 * Suppress <template> and <require> element warnings
 

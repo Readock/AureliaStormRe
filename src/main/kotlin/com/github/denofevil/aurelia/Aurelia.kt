@@ -30,7 +30,8 @@ object Aurelia {
     const val ELSE = "else"
     const val PROMISE = "promise"
     const val THEN = "then"
-    val CUSTOM_ELEMENTS = arrayOf("let", "require", "template")
+    val IMPORT_ELEMENTS = arrayOf("require", "import")
+    val CUSTOM_ELEMENTS = arrayOf("let", "template") + IMPORT_ELEMENTS
     val COMPONENT_ATTRIBUTES = arrayOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
 
     fun isPresentFor(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {

@@ -46,7 +46,6 @@ class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlEleme
     }
 
     private fun resolveDeclarationClass(): PsiElement? {
-        // Find file in project structure (assuming it's in the same folder)
         val project = tag.project
         val scope = GlobalSearchScope.allScope(project)
 
@@ -74,7 +73,7 @@ class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlEleme
     private fun findRequireImports(xmlFile: XmlFile, componentName: String): List<String> {
         val rootTag = xmlFile.rootTag ?: return emptyList()
         // Find <require> elements with a "from" attribute
-        val requireTags = rootTag.findSubTags("require")
+        val requireTags = Aurelia.IMPORT_ELEMENTS.map { rootTag.findSubTags(it).toList() }.flatten()
         return requireTags.filter { it.getAttributeValue("from") != null }.map { it.getAttributeValue("from")!! }.filter {
             return@filter it.endsWith("/$componentName")
         }
