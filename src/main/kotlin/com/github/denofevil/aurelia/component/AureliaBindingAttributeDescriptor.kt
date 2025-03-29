@@ -1,6 +1,6 @@
 package com.github.denofevil.aurelia.component
 
-import com.github.denofevil.aurelia.AureliaAttributeDescriptor
+import com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptor
 import com.intellij.psi.PsiElement
 import com.intellij.xml.XmlAttributeDescriptor
 

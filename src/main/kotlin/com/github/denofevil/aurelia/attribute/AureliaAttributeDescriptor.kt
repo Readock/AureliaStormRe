@@ -1,5 +1,6 @@
-package com.github.denofevil.aurelia
+package com.github.denofevil.aurelia.attribute
 
+import com.github.denofevil.aurelia.Aurelia
 import com.intellij.psi.PsiElement
 import com.intellij.psi.meta.PsiPresentableMetaData
 import com.intellij.util.ArrayUtil

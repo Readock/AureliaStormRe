@@ -1,5 +1,6 @@
-package com.github.denofevil.aurelia
+package com.github.denofevil.aurelia.attribute
 
+import com.github.denofevil.aurelia.Aurelia
 import com.intellij.psi.xml.XmlTag
 import com.intellij.xml.XmlAttributeDescriptor
 import com.intellij.xml.XmlAttributeDescriptorsProvider
@@ -7,7 +8,7 @@ import com.intellij.xml.XmlAttributeDescriptorsProvider
 /**
  * @author Dennis.Ushakov
  */
-class AttributesProvider : XmlAttributeDescriptorsProvider {
+class AureliaAttributeDesciptorsProvider : XmlAttributeDescriptorsProvider {
     override fun getAttributeDescriptors(xmlTag: XmlTag): Array<XmlAttributeDescriptor> = arrayOf(
         AureliaAttributeDescriptor(Aurelia.REPEAT_FOR),
         AureliaAttributeDescriptor(Aurelia.VIRTUAL_REPEAT_FOR),

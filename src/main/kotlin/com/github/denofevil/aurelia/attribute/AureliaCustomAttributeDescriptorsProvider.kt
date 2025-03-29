@@ -1,13 +1,14 @@
 package com.github.denofevil.aurelia.attribute
 
 import com.github.denofevil.aurelia.Aurelia
+import com.github.denofevil.aurelia.config.AureliaSettings
 import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.psi.xml.XmlTag
 import com.intellij.xml.XmlAttributeDescriptor
 import com.intellij.xml.XmlAttributeDescriptorsProvider
 import javax.swing.text.html.HTML
 
-class AureliaAttributeDescriptorProvider : XmlAttributeDescriptorsProvider {
+class AureliaCustomAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
     private val htmlAttributes = HTML.getAllAttributeKeys().map { it.toString().lowercase() }
 
     override fun getAttributeDescriptors(element: XmlTag?) =
@@ -16,6 +17,8 @@ class AureliaAttributeDescriptorProvider : XmlAttributeDescriptorsProvider {
 
 
     override fun getAttributeDescriptor(attributeName: String?, tag: XmlTag?): XmlAttributeDescriptor? {
+        if (!AureliaSettings.getInstance().isCustomAttributesEnabled) return null
+
         val attribute = tag?.getAttribute(attributeName)
         val isExcludedAttribute = htmlAttributes.stream().anyMatch { it.equals(attributeName) }
                 || Aurelia.COMPONENT_ATTRIBUTES.contains(attributeName)

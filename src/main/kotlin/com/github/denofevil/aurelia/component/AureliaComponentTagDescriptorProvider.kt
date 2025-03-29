@@ -1,6 +1,7 @@
 package com.github.denofevil.aurelia.component
 
 import com.github.denofevil.aurelia.Aurelia
+import com.github.denofevil.aurelia.config.AureliaSettings
 import com.intellij.psi.html.HtmlTag
 import com.intellij.psi.impl.source.xml.XmlElementDescriptorProvider
 import com.intellij.psi.xml.XmlTag
@@ -15,6 +16,8 @@ class AureliaComponentTagDescriptorProvider : XmlElementDescriptorProvider {
 
     @Nullable
     override fun getDescriptor(tag: XmlTag): XmlElementDescriptor? {
+        if (!AureliaSettings.getInstance().isCustomComponentEnabled) return null
+        
         val tagName = tag.name.lowercase()
         val isExcludedTag = htmlTags.stream().anyMatch { it.equals(tagName) }
                 || Aurelia.CUSTOM_ELEMENTS.contains(tagName) || tagName == "require"

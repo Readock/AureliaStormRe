@@ -25,9 +25,9 @@
 	<extensions defaultExtensionNs="com.intellij">
 		<xml.xmlSuppressionProvider implementation="com.github.denofevil.aurelia.HtmlXmlSuppressionProvider" />
 		<multiHostInjector implementation="com.github.denofevil.aurelia.Injector" />
-		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.AttributesProvider" order="first" />
+		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaAttributeDesciptorsProvider" order="first" />
 		<xml.elementDescriptorProvider implementation="com.github.denofevil.aurelia.component.AureliaComponentTagDescriptorProvider" order="first" />
-		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptorProvider" order="last" />
+		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider" order="last" />
 		<psi.referenceContributor language="HTML" implementation="com.github.denofevil.aurelia.require.AureliaRequireReferenceContributor" order="first" />
 		<psi.referenceProvider language="HTML" providerClass="com.github.denofevil.aurelia.ReferenceProvider">
 			<pattern type="xml">xmlAttributeValue("aurelia-app", "data-aurelia-app")</pattern>
@@ -42,6 +42,15 @@
 		<projectTemplatesFactory
 			implementation="com.github.denofevil.aurelia.cli.ProjectTemplateFactory" /> <!-- works in IntelliJ IDEA -->
 		<daemon.highlightInfoFilter implementation="com.github.denofevil.aurelia.AureliaAttributesFilter" />
+		<applicationService id="aureliaSettings" serviceImplementation="com.github.denofevil.aurelia.config.AureliaSettings" />
+		<projectConfigurable
+			instance="com.github.denofevil.aurelia.config.AureliaSettingsConfigurable"
+			id="settings.aureliaStorm"
+			key="aurelia"
+			bundle="messages.AureliaStormBundle"
+			parentId="Settings.JavaScript"
+			order="last"
+		/>
 	</extensions>
 	<extensions defaultExtensionNs="JavaScript">
 		<frameworkIndexingHandler implementation="com.github.denofevil.aurelia.FrameworkHandler" />

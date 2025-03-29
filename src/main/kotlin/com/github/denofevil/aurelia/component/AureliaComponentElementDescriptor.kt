@@ -1,8 +1,8 @@
 package com.github.denofevil.aurelia.component
 
-import com.github.denofevil.aurelia.AttributesProvider
 import com.github.denofevil.aurelia.Aurelia
-import com.github.denofevil.aurelia.AureliaAttributeDescriptor
+import com.github.denofevil.aurelia.attribute.AureliaAttributeDesciptorsProvider
+import com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptor
 import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.lang.javascript.frameworks.jsx.tsx.TypeScriptJSXTagUtil
 import com.intellij.lang.javascript.psi.JSElement
@@ -23,7 +23,7 @@ import com.intellij.xml.util.XmlUtil
 class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
     private var myElementDecl: XmlElementDecl? = null
     private var declaration: PsiElement?
-    private var attributesProvider = AttributesProvider()
+    private var attributesProvider = AureliaAttributeDesciptorsProvider()
 
     init {
         this.declaration = DeclarationResolverUtil.resolveComponentDeclaration(tag)
