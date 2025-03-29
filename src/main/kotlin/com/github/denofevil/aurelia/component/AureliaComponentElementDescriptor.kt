@@ -77,6 +77,7 @@ class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlEleme
     public override fun collectAttributeDescriptors(tag: XmlTag?): Array<XmlAttributeDescriptor> {
         val bindables = collectBindableAttributeDescriptors(this.declaration as JSClass?)
         val globals = emptyArray<XmlAttributeDescriptor>()
+        // Aurelia.COMMON_ATTRIBUTES.map { AureliaAttributeDescriptor(it) }.toTypedArray()
         val componentAttributes = Aurelia.COMPONENT_ATTRIBUTES.map { AureliaAttributeDescriptor(it) }.toTypedArray()
         return bindables + globals + componentAttributes
     }

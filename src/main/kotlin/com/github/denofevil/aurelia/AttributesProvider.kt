@@ -41,5 +41,6 @@ class AttributesProvider : XmlAttributeDescriptorsProvider {
                 || Aurelia.REF == name
                 || Aurelia.PROMISE == name
                 || Aurelia.THEN == name
+                || Aurelia.I18N_ATTRIBUTES.contains(name)
     }
 }

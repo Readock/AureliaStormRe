@@ -1,20 +1,21 @@
 package com.github.denofevil.aurelia
 
+import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.lang.injection.MultiHostInjector
 import com.intellij.lang.injection.MultiHostRegistrar
+import com.intellij.lang.javascript.JSInjectionBracesUtil
 import com.intellij.lang.javascript.JavascriptLanguage
-import com.intellij.openapi.util.TextRange
+import com.intellij.lang.javascript.psi.JSFile
+import com.intellij.lang.javascript.psi.ecmal4.JSClass
 import com.intellij.psi.ElementManipulators
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiLanguageInjectionHost
-import com.intellij.psi.PsiWhiteSpace
+import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl
 import com.intellij.psi.impl.source.xml.XmlTextImpl
-import com.intellij.psi.templateLanguages.OuterLanguageElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
-import com.intellij.psi.xml.XmlElementType
-import com.intellij.psi.xml.XmlTokenType
+import com.intellij.psi.xml.XmlFile
 import java.util.*
 
 /**
@@ -39,41 +40,23 @@ class Injector : MultiHostInjector {
                 }
             }
         }
-        val text = ElementManipulators.getValueText(host)
-        var start = text.indexOf("\${")
-        while (start >= 0) {
-            var end = range.length
-            var nested = 0
-            for (i in start + 2 until range.length) {
-                if (text[i] == '{') nested++
-                if (nested == 0 && text[i] == '}') {
-                    end = i
-                    break
-                }
-                if (text[i] == '}') nested--
-            }
-            var injectionCandidate = host.findElementAt(start)
-            while (injectionCandidate is PsiWhiteSpace) injectionCandidate = injectionCandidate.getNextSibling()
-
-            if (injectionCandidate != null &&
-                injectionCandidate.startOffsetInParent <= end &&
-                !XmlTokenType.COMMENTS.contains(injectionCandidate.node.elementType) &&
-                injectionCandidate.node.elementType !== XmlElementType.XML_COMMENT &&
-                injectionCandidate !is OuterLanguageElement
-            ) {
-
-                registrar.startInjecting(JavascriptLanguage.INSTANCE)
-                    .addPlace(
-                        null, null, host as PsiLanguageInjectionHost,
-                        TextRange(range.startOffset + start + 2, range.startOffset + end)
-                    )
-                    .doneInjecting()
-            }
-            start = text.indexOf("\${", end)
-        }
+        JSInjectionBracesUtil.injectInXmlTextByDelimiters(registrar, host, JavascriptLanguage.INSTANCE, "\${", "}")
     }
 
     override fun elementsToInjectIn(): List<Class<out PsiElement>> {
         return Arrays.asList(XmlTextImpl::class.java, XmlAttributeValueImpl::class.java)
+    }
+
+    private fun findTypeScriptHostOf(element: XmlFile?): JSClass? {
+        // TODO: currently not possible to provide injection context :(
+        element ?: return null
+        val originalFile = element.virtualFile
+        val parentDirectory = originalFile.parent ?: return null
+
+        val originalFileName = originalFile.name
+        val componentName = originalFileName.substringBeforeLast('.')
+
+        val file = parentDirectory.findChild("$componentName.ts")?.let { PsiManager.getInstance(element.project).findFile(it) } as JSFile
+        return DeclarationResolverUtil.findClassByDecorator(file, componentName, Aurelia.CUSTOM_ELEMENT_DECORATOR)
     }
 }

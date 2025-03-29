@@ -11,7 +11,6 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag
-import kotlin.jvm.optionals.getOrElse
 
 object DeclarationResolverUtil {
 
@@ -27,38 +26,34 @@ object DeclarationResolverUtil {
         val project = element.project
         val scope = GlobalSearchScope.allScope(project)
 
-        val jsImportFiles = RequireImportUtil.resolveImportByName(element, name)
-        if (jsImportFiles.isNotEmpty()) {
+        val importedFile = RequireImportUtil.resolveImportByName(element, name)
+            .map { findClassByDecorator(it, name, decorator) }.firstOrNull()
+        if (importedFile != null) {
             // if possible we take declarations from a <require from=""> tag
-            return jsImportFiles.map { findClassByDecorator(it, name, decorator) }.firstOrNull();
+            return importedFile
         }
         // no matching require tag so we will search for a fitting ts file
         val tsFilesWithComponentName = FilenameIndex.getVirtualFilesByName(
             "${name}.ts", scope
         )
-        if (!tsFilesWithComponentName.isEmpty()) {
-            val files = tsFilesWithComponentName.stream().map { f -> f.findPsiFile(project) }
-                .map { f -> findClassByDecorator(f, name, decorator) }.toList()
-                .filterNotNull().toList()
-            return files.firstOrNull()
-        }
-        return null
+        return tsFilesWithComponentName.firstNotNullOfOrNull { findClassByDecorator(it.findPsiFile(project), name, decorator) }
     }
 
-    private fun findClassByDecorator(tsFile: PsiFile?, elementName: String, decoratorName: String): PsiElement? {
+    fun findClassByDecorator(tsFile: PsiFile?, elementName: String, decoratorName: String): JSClass? {
         val jsClasses = PsiTreeUtil.findChildrenOfType(tsFile, JSClass::class.java) as Collection<JSClass>
-        return jsClasses.stream().filter { matchesWithCustomComponent(it, elementName, decoratorName) }.findFirst()
-            .getOrElse { jsClasses.firstOrNull() }
+        return jsClasses.firstOrNull { matchesWithDecorator(it, elementName, decoratorName) } // highest priority has the decorator
+            ?: jsClasses.firstOrNull { matchesWithName(it, elementName) } // then class name
+            ?: jsClasses.firstOrNull() // as fallback take first class in the file
     }
 
-    private fun matchesWithCustomComponent(jsClass: JSClass, elementName: String, decoratorName: String): Boolean {
-        val matchingClassName = jsClass.name != null && (Aurelia.camelToKebabCase(jsClass.name!!)) == elementName
-        if (matchingClassName) {
-            return true;
-        }
+    private fun matchesWithDecorator(jsClass: JSClass, elementName: String, decoratorName: String): Boolean {
         return jsClass.attributeList?.decorators?.any {
             it.decoratorName == decoratorName && it.expression?.text?.contains(elementName) == true
         } ?: false
+    }
+
+    private fun matchesWithName(jsClass: JSClass, elementName: String): Boolean {
+        return jsClass.name != null && (Aurelia.camelToKebabCase(jsClass.name!!)) == elementName
     }
 
 }

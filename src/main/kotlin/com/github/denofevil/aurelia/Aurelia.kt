@@ -21,7 +21,7 @@ import com.intellij.psi.util.CachedValuesManager
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
 
-    val INJECTABLE = arrayOf("bind", "one-way", "two-way", "one-time", "delegate", "trigger", "call", "from-view", "to-view")
+    val INJECTABLE = arrayOf("bind", "one-way", "two-way", "one-time", "delegate", "trigger", "call", "from-view", "to-view", "for", "ref")
     const val REPEAT_FOR = "repeat.for"
     const val VIRTUAL_REPEAT_FOR = "virtual-repeat.for"
     const val AURELIA_APP = "aurelia-app"
@@ -34,6 +34,7 @@ object Aurelia {
     const val CUSTOM_ATTRIBUTE_DECORATOR = "customAttribute"
     val IMPORT_ELEMENTS = arrayOf("require", "import")
     val CUSTOM_ELEMENTS = arrayOf("let", "template") + IMPORT_ELEMENTS
+    val I18N_ATTRIBUTES = listOf("t", "t-params")
     val COMPONENT_ATTRIBUTES = arrayOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
 
     fun isPresentFor(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {

@@ -18,7 +18,8 @@ class AureliaAttributeDescriptorProvider : XmlAttributeDescriptorsProvider {
     override fun getAttributeDescriptor(attributeName: String?, tag: XmlTag?): XmlAttributeDescriptor? {
         val attribute = tag?.getAttribute(attributeName)
         val isExcludedAttribute = htmlAttributes.stream().anyMatch { it.equals(attributeName) }
-                || Aurelia.COMPONENT_ATTRIBUTES.contains(attributeName) || attributeName == "from"
+                || Aurelia.COMPONENT_ATTRIBUTES.contains(attributeName)
+                || attributeName == "from"
         if (!isExcludedAttribute && tag != null && attribute != null) {
             val ref = DeclarationResolverUtil.resolveAttributeDeclaration(attribute)
             if (ref != null) {
