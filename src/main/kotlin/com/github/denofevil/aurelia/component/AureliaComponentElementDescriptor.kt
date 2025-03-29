@@ -5,12 +5,8 @@ import com.github.denofevil.aurelia.attribute.AureliaAttributeDesciptorsProvider
 import com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptor
 import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.lang.javascript.frameworks.jsx.tsx.TypeScriptJSXTagUtil
-import com.intellij.lang.javascript.psi.JSElement
-import com.intellij.lang.javascript.psi.JSRecordType.PropertySignature
-import com.intellij.lang.javascript.psi.ecmal4.JSAttributeListOwner
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
 import com.intellij.psi.PsiElement
-import com.intellij.psi.html.HtmlTag
 import com.intellij.psi.xml.XmlElementDecl
 import com.intellij.psi.xml.XmlTag
 import com.intellij.xml.XmlAttributeDescriptor
@@ -20,7 +16,7 @@ import com.intellij.xml.XmlNSDescriptor
 import com.intellij.xml.impl.dtd.BaseXmlElementDescriptorImpl
 import com.intellij.xml.util.XmlUtil
 
-class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
+class AureliaComponentElementDescriptor(private val tag: XmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
     private var myElementDecl: XmlElementDecl? = null
     private var declaration: PsiElement?
     private var attributesProvider = AureliaAttributeDesciptorsProvider()
@@ -86,7 +82,7 @@ class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlEleme
         jsClass: JSClass?
     ): Array<XmlAttributeDescriptor> {
         val members: ArrayList<XmlAttributeDescriptor?> = ArrayList()
-        findBindableAttributes(jsClass).forEach { attr ->
+        DeclarationResolverUtil.resolveBindableAttributes(jsClass).forEach { attr ->
             val descriptor = TypeScriptJSXTagUtil.createAttributeDescriptor(attr, true)
             members.add(AureliaBindingAttributeDescriptor(Aurelia.camelToKebabCase(descriptor.name), descriptor))
 
@@ -96,22 +92,6 @@ class AureliaComponentElementDescriptor(private val tag: HtmlTag) : BaseXmlEleme
             }
         }
         return members.toArray(XmlAttributeDescriptor.EMPTY) as Array<XmlAttributeDescriptor>
-    }
-
-    private fun findBindableAttributes(jsClass: JSClass?): ArrayList<PropertySignature> {
-        val members = arrayListOf<PropertySignature>()
-        jsClass ?: return members;
-        for (jsMember in jsClass.members) {
-            if (hasBindableAnnotation(jsMember) && jsMember is PropertySignature) {
-                members.add(jsMember)
-            }
-        }
-        return members
-    }
-
-    private fun hasBindableAnnotation(member: JSElement): Boolean {
-        if (member !is JSAttributeListOwner) return false
-        return member.attributeList?.decorators?.any { it.decoratorName == "bindable" } ?: false
     }
 
     override fun collectAttributeDescriptorsMap(tag: XmlTag?): HashMap<String, XmlAttributeDescriptor> {

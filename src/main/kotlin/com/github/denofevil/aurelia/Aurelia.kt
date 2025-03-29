@@ -14,6 +14,9 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
+import com.intellij.psi.xml.XmlAttribute
+import com.intellij.psi.xml.XmlTag
+import javax.swing.text.html.HTML
 
 /**
  * @author Dennis.Ushakov
@@ -21,7 +24,8 @@ import com.intellij.psi.util.CachedValuesManager
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
 
-    val INJECTABLE = arrayOf("bind", "one-way", "two-way", "one-time", "delegate", "trigger", "call", "from-view", "to-view", "for", "ref")
+    val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view")
+    val INJECTABLE = listOf("delegate", "trigger", "call", "for", "ref") + PROPERTY_BINDINGS
     const val REPEAT_FOR = "repeat.for"
     const val VIRTUAL_REPEAT_FOR = "virtual-repeat.for"
     const val AURELIA_APP = "aurelia-app"
@@ -32,10 +36,12 @@ object Aurelia {
     const val THEN = "then"
     const val CUSTOM_ELEMENT_DECORATOR = "customElement"
     const val CUSTOM_ATTRIBUTE_DECORATOR = "customAttribute"
-    val IMPORT_ELEMENTS = arrayOf("require", "import")
-    val CUSTOM_ELEMENTS = arrayOf("let", "template") + IMPORT_ELEMENTS
+    val IMPORT_ELEMENTS = listOf("require", "import")
+    val CUSTOM_ELEMENTS = listOf("let", "template") + IMPORT_ELEMENTS
     val I18N_ATTRIBUTES = listOf("t", "t-params")
-    val COMPONENT_ATTRIBUTES = arrayOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
+    val COMPONENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
+    private val htmlTags = HTML.getAllTags().map { it.toString().lowercase() }
+    private val htmlAttributes = HTML.getAllAttributeKeys().map { it.toString().lowercase() }
 
     fun isPresentFor(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {
         val aureliaRootFolders = getAureliaRootFolders(project)
@@ -66,6 +72,21 @@ object Aurelia {
 
     fun camelToKebabCase(camel: String): String {
         return camel.replace(Regex("([a-z])([A-Z])"), "$1-$2").lowercase()
+    }
+
+    fun isFrameworkCandidate(tag: XmlTag): Boolean {
+        val tagName = tag.name.lowercase()
+        val isExcludedTag = htmlTags.stream().anyMatch { it.equals(tagName) }
+                || CUSTOM_ELEMENTS.contains(tagName) || tagName == "require"
+        return !isExcludedTag && isPresentFor(tag.containingFile)
+    }
+
+    fun isFrameworkCandidate(attribute: XmlAttribute): Boolean {
+        val attributeName = attribute.name.lowercase()
+        val isExcludedAttribute = htmlAttributes.stream().anyMatch { it.equals(attributeName) }
+                || COMPONENT_ATTRIBUTES.contains(attributeName)
+                || attributeName == "from"
+        return !isExcludedAttribute && isPresentFor(attribute.containingFile)
     }
 
     private fun isChildOf(source: VirtualFile, target: VirtualFile): Boolean {

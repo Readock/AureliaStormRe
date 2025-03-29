@@ -6,24 +6,20 @@ import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.psi.xml.XmlTag
 import com.intellij.xml.XmlAttributeDescriptor
 import com.intellij.xml.XmlAttributeDescriptorsProvider
-import javax.swing.text.html.HTML
 
 class AureliaCustomAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
-    private val htmlAttributes = HTML.getAllAttributeKeys().map { it.toString().lowercase() }
 
-    override fun getAttributeDescriptors(element: XmlTag?) =
-        element?.attributes?.mapNotNull { getAttributeDescriptor(it.value, element) }?.toTypedArray()
-            ?: emptyArray<XmlAttributeDescriptor>()
-
+    override fun getAttributeDescriptors(element: XmlTag?): Array<XmlAttributeDescriptor> {
+        element ?: return emptyArray()
+        val existing = element.attributes.mapNotNull { getAttributeDescriptor(it.value, element) }.toTypedArray()
+        return existing
+    }
 
     override fun getAttributeDescriptor(attributeName: String?, tag: XmlTag?): XmlAttributeDescriptor? {
         if (!AureliaSettings.getInstance().isCustomAttributesEnabled) return null
 
-        val attribute = tag?.getAttribute(attributeName)
-        val isExcludedAttribute = htmlAttributes.stream().anyMatch { it.equals(attributeName) }
-                || Aurelia.COMPONENT_ATTRIBUTES.contains(attributeName)
-                || attributeName == "from"
-        if (!isExcludedAttribute && tag != null && attribute != null) {
+        val attribute = tag?.getAttribute(attributeName) ?: return null
+        if (Aurelia.isFrameworkCandidate(attribute)) {
             val ref = DeclarationResolverUtil.resolveAttributeDeclaration(attribute)
             if (ref != null) {
                 return AureliaCustomAttributeDescriptor(attribute.name, ref)
