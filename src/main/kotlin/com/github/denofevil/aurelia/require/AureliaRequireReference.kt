@@ -11,6 +11,7 @@ class AureliaRequireReference(private val attribute: XmlAttributeValue) : PsiRef
     override fun resolve(): PsiElement? {
         val tag = element.parent?.parent as? XmlTag ?: return null
         return CommonJSUtil.resolveReferencedElements(tag, element.value).firstOrNull()
+            ?: CommonJSUtil.resolveReferencedElements(tag, "src/${element.value}").firstOrNull()
     }
 
     override fun getVariants(): Array<Any> = emptyArray()
