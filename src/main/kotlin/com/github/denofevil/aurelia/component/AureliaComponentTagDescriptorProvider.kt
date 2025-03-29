@@ -12,6 +12,7 @@ import javax.swing.text.html.HTML
 class AureliaComponentTagDescriptorProvider : XmlElementDescriptorProvider {
     private val htmlTags = HTML.getAllTags().map { it.toString().lowercase() }
 
+
     @Nullable
     override fun getDescriptor(tag: XmlTag): XmlElementDescriptor? {
         val tagName = tag.name.lowercase()

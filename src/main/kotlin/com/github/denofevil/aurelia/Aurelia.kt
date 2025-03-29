@@ -30,6 +30,8 @@ object Aurelia {
     const val ELSE = "else"
     const val PROMISE = "promise"
     const val THEN = "then"
+    const val CUSTOM_ELEMENT_DECORATOR = "customElement"
+    const val CUSTOM_ATTRIBUTE_DECORATOR = "customAttribute"
     val IMPORT_ELEMENTS = arrayOf("require", "import")
     val CUSTOM_ELEMENTS = arrayOf("let", "template") + IMPORT_ELEMENTS
     val COMPONENT_ATTRIBUTES = arrayOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
