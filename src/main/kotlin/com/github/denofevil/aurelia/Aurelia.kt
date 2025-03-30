@@ -24,26 +24,25 @@ import javax.swing.text.html.HTML
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
 
-    val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view")
+    private val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view")
     val INJECTABLE = listOf("delegate", "trigger", "call", "for", "ref") + PROPERTY_BINDINGS
-    const val REPEAT_FOR = "repeat.for"
-    const val VIRTUAL_REPEAT_FOR = "virtual-repeat.for"
     const val AURELIA_APP = "aurelia-app"
-    const val CASE = "case"
-    const val REF = "ref"
-    const val ELSE = "else"
-    const val PROMISE = "promise"
-    const val THEN = "then"
     const val CUSTOM_ELEMENT_DECORATOR = "customElement"
     const val CUSTOM_ATTRIBUTE_DECORATOR = "customAttribute"
     val IMPORT_ELEMENTS = listOf("require", "import")
+    private const val IMPORT_ELEMENT_ATTRIBUTE = "from"
     val CUSTOM_ELEMENTS = listOf("let", "template") + IMPORT_ELEMENTS
-    val I18N_ATTRIBUTES = listOf("t", "t-params")
+    private val I18N_ATTRIBUTES = listOf("t", "t-params")
+    val WHITE_LIST_ATTRIBUTES = listOf(
+        "name", "value", "innerhtml", "containerless", "model", "disabled", "element", "aurelia-table"
+    ) + I18N_ATTRIBUTES
+    val AUTOCOMPLETE_ATTRIBUTES = listOf("repeat.for", AURELIA_APP, "else", "if.bind", "show.bind")
+    val ATTRIBUTES_WITHOUT_VALUE = listOf("else", "disabled", "containerless")
     val COMPONENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
     private val htmlTags = HTML.getAllTags().map { it.toString().lowercase() }
     private val htmlAttributes = HTML.getAllAttributeKeys().map { it.toString().lowercase() }
 
-    fun isPresentFor(project: Project) = CachedValuesManager.getManager(project).getCachedValue(project) {
+    fun isPresentFor(project: Project): Boolean = CachedValuesManager.getManager(project).getCachedValue(project) {
         val aureliaRootFolders = getAureliaRootFolders(project)
         CachedValueProvider.Result
             .create(
@@ -51,7 +50,7 @@ object Aurelia {
                 VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS,
                 ProjectRootModificationTracker.getInstance(project)
             )
-    }!!
+    }
 
     fun isPresentFor(element: PsiFile?): Boolean {
         if (element == null) {
@@ -77,15 +76,14 @@ object Aurelia {
     fun isFrameworkCandidate(tag: XmlTag): Boolean {
         val tagName = tag.name.lowercase()
         val isExcludedTag = htmlTags.stream().anyMatch { it.equals(tagName) }
-                || CUSTOM_ELEMENTS.contains(tagName) || tagName == "require"
+                || CUSTOM_ELEMENTS.contains(tagName) || IMPORT_ELEMENTS.contains(tagName)
         return !isExcludedTag && isPresentFor(tag.containingFile)
     }
 
     fun isFrameworkCandidate(attribute: XmlAttribute): Boolean {
         val attributeName = attribute.name.lowercase()
         val isExcludedAttribute = htmlAttributes.stream().anyMatch { it.equals(attributeName) }
-                || COMPONENT_ATTRIBUTES.contains(attributeName)
-                || attributeName == "from"
+                || attributeName == IMPORT_ELEMENT_ATTRIBUTE
         return !isExcludedAttribute && isPresentFor(attribute.containingFile)
     }
 

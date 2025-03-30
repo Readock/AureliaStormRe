@@ -1,6 +1,8 @@
 package com.github.denofevil.aurelia.require
 
 import com.github.denofevil.aurelia.Aurelia
+import com.github.denofevil.aurelia.attribute.AttributeUtil
+import com.github.denofevil.aurelia.config.AureliaSettings
 import com.intellij.lang.javascript.psi.JSElement
 import com.intellij.lang.javascript.psi.JSRecordType.PropertySignature
 import com.intellij.lang.javascript.psi.ecmal4.JSAttributeListOwner
@@ -21,7 +23,8 @@ object DeclarationResolverUtil {
 
     fun resolveAttributeDeclaration(attribute: XmlAttribute): JSClass? {
         return CachedValuesManager.getCachedValue(attribute) {
-            val resolvedClass = resolveClassDeclaration(attribute, attribute.name, Aurelia.CUSTOM_ATTRIBUTE_DECORATOR)
+            val resolvedClass =
+                resolveClassDeclaration(attribute, AttributeUtil.withoutInjectable(attribute.name), Aurelia.CUSTOM_ATTRIBUTE_DECORATOR)
             CachedValueProvider.Result.create(
                 resolvedClass,
                 attribute.containingFile,
@@ -56,7 +59,10 @@ object DeclarationResolverUtil {
     private fun resolveBindableAttributesImpl(jsClass: JSClass): List<PropertySignature> {
         val members = arrayListOf<PropertySignature>()
         for (jsMember in jsClass.members) {
-            if (hasBindableAnnotation(jsMember) && jsMember is PropertySignature) {
+            if (AureliaSettings.getInstance().checkPropertyBindableAnnotation && !hasBindableAnnotation(jsMember)) {
+                continue
+            }
+            if (jsMember is PropertySignature) {
                 members.add(jsMember)
             }
         }
@@ -101,5 +107,4 @@ object DeclarationResolverUtil {
         if (member !is JSAttributeListOwner) return false
         return member.attributeList?.decorators?.any { it.decoratorName == "bindable" } ?: false
     }
-
 }

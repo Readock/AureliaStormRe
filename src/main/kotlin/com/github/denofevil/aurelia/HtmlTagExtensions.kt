@@ -1,4 +1,5 @@
 package com.github.denofevil.aurelia
+
 import com.intellij.codeInspection.XmlSuppressionProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -17,6 +18,11 @@ class HtmlXmlSuppressionProvider : XmlSuppressionProvider() {
             val text = element.text
             for (customElement in Aurelia.CUSTOM_ELEMENTS) {
                 if (text.contains(customElement)) return true;
+            }
+        }
+        if (inspectionId == "HtmlUnknownBooleanAttribute" && element is XmlToken) {
+            if (Aurelia.ATTRIBUTES_WITHOUT_VALUE.contains(element.text)) {
+                return true;
             }
         }
         return false

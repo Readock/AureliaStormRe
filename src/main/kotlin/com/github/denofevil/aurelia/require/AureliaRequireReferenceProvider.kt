@@ -13,9 +13,11 @@ class AureliaRequireReferenceProvider : PsiReferenceProvider() {
             val text = ElementManipulators.getValueText(element)
             val range = ElementManipulators.getValueTextRange(element)
             val reference = AureliaRequireReference(element)
+            // TODO: this is a bit hacky ... find a better solution to get suggestions and correct error detection
             if (reference.resolve() != null) {
                 return arrayOf(reference)
             }
+            // this shows suggestions but produces wierd warnings as well
             return JSFileReferencesUtil.createImportExportFromClauseReferences(element, range.startOffset, text, this)
         }
         return PsiReference.EMPTY_ARRAY

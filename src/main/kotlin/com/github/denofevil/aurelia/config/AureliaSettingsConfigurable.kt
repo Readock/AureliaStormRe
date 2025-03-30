@@ -13,6 +13,7 @@ class AureliaSettingsConfigurable : Configurable {
     private lateinit var jsInjectionEnabledCheckbox: JCheckBox
     private lateinit var customAttributesEnabledCheckbox: JCheckBox
     private lateinit var customComponentsEnabledCheckbox: JCheckBox
+    private lateinit var checkPropertyBindableAnnotationCheckbox: JCheckBox
     private lateinit var settings: AureliaSettings
 
 
@@ -20,7 +21,8 @@ class AureliaSettingsConfigurable : Configurable {
         mapOf(
             jsInjectionEnabledCheckbox to settings::jsInjectionEnabled,
             customAttributesEnabledCheckbox to settings::isCustomAttributesEnabled,
-            customComponentsEnabledCheckbox to settings::isCustomComponentEnabled
+            customComponentsEnabledCheckbox to settings::isCustomComponentEnabled,
+            checkPropertyBindableAnnotationCheckbox to settings::checkPropertyBindableAnnotation
         )
     }
 
@@ -29,6 +31,7 @@ class AureliaSettingsConfigurable : Configurable {
         jsInjectionEnabledCheckbox = JCheckBox(AureliaStormBundle.get("settings.enableJsInjection"))
         customAttributesEnabledCheckbox = JCheckBox(AureliaStormBundle.get("settings.enableCustomAttributes"))
         customComponentsEnabledCheckbox = JCheckBox(AureliaStormBundle.get("settings.enableCustomComponents"))
+        checkPropertyBindableAnnotationCheckbox = JCheckBox(AureliaStormBundle.get("settings.checkPropertyBindableAnnotation"))
         val builder: FormBuilder = FormBuilder.createFormBuilder()
         settingsMap.keys.forEach { builder.addComponent(it) }
         val panel = builder.panel

@@ -12,6 +12,7 @@ class AureliaSettings : PersistentStateComponent<AureliaSettings> {
     var jsInjectionEnabled: Boolean = true
     var isCustomAttributesEnabled: Boolean = true
     var isCustomComponentEnabled: Boolean = true
+    var checkPropertyBindableAnnotation: Boolean = false
 
     companion object {
         fun getInstance(): AureliaSettings {
