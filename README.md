@@ -9,7 +9,8 @@ Features:
 
 * Custom component recognition (matching by require tags or file name)
 * Custom component bindable property recognition (`@bindable` annotation)
-* require and import tag reference detection
+* require and import tag reference detection and navigation (using ctrl + click)
+* Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
 * Code insight for specific Aurelia attributes (such as `*.bind` or `*.trigger`)
 * Syntax highlighting in `${}` interpolations
 * Controller properties completion and navigation

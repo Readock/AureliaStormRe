@@ -24,7 +24,7 @@ import javax.swing.text.html.HTML
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
 
-    private val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view")
+    private val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view", "dispatch")
     val INJECTABLE = listOf("delegate", "trigger", "call", "for", "ref") + PROPERTY_BINDINGS
     const val AURELIA_APP = "aurelia-app"
     const val CUSTOM_ELEMENT_DECORATOR = "customElement"

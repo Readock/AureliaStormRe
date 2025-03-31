@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-### 1.4.0
+### 2.0.0
 
 #### Features
 
@@ -10,6 +10,8 @@
     * Gets resolved over <require from=""> tags
     * Without require a ts with the same names component gets used
     * Checks for matching @customElement and class names
+* require and import tag reference detection and navigation
+* Detecting bindable HTML attributes and events
 * require and import tag support
 * Custom component bindable property recognition (by @bindable)
 * Suppress <template> and <require> element warnings
