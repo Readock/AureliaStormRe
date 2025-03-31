@@ -1,22 +1,17 @@
 package com.github.denofevil.aurelia
 
 import com.github.denofevil.aurelia.config.AureliaSettings
-import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.lang.injection.MultiHostInjector
 import com.intellij.lang.injection.MultiHostRegistrar
 import com.intellij.lang.javascript.JSInjectionBracesUtil
 import com.intellij.lang.javascript.JavascriptLanguage
-import com.intellij.lang.javascript.psi.JSFile
-import com.intellij.lang.javascript.psi.ecmal4.JSClass
 import com.intellij.psi.ElementManipulators
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiLanguageInjectionHost
-import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl
 import com.intellij.psi.impl.source.xml.XmlTextImpl
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
-import com.intellij.psi.xml.XmlFile
 
 /**
  * @author Dennis.Ushakov
@@ -49,14 +44,14 @@ class Injector : MultiHostInjector {
         return listOf(XmlTextImpl::class.java, XmlAttributeValueImpl::class.java)
     }
 
-    private fun findTypeScriptHostOf(element: XmlFile?): JSClass? {
-        val originalFile = element?.virtualFile
-        val parentDirectory = originalFile?.parent ?: return null
-
-        val originalFileName = originalFile.name
-        val componentName = originalFileName.substringBeforeLast('.')
-
-        val file = parentDirectory.findChild("$componentName.ts")?.let { PsiManager.getInstance(element.project).findFile(it) } as JSFile
-        return DeclarationResolverUtil.findClassByDecorator(file, componentName, Aurelia.CUSTOM_ELEMENT_DECORATOR)
-    }
+//    private fun findTypeScriptHostOf(element: XmlFile?): JSClass? {
+//        val originalFile = element?.virtualFile
+//        val parentDirectory = originalFile?.parent ?: return null
+//
+//        val originalFileName = originalFile.name
+//        val componentName = originalFileName.substringBeforeLast('.')
+//
+//        val file = parentDirectory.findChild("$componentName.ts")?.let { PsiManager.getInstance(element.project).findFile(it) } as JSFile
+//        return DeclarationResolverUtil.findClassByDecorator(file, componentName, Aurelia.CUSTOM_ELEMENT_DECORATOR)
+//    }
 }
