@@ -16,12 +16,12 @@ class HtmlXmlSuppressionProvider : XmlSuppressionProvider() {
         if (inspectionId == "HtmlUnknownTag" && element is XmlToken && element.node.elementType === XmlTokenType.XML_NAME) {
             val text = element.text
             for (customElement in Aurelia.CUSTOM_ELEMENTS) {
-                if (text.contains(customElement)) return true;
+                if (text.contains(customElement)) return true
             }
         }
         if (inspectionId == "HtmlUnknownBooleanAttribute" && element is XmlToken) {
             if (Aurelia.ATTRIBUTES_WITHOUT_VALUE.contains(element.text)) {
-                return true;
+                return true
             }
         }
         return false

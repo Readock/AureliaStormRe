@@ -5,7 +5,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.xml.XmlAttributeDescriptor
 
 class AureliaBindingAttributeDescriptor(
-    private var attributeName: String,
+    attributeName: String,
     private val baseDescriptor: XmlAttributeDescriptor,
 ) : AureliaAttributeDescriptor(attributeName, false) {
 
