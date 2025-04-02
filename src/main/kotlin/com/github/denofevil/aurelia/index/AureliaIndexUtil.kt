@@ -3,6 +3,7 @@ package com.github.denofevil.aurelia.index
 import com.github.denofevil.aurelia.Aurelia
 import com.intellij.lang.javascript.psi.JSCallExpression
 import com.intellij.lang.javascript.psi.JSLiteralExpression
+import com.intellij.lang.javascript.psi.JSObjectLiteralExpression
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
@@ -61,17 +62,29 @@ object AureliaIndexUtil {
         return result
     }
 
-    fun resolveClassCustomElementNameByAnnotation(jsClass: JSClass): String? {
-        val annotation = jsClass.attributeList?.decorators?.find { it.decoratorName == Aurelia.CUSTOM_ELEMENT_DECORATOR }
-        val value = annotation?.expression?.asSafely<JSCallExpression>()
-            ?.argumentList?.arguments?.firstOrNull() as? JSLiteralExpression
-        return value?.stringValue
+    fun resolveClassCustomAttributeNameByAnnotation(jsClass: JSClass): String? {
+        return resolveClassNameByAnnotation(jsClass, Aurelia.CustomAttribute.ANNOTATION, Aurelia.CustomAttribute.CLASS_SUFFIX)
     }
 
-    fun resolveClassCustomAttributeNameByAnnotation(jsClass: JSClass): String? {
-        val annotation = jsClass.attributeList?.decorators?.find { it.decoratorName == Aurelia.CUSTOM_ATTRIBUTE_DECORATOR }
-        val value = annotation?.expression?.asSafely<JSCallExpression>()
-            ?.argumentList?.arguments?.firstOrNull() as? JSLiteralExpression
-        return value?.stringValue
+    fun resolveClassCustomElementNameByAnnotation(jsClass: JSClass): String? {
+        return resolveClassNameByAnnotation(jsClass, Aurelia.CustomElement.ANNOTATION, Aurelia.CustomElement.CLASS_SUFFIX)
+    }
+
+    private fun resolveClassNameByAnnotation(
+        jsClass: JSClass,
+        annotationName: String,
+        nameSuffix: String,
+        annotationProperty: String = "name"
+    ): String? {
+        val annotation = jsClass.attributeList?.decorators?.find { it.decoratorName == annotationName }
+        val value = annotation?.expression?.asSafely<JSCallExpression>()?.argumentList?.arguments?.firstOrNull()
+        val strValue = value?.asSafely<JSLiteralExpression>()?.stringValue
+            ?: value?.asSafely<JSObjectLiteralExpression>()?.findProperty(annotationProperty)
+                ?.value?.asSafely<JSLiteralExpression>()?.stringValue
+        strValue?.let { return it }
+        jsClass.name?.takeIf { it.endsWith(nameSuffix) }?.substringBeforeLast(nameSuffix)?.let { name ->
+            name.takeIf { it.isNotEmpty() }?.let { return Aurelia.camelToKebabCase(it) }
+        }
+        return null
     }
 }

@@ -22,8 +22,17 @@ object Aurelia {
 
     private val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view", "dispatch")
     val INJECTABLE = listOf("delegate", "trigger", "call", "for", "ref") + PROPERTY_BINDINGS
-    const val CUSTOM_ELEMENT_DECORATOR = "customElement"
-    const val CUSTOM_ATTRIBUTE_DECORATOR = "customAttribute"
+
+    object CustomAttribute {
+        const val ANNOTATION = "customAttribute"
+        const val CLASS_SUFFIX = "CustomAttribute"
+    }
+
+    object CustomElement {
+        const val ANNOTATION = "customElement"
+        const val CLASS_SUFFIX = "CustomElement"
+    }
+
     val IMPORT_ELEMENTS = listOf("require", "import")
     const val IMPORT_ELEMENT_ATTRIBUTE = "from"
     val CUSTOM_ELEMENTS = listOf("let", "template") + IMPORT_ELEMENTS

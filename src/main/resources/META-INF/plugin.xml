@@ -44,9 +44,9 @@
 		<applicationService id="aureliaSettings" serviceImplementation="com.github.denofevil.aurelia.config.AureliaSettings" />
 		<projectConfigurable
 			instance="com.github.denofevil.aurelia.config.AureliaSettingsConfigurable"
-			id="settings.aureliaStorm"
+			id="settings.aurelia"
 			key="aurelia"
-			bundle="messages.AureliaStormBundle"
+			bundle="messages.AureliaBundle"
 			parentId="Settings.JavaScript"
 			order="last"
 		/>

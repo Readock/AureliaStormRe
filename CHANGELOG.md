@@ -6,9 +6,9 @@
 
 #### Features
 
-* Custom component recognition
+* Custom component / attribute recognition
     * Gets resolved over <require from=""> tags
-    * Without require a class with matching @customElement will be taken
+    * Without require a class with matching @customElement will be taken (also works with name suffix)
     * Having custom elements with the same name might not recognize correctly
 * require and import tag reference detection and navigation
 * Detecting bindable HTML attributes and events
