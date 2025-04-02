@@ -1,16 +1,14 @@
 package com.github.denofevil.aurelia.require
 
 import com.github.denofevil.aurelia.Aurelia
-import com.github.denofevil.aurelia.attribute.AttributeUtil
 import com.github.denofevil.aurelia.config.AureliaSettings
+import com.github.denofevil.aurelia.index.AureliaIndexUtil
 import com.intellij.lang.javascript.psi.JSElement
 import com.intellij.lang.javascript.psi.JSRecordType.PropertySignature
 import com.intellij.lang.javascript.psi.ecmal4.JSAttributeListOwner
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
-import com.intellij.openapi.vfs.findPsiFile
+import com.intellij.openapi.module.ModuleUtil
 import com.intellij.psi.PsiFile
-import com.intellij.psi.search.FilenameIndex
-import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
 import com.intellij.psi.util.PsiModificationTracker
@@ -23,8 +21,8 @@ object DeclarationResolverUtil {
 
     fun resolveAttributeDeclaration(attribute: XmlAttribute): JSClass? {
         return CachedValuesManager.getCachedValue(attribute) {
-            val resolvedClass =
-                resolveClassDeclaration(attribute, AttributeUtil.withoutInjectable(attribute.name), Aurelia.CUSTOM_ATTRIBUTE_DECORATOR)
+            val candidates = AureliaIndexUtil.resolveCustomAttributeClasses(attribute.name, attribute.project)
+            val resolvedClass = resolveClassDeclaration(attribute, attribute.name, candidates)
             CachedValueProvider.Result.create(
                 resolvedClass,
                 attribute.containingFile,
@@ -35,7 +33,8 @@ object DeclarationResolverUtil {
 
     fun resolveComponentDeclaration(tag: XmlTag): JSClass? {
         return CachedValuesManager.getCachedValue(tag) {
-            val resolvedClass = resolveClassDeclaration(tag, tag.name, Aurelia.CUSTOM_ELEMENT_DECORATOR)
+            val candidates = AureliaIndexUtil.resolveCustomElementClasses(tag.name, tag.project)
+            val resolvedClass = resolveClassDeclaration(tag, tag.name, candidates)
             CachedValueProvider.Result.create(
                 resolvedClass,
                 tag.containingFile,
@@ -56,6 +55,18 @@ object DeclarationResolverUtil {
         }
     }
 
+    private fun resolveClassDeclaration(element: XmlElement, name: String, annotatedClassCandidates: List<JSClass>): JSClass? {
+        val importedClasses = RequireImportUtil.resolveImportByName(element, name)
+            .map { findClassesOf(it) }.flatten()
+
+        importedClasses.firstOrNull { annotatedClassCandidates.contains(it) }?.let { return it }
+//        importedClasses.firstOrNull { matchesWithName(it, name) }?.let { return it }
+        val module = ModuleUtil.findModuleForPsiElement(element)
+        annotatedClassCandidates.firstOrNull { ModuleUtil.findModuleForPsiElement(it) == module }?.let { return it }
+        return annotatedClassCandidates.firstOrNull()
+    }
+
+
     private fun resolveBindableAttributesImpl(jsClass: JSClass): List<PropertySignature> {
         val members = arrayListOf<PropertySignature>()
         for (jsMember in jsClass.members) {
@@ -69,38 +80,12 @@ object DeclarationResolverUtil {
         return members
     }
 
-    private fun resolveClassDeclaration(element: XmlElement, name: String, decorator: String): JSClass? {
-        val project = element.project
-        val scope = GlobalSearchScope.allScope(project)
-
-        val importedFile = RequireImportUtil.resolveImportByName(element, name)
-            .map { findClassByDecorator(it, name, decorator) }.firstOrNull()
-        if (importedFile != null) {
-            // if possible we take declarations from a <require from=""> tag
-            return importedFile
-        }
-        // no matching require tag so we will search for a fitting ts file
-        val tsFilesWithComponentName = FilenameIndex.getVirtualFilesByName(
-            "${name}.ts", scope
-        )
-        return tsFilesWithComponentName.firstNotNullOfOrNull { findClassByDecorator(it.findPsiFile(project), name, decorator) }
-    }
-
-    private fun findClassByDecorator(tsFile: PsiFile?, elementName: String, decoratorName: String): JSClass? {
-        val jsClasses = PsiTreeUtil.findChildrenOfType(tsFile, JSClass::class.java) as Collection<JSClass>
-        return jsClasses.firstOrNull { matchesWithDecorator(it, elementName, decoratorName) } // highest priority has the decorator
-            ?: jsClasses.firstOrNull { matchesWithName(it, elementName) } // then class name
-            ?: jsClasses.firstOrNull() // as fallback take first class in the file
-    }
-
-    private fun matchesWithDecorator(jsClass: JSClass, elementName: String, decoratorName: String): Boolean {
-        return jsClass.attributeList?.decorators?.any {
-            it.decoratorName == decoratorName && it.expression?.text?.contains(elementName) == true
-        } ?: false
+    private fun findClassesOf(psiClass: PsiFile): Collection<JSClass> {
+        return PsiTreeUtil.findChildrenOfType(psiClass, JSClass::class.java)
     }
 
     private fun matchesWithName(jsClass: JSClass, elementName: String): Boolean {
-        return jsClass.name != null && (Aurelia.camelToKebabCase(jsClass.name!!)) == elementName
+        return jsClass.name != null && (Aurelia.camelToKebabCase(jsClass.name!!)).lowercase() == elementName.lowercase()
     }
 
     private fun hasBindableAnnotation(member: JSElement): Boolean {

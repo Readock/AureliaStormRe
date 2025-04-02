@@ -12,7 +12,7 @@ import com.intellij.xml.XmlElementDescriptor
  * @author Dennis.Ushakov
  * @author felix
  */
-class AureliaAttributeDesciptorsProvider : XmlAttributeDescriptorsProvider {
+class AureliaAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
     override fun getAttributeDescriptors(xmlTag: XmlTag): Array<XmlAttributeDescriptor> {
         val declaration = DeclarationResolverUtil.resolveComponentDeclaration(xmlTag);
         val declarationMembers = arrayListOf<XmlAttributeDescriptor>()
@@ -29,6 +29,7 @@ class AureliaAttributeDesciptorsProvider : XmlAttributeDescriptorsProvider {
         if (Aurelia.WHITE_LIST_ATTRIBUTES.any { AttributeUtil.withoutInjectable(it) == AttributeUtil.withoutInjectable(name) }) {
             return AureliaAttributeDescriptor(name)
         }
+        Aurelia.AUTOCOMPLETE_ATTRIBUTES.firstOrNull { it == name }?.let { return AureliaAttributeDescriptor(it) }
         // attributes like name, value etc. should also have the same descriptor when using them with .bind
         return getHtmlAttributeWithoutInjectableDescriptor(name, xmlTag)
     }
