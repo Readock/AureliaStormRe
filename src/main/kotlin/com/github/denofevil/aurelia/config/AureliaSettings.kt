@@ -9,9 +9,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil
 
 @State(name = "aureliaSettings", storages = [Storage("aureliaSettings.xml")])
 class AureliaSettings : PersistentStateComponent<AureliaSettings> {
-    var jsInjectionEnabled: Boolean = true
-    var isCustomAttributesEnabled: Boolean = true
-    var isCustomComponentEnabled: Boolean = true
+    var jsInjectionEnabled: Boolean = false
     var checkPropertyBindableAnnotation: Boolean = false
 
     companion object {

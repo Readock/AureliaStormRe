@@ -11,8 +11,6 @@ import kotlin.reflect.KMutableProperty0
 
 class AureliaSettingsConfigurable : Configurable {
     private lateinit var jsInjectionEnabledCheckbox: JCheckBox
-    private lateinit var customAttributesEnabledCheckbox: JCheckBox
-    private lateinit var customComponentsEnabledCheckbox: JCheckBox
     private lateinit var checkPropertyBindableAnnotationCheckbox: JCheckBox
     private lateinit var settings: AureliaSettings
 
@@ -20,8 +18,6 @@ class AureliaSettingsConfigurable : Configurable {
     private val settingsMap: Map<JCheckBox, KMutableProperty0<Boolean>> by lazy {
         mapOf(
             jsInjectionEnabledCheckbox to settings::jsInjectionEnabled,
-            customAttributesEnabledCheckbox to settings::isCustomAttributesEnabled,
-            customComponentsEnabledCheckbox to settings::isCustomComponentEnabled,
             checkPropertyBindableAnnotationCheckbox to settings::checkPropertyBindableAnnotation
         )
     }
@@ -29,8 +25,6 @@ class AureliaSettingsConfigurable : Configurable {
     override fun createComponent(): JComponent {
         settings = AureliaSettings.getInstance()
         jsInjectionEnabledCheckbox = JCheckBox(AureliaStormBundle.get("settings.enableJsInjection"))
-        customAttributesEnabledCheckbox = JCheckBox(AureliaStormBundle.get("settings.enableCustomAttributes"))
-        customComponentsEnabledCheckbox = JCheckBox(AureliaStormBundle.get("settings.enableCustomComponents"))
         checkPropertyBindableAnnotationCheckbox = JCheckBox(AureliaStormBundle.get("settings.checkPropertyBindableAnnotation"))
         val builder: FormBuilder = FormBuilder.createFormBuilder()
         settingsMap.keys.forEach { builder.addComponent(it) }

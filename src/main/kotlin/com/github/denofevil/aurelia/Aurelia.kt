@@ -14,7 +14,6 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
-import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 import javax.swing.text.html.HTML
 
@@ -37,7 +36,6 @@ object Aurelia {
     val ATTRIBUTES_WITHOUT_VALUE = listOf("else", "disabled", "containerless")
     val COMPONENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
     private val htmlTags = HTML.getAllTags().map { it.toString().lowercase() }
-    private val htmlAttributes = HTML.getAllAttributeKeys().map { it.toString().lowercase() }
 
     fun isPresentFor(project: Project): Boolean = CachedValuesManager.getManager(project).getCachedValue(project) {
         val aureliaRootFolders = getAureliaRootFolders(project)
@@ -75,13 +73,6 @@ object Aurelia {
         val isExcludedTag = htmlTags.stream().anyMatch { it.equals(tagName) }
                 || CUSTOM_ELEMENTS.contains(tagName) || IMPORT_ELEMENTS.contains(tagName)
         return !isExcludedTag && isPresentFor(tag.containingFile)
-    }
-
-    fun isFrameworkCandidate(attribute: XmlAttribute): Boolean {
-        val attributeName = attribute.name.lowercase()
-        val isExcludedAttribute = htmlAttributes.stream().anyMatch { it.equals(attributeName) }
-                || attributeName == IMPORT_ELEMENT_ATTRIBUTE
-        return !isExcludedAttribute && isPresentFor(attribute.containingFile)
     }
 
     private fun isChildOf(source: VirtualFile, target: VirtualFile): Boolean {

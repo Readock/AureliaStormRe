@@ -13,22 +13,9 @@ import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
 import com.intellij.psi.util.PsiModificationTracker
 import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 
 object DeclarationResolverUtil {
-
-    fun resolveAttributeDeclaration(attribute: XmlAttribute): JSClass? {
-        return CachedValuesManager.getCachedValue(attribute) {
-            val candidates = AureliaIndexUtil.resolveCustomAttributeClasses(attribute.name, attribute.project)
-            val resolvedClass = resolveClassDeclaration(attribute, attribute.name, candidates)
-            CachedValueProvider.Result.create(
-                resolvedClass,
-                attribute.containingFile,
-                PsiModificationTracker.MODIFICATION_COUNT
-            )
-        }
-    }
 
     fun resolveComponentDeclaration(tag: XmlTag): JSClass? {
         return resolveComponentDeclaration(tag, tag.name)
@@ -46,10 +33,22 @@ object DeclarationResolverUtil {
         }
     }
 
+    fun resolveBindableAttributesOnlyWithAnnotation(jsClass: JSClass?): List<PropertySignature> {
+        jsClass ?: return emptyList()
+        return CachedValuesManager.getCachedValue(jsClass) {
+            val resolvedAttributes = resolveBindableAttributesImpl(jsClass, true)
+            CachedValueProvider.Result.create(
+                resolvedAttributes,
+                jsClass.containingFile,
+                PsiModificationTracker.MODIFICATION_COUNT
+            )
+        }
+    }
+
     fun resolveBindableAttributes(jsClass: JSClass?): List<PropertySignature> {
         jsClass ?: return emptyList()
         return CachedValuesManager.getCachedValue(jsClass) {
-            val resolvedAttributes = resolveBindableAttributesImpl(jsClass)
+            val resolvedAttributes = resolveBindableAttributesImpl(jsClass, false)
             CachedValueProvider.Result.create(
                 resolvedAttributes,
                 jsClass.containingFile,
@@ -68,12 +67,12 @@ object DeclarationResolverUtil {
     }
 
 
-    private fun resolveBindableAttributesImpl(jsClass: JSClass): List<PropertySignature> {
+    private fun resolveBindableAttributesImpl(jsClass: JSClass, onlyWithAnnotation: Boolean = true): List<PropertySignature> {
         val members = arrayListOf<PropertySignature>()
         for (jsMember in jsClass.members) {
-            if (AureliaSettings.getInstance().checkPropertyBindableAnnotation && !hasBindableAnnotation(jsMember)) {
-                continue
-            }
+            val isWithoutAnnotation = !hasBindableAnnotation(jsMember)
+            if (AureliaSettings.getInstance().checkPropertyBindableAnnotation && isWithoutAnnotation) continue
+            if (onlyWithAnnotation && isWithoutAnnotation) continue
             if (jsMember is PropertySignature) {
                 members.add(jsMember)
             }

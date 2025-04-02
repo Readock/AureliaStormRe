@@ -1,6 +1,5 @@
 package com.github.denofevil.aurelia.attribute
 
-import com.github.denofevil.aurelia.config.AureliaSettings
 import com.github.denofevil.aurelia.index.AureliaIndexUtil
 import com.intellij.psi.xml.XmlTag
 import com.intellij.xml.XmlAttributeDescriptor
@@ -14,7 +13,6 @@ class AureliaCustomAttributeDescriptorsProvider : XmlAttributeDescriptorsProvide
     }
 
     override fun getAttributeDescriptor(attributeName: String?, tag: XmlTag?): XmlAttributeDescriptor? {
-        if (!AureliaSettings.getInstance().isCustomAttributesEnabled) return null
         if (attributeName == null || tag == null) return null
         AureliaIndexUtil.resolveCustomAttributeClasses(attributeName, tag.project).firstOrNull()?.let {
             return AureliaCustomAttributeDescriptor(attributeName, it, true)
