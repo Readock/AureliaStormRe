@@ -22,7 +22,7 @@ class AureliaCustomElementAttributeDescriptorsProvider : XmlAttributeDescriptors
     }
 
     private fun declarationPropertyBindings(xmlTag: XmlTag): List<AureliaAttributeDescriptor> {
-        val declaration = DeclarationResolverUtil.resolveComponentDeclaration(xmlTag);
+        val declaration = DeclarationResolverUtil.resolveComponentDeclaration(xmlTag)
         if (declaration != null) {
             return DeclarationResolverUtil.resolveBindableAttributesOnlyWithAnnotation(declaration).map {
                 val descriptor = TypeScriptJSXTagUtil.createAttributeDescriptor(it, true)

@@ -25,8 +25,9 @@ object RequireImportUtil {
         val rootTag = xmlFile.rootTag ?: return emptyList()
         // Find <require> elements with a "from" attribute
         val requireTags = Aurelia.IMPORT_ELEMENTS.map { rootTag.findSubTags(it).toList() }.flatten()
-        return requireTags.filter { it.getAttributeValue("from") != null }.map { it.getAttributeValue("from")!! }.filter {
-            return@filter it.endsWith("/$componentName")
-        }
+        return requireTags.filter { it.getAttributeValue(Aurelia.IMPORT_ELEMENT_ATTRIBUTE) != null }.map { it.getAttributeValue("from")!! }
+            .filter {
+                return@filter it.endsWith("/$componentName")
+            }
     }
 }

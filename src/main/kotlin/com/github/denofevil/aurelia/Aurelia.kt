@@ -28,7 +28,7 @@ object Aurelia {
     const val CUSTOM_ELEMENT_DECORATOR = "customElement"
     const val CUSTOM_ATTRIBUTE_DECORATOR = "customAttribute"
     val IMPORT_ELEMENTS = listOf("require", "import")
-    private const val IMPORT_ELEMENT_ATTRIBUTE = "from"
+    const val IMPORT_ELEMENT_ATTRIBUTE = "from"
     val CUSTOM_ELEMENTS = listOf("let", "template") + IMPORT_ELEMENTS
     val WHITE_LIST_ATTRIBUTES = listOf(
         "name", "innerhtml", "containerless", "model", "element"
