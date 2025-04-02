@@ -17,9 +17,6 @@ import com.intellij.psi.util.CachedValuesManager
 import com.intellij.psi.xml.XmlTag
 import javax.swing.text.html.HTML
 
-/**
- * @author Dennis.Ushakov
- */
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
 

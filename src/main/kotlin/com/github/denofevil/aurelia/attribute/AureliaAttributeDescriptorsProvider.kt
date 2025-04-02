@@ -8,11 +8,10 @@ import com.intellij.xml.XmlAttributeDescriptorsProvider
 import com.intellij.xml.XmlElementDescriptor
 
 /**
- * @author Dennis.Ushakov
- * @author felix
+ * Provides descriptors for all html attributes
  */
 class AureliaAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
-    
+
     override fun getAttributeDescriptors(xmlTag: XmlTag): Array<XmlAttributeDescriptor> {
         return emptyArray()
     }

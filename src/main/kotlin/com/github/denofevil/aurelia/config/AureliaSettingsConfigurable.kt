@@ -24,8 +24,8 @@ class AureliaSettingsConfigurable : Configurable {
 
     override fun createComponent(): JComponent {
         settings = AureliaSettings.getInstance()
-        jsInjectionEnabledCheckbox = JCheckBox(AureliaStormBundle.get("settings.enableJsInjection"))
-        checkPropertyBindableAnnotationCheckbox = JCheckBox(AureliaStormBundle.get("settings.checkPropertyBindableAnnotation"))
+        jsInjectionEnabledCheckbox = JCheckBox(AureliaBundle.get("settings.enableJsInjection"))
+        checkPropertyBindableAnnotationCheckbox = JCheckBox(AureliaBundle.get("settings.checkPropertyBindableAnnotation"))
         val builder: FormBuilder = FormBuilder.createFormBuilder()
         settingsMap.keys.forEach { builder.addComponent(it) }
         val panel = builder.panel
@@ -47,6 +47,6 @@ class AureliaSettingsConfigurable : Configurable {
     }
 
     override fun getDisplayName(): String {
-        return "Aurelia Webstorm Plugin"
+        return "Aurelia Plugin"
     }
 }

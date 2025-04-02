@@ -5,6 +5,9 @@ import com.intellij.psi.xml.XmlTag
 import com.intellij.xml.XmlAttributeDescriptor
 import com.intellij.xml.XmlAttributeDescriptorsProvider
 
+/**
+ * Provides descriptors with custom attributes
+ */
 class AureliaCustomAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
 
     override fun getAttributeDescriptors(element: XmlTag?): Array<XmlAttributeDescriptor> {

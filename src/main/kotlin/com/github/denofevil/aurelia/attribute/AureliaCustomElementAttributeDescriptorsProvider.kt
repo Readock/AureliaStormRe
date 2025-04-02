@@ -9,7 +9,7 @@ import com.intellij.xml.XmlAttributeDescriptor
 import com.intellij.xml.XmlAttributeDescriptorsProvider
 
 /**
- * Attributes that will get suggested but don't get used for resolving
+ * Provides descriptors for custom elements (only used for suggestions with ctrl + space)
  */
 class AureliaCustomElementAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
 

@@ -7,7 +7,6 @@ import com.intellij.psi.xml.XmlToken
 import com.intellij.psi.xml.XmlTokenType
 import org.jetbrains.annotations.NotNull
 
-
 class HtmlXmlSuppressionProvider : XmlSuppressionProvider() {
     override fun isProviderAvailable(@NotNull file: PsiFile): Boolean {
         return true

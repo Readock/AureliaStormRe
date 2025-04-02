@@ -14,9 +14,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.resolve.FileContextUtil
 import com.intellij.psi.util.PsiTreeUtil
 
-/**
- * @author Dennis.Ushakov
- */
 class FrameworkHandler : FrameworkIndexingHandler() {
     override fun addContextType(info: JSTypeInfo, context: PsiElement) {
         val controller = findController(context) ?: return
@@ -43,7 +40,7 @@ class FrameworkHandler : FrameworkIndexingHandler() {
 
         val name = FileUtil.getNameWithoutExtension(hostFile.name)
         DeclarationResolverUtil.resolveComponentDeclaration(context, name)?.let { return it }
-        
+
         val controllerFile = directory.findFile("$name.ts") ?: directory.findFile("$name.js")
         return PsiTreeUtil.findChildOfType(controllerFile, JSClass::class.java)
     }

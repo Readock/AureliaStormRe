@@ -6,7 +6,6 @@ import com.intellij.psi.xml.XmlTag
 import com.intellij.xml.XmlElementDescriptor
 import org.jetbrains.annotations.Nullable
 
-
 class AureliaCustomElementDescriptorProvider : XmlElementDescriptorProvider {
 
     @Nullable
