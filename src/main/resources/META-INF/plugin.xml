@@ -26,18 +26,19 @@
 		<xml.xmlSuppressionProvider implementation="com.github.denofevil.aurelia.HtmlXmlSuppressionProvider" />
 		<multiHostInjector implementation="com.github.denofevil.aurelia.Injector" />
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptorsProvider" order="first" />
-		<xml.elementDescriptorProvider implementation="com.github.denofevil.aurelia.component.AureliaComponentTagDescriptorProvider" order="first" />
-		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider" order="last" />
+		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomElementAttributeDescriptorsProvider" order="first" />
+		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider" order="first" />
+		<xml.elementDescriptorProvider implementation="com.github.denofevil.aurelia.component.AureliaCustomElementDescriptorProvider" order="first" />
 		<psi.referenceContributor language="HTML" implementation="com.github.denofevil.aurelia.require.AureliaRequireReferenceContributor" order="first" />
-		<psi.referenceProvider language="HTML" providerClass="com.github.denofevil.aurelia.ReferenceProvider">
-			<pattern type="xml">xmlAttributeValue("aurelia-app", "data-aurelia-app")</pattern>
-		</psi.referenceProvider>
+		<!--		<psi.referenceProvider language="HTML" providerClass="com.github.denofevil.aurelia.ReferenceProvider">-->
+		<!--			<pattern type="xml">xmlAttributeValue("aurelia-app", "data-aurelia-app")</pattern>-->
+		<!--		</psi.referenceProvider>-->
 		<javascript.rename.extension implementation="com.github.denofevil.aurelia.RenameExtension" />
 		<fileBasedIndex implementation="com.github.denofevil.aurelia.index.AureliaCustomElementIndex" />
 		<fileBasedIndex implementation="com.github.denofevil.aurelia.index.AureliaCustomAttributeIndex" />
-		<lang.inspectionSuppressor language="JavaScript"
-			implementationClass="com.github.denofevil.aurelia.InspectionSuppressor"
-			order="first" />
+		<!--		<lang.inspectionSuppressor language="JavaScript"-->
+		<!--			implementationClass="com.github.denofevil.aurelia.InspectionSuppressor"-->
+		<!--			order="first" />-->
 
 		<directoryProjectGenerator
 			implementation="com.github.denofevil.aurelia.cli.ProjectGenerator" />  <!-- works in WebStorm and other SmallIDEs -->

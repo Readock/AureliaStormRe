@@ -8,14 +8,14 @@ import com.intellij.xml.XmlElementDescriptor
 import org.jetbrains.annotations.Nullable
 
 
-class AureliaComponentTagDescriptorProvider : XmlElementDescriptorProvider {
+class AureliaCustomElementDescriptorProvider : XmlElementDescriptorProvider {
 
     @Nullable
     override fun getDescriptor(tag: XmlTag): XmlElementDescriptor? {
         if (!AureliaSettings.getInstance().isCustomComponentEnabled) return null
 
         if (Aurelia.isFrameworkCandidate(tag)) {
-            val descriptor = AureliaComponentElementDescriptor(tag)
+            val descriptor = AureliaCustomElementDescriptor(tag)
             if (descriptor.declaration != null) {
                 return descriptor
             }

@@ -1,6 +1,7 @@
 package com.github.denofevil.aurelia.component
 
 import com.github.denofevil.aurelia.Aurelia
+import com.github.denofevil.aurelia.attribute.AttributeUtil
 import com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptor
 import com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptorsProvider
 import com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider
@@ -17,15 +18,11 @@ import com.intellij.xml.XmlNSDescriptor
 import com.intellij.xml.impl.dtd.BaseXmlElementDescriptorImpl
 import com.intellij.xml.util.XmlUtil
 
-class AureliaComponentElementDescriptor(private val tag: XmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
+class AureliaCustomElementDescriptor(private val tag: XmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
     private var myElementDecl: XmlElementDecl? = null
-    private var declaration: PsiElement?
-    private var attributesProvider = AureliaAttributeDescriptorsProvider()
-    private var customattributesProvider = AureliaCustomAttributeDescriptorsProvider()
-
-    init {
-        this.declaration = DeclarationResolverUtil.resolveComponentDeclaration(tag)
-    }
+    private var declaration: JSClass? = DeclarationResolverUtil.resolveComponentDeclaration(tag)
+    private var attributeDescriptorsProvider = AureliaAttributeDescriptorsProvider()
+    private var customAttributeDescriptorsProvider = AureliaCustomAttributeDescriptorsProvider()
 
     override fun getDeclaration(): PsiElement? {
         return this.declaration
@@ -34,7 +31,6 @@ class AureliaComponentElementDescriptor(private val tag: XmlTag) : BaseXmlElemen
     override fun getName(context: PsiElement?): String {
         return this.name
     }
-
 
     override fun getName(): String {
         return tag.name
@@ -65,43 +61,30 @@ class AureliaComponentElementDescriptor(private val tag: XmlTag) : BaseXmlElemen
     }
 
     override fun getAttributeDescriptor(attributeName: String?, context: XmlTag?): XmlAttributeDescriptor? {
-        if (attributeName != null && context != null) {
-            return customattributesProvider.getAttributeDescriptor(attributeName, context)
-                ?: attributesProvider.getAttributeDescriptor(attributeName, context)
-                ?: super.getAttributeDescriptor(attributeName, context)
+        if (attributeName == null || context == null) return null
+
+        // resolve descriptor for binding properties
+        DeclarationResolverUtil.resolveBindableAttributes(this.declaration).firstOrNull {
+            Aurelia.camelToKebabCase(it.memberName).lowercase() == AttributeUtil.withoutInjectable(attributeName).lowercase()
+        }?.let {
+            val descriptor = TypeScriptJSXTagUtil.createAttributeDescriptor(it, true)
+            return AureliaBindingAttributeDescriptor(attributeName, descriptor)
         }
-        return super.getAttributeDescriptor(attributeName, context)
+        // try to resolve using other descriptors
+        customAttributeDescriptorsProvider.getAttributeDescriptor(attributeName, context)?.let { return it }
+        attributeDescriptorsProvider.getAttributeDescriptor(attributeName, context)?.let { return it }
+
+        // try to resolve checking additional attributes
+        Aurelia.COMPONENT_ATTRIBUTES.firstOrNull { it == attributeName }?.let { return AureliaAttributeDescriptor(attributeName) }
+        return null
     }
 
     public override fun collectAttributeDescriptors(tag: XmlTag?): Array<XmlAttributeDescriptor> {
-        return collectBindableAttributeDescriptors(this.declaration as JSClass?)
-    }
-
-    private fun collectBindableAttributeDescriptors(
-        jsClass: JSClass?
-    ): Array<XmlAttributeDescriptor> {
-        val members = ArrayList<XmlAttributeDescriptor>()
-        members.addAll(Aurelia.COMPONENT_ATTRIBUTES.map { AureliaAttributeDescriptor(it) })
-        DeclarationResolverUtil.resolveBindableAttributes(jsClass).forEach { attr ->
-            val descriptor = TypeScriptJSXTagUtil.createAttributeDescriptor(attr, true)
-            members.add(AureliaBindingAttributeDescriptor(Aurelia.camelToKebabCase(descriptor.name), descriptor))
-
-            // To support bindings of properties
-            Aurelia.INJECTABLE.forEach { suffix ->
-                members.add(AureliaBindingAttributeDescriptor("${Aurelia.camelToKebabCase(descriptor.name)}.$suffix", descriptor))
-            }
-        }
-        return members.toTypedArray()
+        return emptyArray() // handled by other descriptors
     }
 
     override fun collectAttributeDescriptorsMap(tag: XmlTag?): HashMap<String, XmlAttributeDescriptor> {
-        val attributeMap = HashMap<String, XmlAttributeDescriptor>()
-        val descriptors = collectAttributeDescriptors(tag)
-
-        for (descriptor in descriptors) {
-            attributeMap[descriptor.name] = descriptor
-        }
-        return attributeMap
+        return HashMap() // handled by other descriptors
     }
 
     override fun getQualifiedName(): String {

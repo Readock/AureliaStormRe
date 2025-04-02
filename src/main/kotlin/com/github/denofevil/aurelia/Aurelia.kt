@@ -32,11 +32,9 @@ object Aurelia {
     val IMPORT_ELEMENTS = listOf("require", "import")
     private const val IMPORT_ELEMENT_ATTRIBUTE = "from"
     val CUSTOM_ELEMENTS = listOf("let", "template") + IMPORT_ELEMENTS
-    private val I18N_ATTRIBUTES = listOf("t", "t-params")
     val WHITE_LIST_ATTRIBUTES = listOf(
-        "name", "value", "innerhtml", "containerless", "model", "disabled", "element", "aurelia-table"
-    ) + I18N_ATTRIBUTES
-    val AUTOCOMPLETE_ATTRIBUTES = listOf("repeat.for", AURELIA_APP, "else", "if.bind", "show.bind")
+        "name", "innerhtml", "containerless", "model", "element", "aurelia-table"
+    )
     val ATTRIBUTES_WITHOUT_VALUE = listOf("else", "disabled", "containerless")
     val COMPONENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
     private val htmlTags = HTML.getAllTags().map { it.toString().lowercase() }

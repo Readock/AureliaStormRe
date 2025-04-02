@@ -27,6 +27,10 @@ object AureliaIndexUtil {
         }
     }
 
+    fun getAllCustomAttributeNames(project: Project): Collection<String> {
+        return FileBasedIndex.getInstance().getAllKeys(AureliaCustomAttributeIndexKey, project)
+    }
+
     private fun resolveAnnotatedClasses(
         searchName: String,
         project: Project,

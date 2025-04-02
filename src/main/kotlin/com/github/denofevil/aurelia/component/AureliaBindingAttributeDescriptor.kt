@@ -7,7 +7,7 @@ import com.intellij.xml.XmlAttributeDescriptor
 class AureliaBindingAttributeDescriptor(
     private var attributeName: String,
     private val baseDescriptor: XmlAttributeDescriptor,
-) : AureliaAttributeDescriptor(attributeName) {
+) : AureliaAttributeDescriptor(attributeName, false) {
 
 
     override fun getDeclaration(): PsiElement? = baseDescriptor.declaration
