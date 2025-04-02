@@ -26,14 +26,13 @@ object Aurelia {
 
     private val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view", "dispatch")
     val INJECTABLE = listOf("delegate", "trigger", "call", "for", "ref") + PROPERTY_BINDINGS
-    const val AURELIA_APP = "aurelia-app"
     const val CUSTOM_ELEMENT_DECORATOR = "customElement"
     const val CUSTOM_ATTRIBUTE_DECORATOR = "customAttribute"
     val IMPORT_ELEMENTS = listOf("require", "import")
     private const val IMPORT_ELEMENT_ATTRIBUTE = "from"
     val CUSTOM_ELEMENTS = listOf("let", "template") + IMPORT_ELEMENTS
     val WHITE_LIST_ATTRIBUTES = listOf(
-        "name", "innerhtml", "containerless", "model", "element", "aurelia-table"
+        "name", "innerhtml", "containerless", "model", "element"
     )
     val ATTRIBUTES_WITHOUT_VALUE = listOf("else", "disabled", "containerless")
     val COMPONENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
@@ -52,7 +51,7 @@ object Aurelia {
 
     fun isPresentFor(element: PsiFile?): Boolean {
         if (element == null) {
-            return false;
+            return false
         }
         return CachedValuesManager.getManager(element.project).getCachedValue(element) {
             var isPresent = false
@@ -110,7 +109,7 @@ object Aurelia {
                 VfsUtilCore.iterateChildrenRecursively(it, null) { virtualFile ->
                     val isPackageJson = !virtualFile.isDirectory && virtualFile.name == "package.json"
                     if (isPackageJson && hasPackageJsonAureliaDependencies(project, virtualFile)) {
-                        aureliaRoots.add(virtualFile.parent);
+                        aureliaRoots.add(virtualFile.parent)
                     }
                     true
                 }

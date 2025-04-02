@@ -4,8 +4,8 @@ import com.github.denofevil.aurelia.Aurelia
 import com.intellij.lang.javascript.frameworks.commonjs.CommonJSUtil
 import com.intellij.lang.javascript.psi.JSFile
 import com.intellij.psi.PsiElement
-import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlFile
+import com.intellij.util.asSafely
 
 object RequireImportUtil {
 
@@ -15,8 +15,8 @@ object RequireImportUtil {
                 + CommonJSUtil.resolveReferencedElements(element, "src/${importPath}")).distinct()
     }
 
-    fun resolveImportByName(element: XmlElement, componentName: String): List<JSFile> {
-        val file = element.containingFile as XmlFile
+    fun resolveImportByName(element: PsiElement, componentName: String): List<JSFile> {
+        val file = element.containingFile.asSafely<XmlFile>() ?: return emptyList()
         val imports: List<String> = findRequireImports(file, componentName).map { it.replace(".", "") }
         return imports.map { resolveImportByPath(element, it) }.flatten()
     }

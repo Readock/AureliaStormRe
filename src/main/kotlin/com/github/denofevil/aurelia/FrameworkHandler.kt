@@ -1,5 +1,6 @@
 package com.github.denofevil.aurelia
 
+import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.codeInsight.completion.CompletionUtil
 import com.intellij.lang.javascript.index.FrameworkIndexingHandler
 import com.intellij.lang.javascript.psi.JSQualifiedNameImpl
@@ -41,8 +42,9 @@ class FrameworkHandler : FrameworkIndexingHandler() {
         val directory = hostFile.originalFile.parent ?: return null
 
         val name = FileUtil.getNameWithoutExtension(hostFile.name)
+        DeclarationResolverUtil.resolveComponentDeclaration(context, name)?.let { return it }
+        
         val controllerFile = directory.findFile("$name.ts") ?: directory.findFile("$name.js")
-
         return PsiTreeUtil.findChildOfType(controllerFile, JSClass::class.java)
     }
 }

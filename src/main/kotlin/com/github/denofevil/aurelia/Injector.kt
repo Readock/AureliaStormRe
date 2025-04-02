@@ -43,15 +43,4 @@ class Injector : MultiHostInjector {
     override fun elementsToInjectIn(): List<Class<out PsiElement>> {
         return listOf(XmlTextImpl::class.java, XmlAttributeValueImpl::class.java)
     }
-
-//    private fun findTypeScriptHostOf(element: XmlFile?): JSClass? {
-//        val originalFile = element?.virtualFile
-//        val parentDirectory = originalFile?.parent ?: return null
-//
-//        val originalFileName = originalFile.name
-//        val componentName = originalFileName.substringBeforeLast('.')
-//
-//        val file = parentDirectory.findChild("$componentName.ts")?.let { PsiManager.getInstance(element.project).findFile(it) } as JSFile
-//        return DeclarationResolverUtil.findClassByDecorator(file, componentName, Aurelia.CUSTOM_ELEMENT_DECORATOR)
-//    }
 }
