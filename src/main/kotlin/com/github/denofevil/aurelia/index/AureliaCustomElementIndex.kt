@@ -8,11 +8,13 @@ import com.intellij.util.indexing.*
 import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
 
-val AureliaCustomElementIndexKey: ID<String, Void> = ID.create("aurelia.customElement.index")
 
 class AureliaCustomElementIndex : ScalarIndexExtension<String>() {
+    companion object {
+        val KEY: ID<String, Void> = ID.create("aurelia.customElement.index")
+    }
 
-    override fun getName(): ID<String, Void> = AureliaCustomElementIndexKey
+    override fun getName(): ID<String, Void> = KEY
 
     override fun getVersion(): Int = 1
 

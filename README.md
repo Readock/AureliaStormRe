@@ -5,19 +5,24 @@
 This plugin brings support for [Aurelia](http://aurelia.io) framework to
 the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide).
 
-Features:
+### Features:
 
-* Custom component recognition (matching by require tags or file name)
-* Custom component bindable property recognition (`@bindable` annotation)
+* Custom element recognition (resolved using `@customElement` annotation)
+    * Custom element property recognition (`@bindable` annotation)
 * require and import tag reference detection and navigation (using ctrl + click)
 * Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
-* Code insight for specific Aurelia attributes (such as `*.bind` or `*.trigger`)
-* Syntax highlighting in `${}` interpolations
-* Controller properties completion and navigation
+* Code insight for `${}` and binding attributes
+    * Controller properties completion and navigation
+    * Has to be enabled in the plugin settings
+    * Does not support `repeat.for` and other aurelia features (enabling can lead to code warnings)
 * New project generation via aurelia-cli
 * Supports Aurelia 1 and 2
 
 Either `aurelia` (v2), or `aurelia-cli` (v1) must be present in the project npm dependencies
+
+### Limitations:
+
+*
 
 <!-- Plugin description end -->
 

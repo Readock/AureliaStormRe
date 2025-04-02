@@ -16,19 +16,23 @@ import com.intellij.util.indexing.ID
 object AureliaIndexUtil {
 
     fun resolveCustomElementClasses(componentName: String, project: Project): List<JSClass> {
-        return resolveAnnotatedClasses(componentName, project, AureliaCustomElementIndexKey) {
+        return resolveAnnotatedClasses(componentName, project, AureliaCustomElementIndex.KEY) {
             resolveClassCustomElementNameByAnnotation(it)
         }
     }
 
     fun resolveCustomAttributeClasses(attributeName: String, project: Project): List<JSClass> {
-        return resolveAnnotatedClasses(attributeName, project, AureliaCustomAttributeIndexKey) {
+        return resolveAnnotatedClasses(attributeName, project, AureliaCustomAttributeIndex.KEY) {
             resolveClassCustomAttributeNameByAnnotation(it)
         }
     }
 
     fun getAllCustomAttributeNames(project: Project): Collection<String> {
-        return FileBasedIndex.getInstance().getAllKeys(AureliaCustomAttributeIndexKey, project)
+        return FileBasedIndex.getInstance().getAllKeys(AureliaCustomAttributeIndex.KEY, project).filter {
+            FileBasedIndex.getInstance().getContainingFiles(
+                AureliaCustomAttributeIndex.KEY, it, GlobalSearchScope.projectScope(project)
+            ).isNotEmpty()
+        }
     }
 
     private fun resolveAnnotatedClasses(

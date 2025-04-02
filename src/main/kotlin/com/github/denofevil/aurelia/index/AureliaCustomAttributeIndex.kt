@@ -9,11 +9,13 @@ import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
 
 
-val AureliaCustomAttributeIndexKey: ID<String, Void> = ID.create("aurelia.customAttribute.index")
-
 class AureliaCustomAttributeIndex : ScalarIndexExtension<String>() {
 
-    override fun getName(): ID<String, Void> = AureliaCustomAttributeIndexKey
+    companion object {
+        val KEY: ID<String, Void> = ID.create("aurelia.customAttribute.index")
+    }
+
+    override fun getName(): ID<String, Void> = KEY
 
     override fun getVersion(): Int = 1
 

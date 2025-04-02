@@ -8,8 +8,8 @@
 
 * Custom component recognition
     * Gets resolved over <require from=""> tags
-    * Without require a ts with the same names component gets used
-    * Checks for matching @customElement and class names
+    * Without require a class with matching @customElement will be taken
+    * Having custom elements with the same name might not recognize correctly
 * require and import tag reference detection and navigation
 * Detecting bindable HTML attributes and events
 * require and import tag support
@@ -18,7 +18,7 @@
 
 #### Improved
 
-* Aurelia detection with large projects
+* Aurelia detection with larger projects
 
 ### 1.2.1
 

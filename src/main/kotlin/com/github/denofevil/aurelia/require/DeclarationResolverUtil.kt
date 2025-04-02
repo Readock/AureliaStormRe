@@ -22,15 +22,8 @@ object DeclarationResolverUtil {
     }
 
     fun resolveComponentDeclaration(element: PsiElement, name: String): JSClass? {
-        return CachedValuesManager.getCachedValue(element) {
-            val candidates = AureliaIndexUtil.resolveCustomElementClasses(name, element.project)
-            val resolvedClass = resolveClassDeclaration(element, name, candidates)
-            CachedValueProvider.Result.create(
-                resolvedClass,
-                element.containingFile,
-                PsiModificationTracker.MODIFICATION_COUNT
-            )
-        }
+        val candidates = AureliaIndexUtil.resolveCustomElementClasses(name, element.project)
+        return resolveClassDeclaration(element, name, candidates)
     }
 
     fun resolveBindableAttributesOnlyWithAnnotation(jsClass: JSClass?): List<PropertySignature> {
@@ -39,7 +32,6 @@ object DeclarationResolverUtil {
             val resolvedAttributes = resolveBindableAttributesImpl(jsClass, true)
             CachedValueProvider.Result.create(
                 resolvedAttributes,
-                jsClass.containingFile,
                 PsiModificationTracker.MODIFICATION_COUNT
             )
         }
@@ -51,7 +43,6 @@ object DeclarationResolverUtil {
             val resolvedAttributes = resolveBindableAttributesImpl(jsClass, false)
             CachedValueProvider.Result.create(
                 resolvedAttributes,
-                jsClass.containingFile,
                 PsiModificationTracker.MODIFICATION_COUNT
             )
         }
