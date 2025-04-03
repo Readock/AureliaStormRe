@@ -6,7 +6,7 @@
 [![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
 
-**This plugin brings support for [Aurelia](http://aurelia.io) framework to
+**This plugin brings support for [Aurelia](https://aurelia.io) framework to
 the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide).**
 
 ### Features:
