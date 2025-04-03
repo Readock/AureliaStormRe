@@ -2,8 +2,12 @@
 
 # AureliaStorm
 
-This plugin brings support for [Aurelia](http://aurelia.io) framework to
-the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide).
+![Build](https://github.com/%REPOSITORY%/workflows/Build/badge.svg)
+[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
+
+**This plugin brings support for [Aurelia](http://aurelia.io) framework to
+the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide).**
 
 ### Features:
 
@@ -37,4 +41,4 @@ Either `aurelia` (v2), or `aurelia-cli` (v1) must be present in the project npm 
 In order to test your plugin use the [runIde](https://plugins.jetbrains.com/docs/intellij/configuring-plugin-project.html#run-ide-task)
 Gradle. This will launch an instance of intellij with the plugin loaded.
 
-dk install gradle 8.13
+> this project is based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
