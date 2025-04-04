@@ -13,11 +13,7 @@ import com.intellij.util.io.KeyDescriptor
  */
 class AureliaCustomAttributeIndex : ScalarIndexExtension<String>() {
 
-    companion object {
-        val KEY: ID<String, Void> = ID.create("aurelia.customAttribute.index")
-    }
-
-    override fun getName(): ID<String, Void> = KEY
+    override fun getName(): ID<String, Void> = CUSTOM_ATTRIBUTE_INDEX_KEY
 
     override fun getVersion(): Int = 1
 
@@ -42,3 +38,5 @@ class AureliaCustomAttributeIndex : ScalarIndexExtension<String>() {
     }
 
 }
+
+val CUSTOM_ATTRIBUTE_INDEX_KEY: ID<String, Void> = ID.create("aurelia.customAttribute.index")

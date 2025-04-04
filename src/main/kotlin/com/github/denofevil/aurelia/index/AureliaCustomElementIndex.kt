@@ -12,11 +12,8 @@ import com.intellij.util.io.KeyDescriptor
  * File based index for fast custom element resolving
  */
 class AureliaCustomElementIndex : ScalarIndexExtension<String>() {
-    companion object {
-        val KEY: ID<String, Void> = ID.create("aurelia.customElement.index")
-    }
 
-    override fun getName(): ID<String, Void> = KEY
+    override fun getName(): ID<String, Void> = CUSTOM_ELEMENT_INDEX_KEY
 
     override fun getVersion(): Int = 1
 
@@ -41,3 +38,5 @@ class AureliaCustomElementIndex : ScalarIndexExtension<String>() {
     }
 
 }
+
+val CUSTOM_ELEMENT_INDEX_KEY: ID<String, Void> = ID.create("aurelia.customElement.index")

@@ -23,37 +23,37 @@ object AureliaIndexUtil {
 
     fun resolveCustomElementClasses(componentName: String, project: Project): List<JSClass> {
         if (!canUseIndexes(project)) return emptyList()
-        return resolveAnnotatedClasses(componentName, project, AureliaCustomElementIndex.KEY) {
+        return resolveAnnotatedClasses(componentName, project, CUSTOM_ELEMENT_INDEX_KEY) {
             resolveClassCustomElementNameByAnnotation(it)
         }
     }
 
     fun resolveCustomAttributeClasses(attributeName: String, project: Project): List<JSClass> {
         if (!canUseIndexes(project)) return emptyList()
-        return resolveAnnotatedClasses(attributeName, project, AureliaCustomAttributeIndex.KEY) {
+        return resolveAnnotatedClasses(attributeName, project, CUSTOM_ATTRIBUTE_INDEX_KEY) {
             resolveClassCustomAttributeNameByAnnotation(it)
         }
     }
 
     fun getAllCustomAttributeNames(project: Project): Collection<String> {
         if (!canUseIndexes(project)) return emptyList()
-        return FileBasedIndex.getInstance().getAllKeys(AureliaCustomAttributeIndex.KEY, project).filter {
+        return FileBasedIndex.getInstance().getAllKeys(CUSTOM_ATTRIBUTE_INDEX_KEY, project).filter {
             FileBasedIndex.getInstance().getContainingFiles(
-                AureliaCustomAttributeIndex.KEY, it, GlobalSearchScope.projectScope(project)
+                CUSTOM_ATTRIBUTE_INDEX_KEY, it, GlobalSearchScope.projectScope(project)
             ).isNotEmpty()
         }
     }
 
-    fun canUseIndexes(project: Project): Boolean {
+    private fun canUseIndexes(project: Project): Boolean {
         val dumbService = DumbService.getInstance(project)
         if (dumbService.isDumb) {
             dumbService.showDumbModeNotificationForAction(
                 AureliaBundle.get("index.notReadyYet"),
                 "aurelia.index.read"
             )
-            return false;
+            return false
         }
-        return true;
+        return true
     }
 
     private fun resolveAnnotatedClasses(

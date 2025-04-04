@@ -6,9 +6,9 @@ import com.intellij.psi.PsiElement
  * Describes custom attributes
  */
 open class AureliaCustomAttributeDescriptor(
-    private val name: String,
+    name: String,
     private val declaration: PsiElement?,
-    private val isFixed: Boolean = false
+    isFixed: Boolean = false
 ) : AureliaAttributeDescriptor(name, isFixed) {
 
     override fun getDeclaration(): PsiElement? = declaration
