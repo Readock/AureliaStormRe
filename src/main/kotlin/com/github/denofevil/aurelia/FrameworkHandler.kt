@@ -17,11 +17,10 @@ import com.intellij.psi.util.PsiTreeUtil
 
 class FrameworkHandler : FrameworkIndexingHandler() {
     override fun addContextType(info: JSTypeInfo, context: PsiElement) {
-        DumbService.getInstance(context.project).runReadActionInSmartMode {
-            val controller = findController(context) ?: return@runReadActionInSmartMode
-            val namespace = JSQualifiedNameImpl.buildProvidedNamespace(controller)
-            info.addType(JSNamedTypeFactory.createNamespace(namespace, JSContext.INSTANCE, null, true), false)
-        }
+        if (DumbService.getInstance(context.project).isDumb) return
+        val controller = findController(context) ?: return
+        val namespace = JSQualifiedNameImpl.buildProvidedNamespace(controller)
+        info.addType(JSNamedTypeFactory.createNamespace(namespace, JSContext.INSTANCE, null, true), false)
     }
 
     override fun addContextNames(context: PsiElement, names: MutableList<String>) {
