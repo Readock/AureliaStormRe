@@ -15,6 +15,9 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.resolve.FileContextUtil
 import com.intellij.psi.util.PsiTreeUtil
 
+/**
+ * Provides context (resolved controller classes) to code injections
+ */
 class FrameworkHandler : FrameworkIndexingHandler() {
     override fun addContextType(info: JSTypeInfo, context: PsiElement) {
         if (DumbService.getInstance(context.project).isDumb) return

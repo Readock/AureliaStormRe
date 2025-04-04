@@ -16,6 +16,9 @@ import com.intellij.util.asSafely
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.indexing.ID
 
+/**
+ * Utility class for reading file indexes
+ */
 object AureliaIndexUtil {
 
     fun resolveCustomElementClasses(componentName: String, project: Project): List<JSClass> {

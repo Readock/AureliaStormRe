@@ -8,7 +8,9 @@ import com.intellij.util.indexing.*
 import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
 
-
+/**
+ * File based index for fast custom element resolving
+ */
 class AureliaCustomElementIndex : ScalarIndexExtension<String>() {
     companion object {
         val KEY: ID<String, Void> = ID.create("aurelia.customElement.index")

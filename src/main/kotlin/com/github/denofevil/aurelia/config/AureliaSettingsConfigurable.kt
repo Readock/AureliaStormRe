@@ -8,7 +8,9 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 import kotlin.reflect.KMutableProperty0
 
-
+/**
+ * UI for plugin configurations
+ */
 class AureliaSettingsConfigurable : Configurable {
     private lateinit var jsInjectionEnabledCheckbox: JCheckBox
     private lateinit var checkPropertyBindableAnnotationCheckbox: JCheckBox

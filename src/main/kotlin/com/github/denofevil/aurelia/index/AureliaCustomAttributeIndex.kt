@@ -8,7 +8,9 @@ import com.intellij.util.indexing.*
 import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
 
-
+/**
+ * File based index for fast custom attribute resolving
+ */
 class AureliaCustomAttributeIndex : ScalarIndexExtension<String>() {
 
     companion object {

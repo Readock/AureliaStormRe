@@ -18,6 +18,10 @@ import com.intellij.xml.XmlNSDescriptor
 import com.intellij.xml.impl.dtd.BaseXmlElementDescriptorImpl
 import com.intellij.xml.util.XmlUtil
 
+/**
+ * Describes custom elements and provides correct declaration of the component
+ * - Make sure to call all AttributeDescriptors in this::getAttributeDescriptor
+ */
 class AureliaCustomElementDescriptor(private val tag: XmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
     private var myElementDecl: XmlElementDecl? = null
     private var declaration: JSClass? = DeclarationResolverUtil.resolveComponentDeclaration(tag)

@@ -13,6 +13,9 @@ import com.intellij.psi.impl.source.xml.XmlTextImpl
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
 
+/**
+ * Injects js/ts code into HTML files
+ */
 class Injector : MultiHostInjector {
     override fun getLanguagesToInject(registrar: MultiHostRegistrar, host: PsiElement) {
         if (!AureliaSettings.getInstance().jsInjectionEnabled) return

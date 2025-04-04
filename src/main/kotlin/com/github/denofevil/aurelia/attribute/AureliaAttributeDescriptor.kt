@@ -7,6 +7,9 @@ import com.intellij.psi.xml.XmlElement
 import com.intellij.util.ArrayUtil
 import com.intellij.xml.XmlAttributeDescriptor
 
+/**
+ * Describes basic aurelia attributes (without declaration)
+ */
 open class AureliaAttributeDescriptor(
     private val name: String,
     private val isFlagAttribute: Boolean = false

@@ -7,6 +7,9 @@ import com.intellij.psi.xml.XmlToken
 import com.intellij.psi.xml.XmlTokenType
 import org.jetbrains.annotations.NotNull
 
+/**
+ * Suppression of unwanted unresolved elements that are part of aurelia framework
+ */
 class HtmlXmlSuppressionProvider : XmlSuppressionProvider() {
     override fun isProviderAvailable(@NotNull file: PsiFile): Boolean {
         return true
