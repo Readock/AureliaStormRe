@@ -8,7 +8,7 @@ import com.intellij.psi.xml.XmlTag
 /**
  * Reference for "from" attributes of <require from=""> tags
  */
-class AureliaRequireReference(private val attribute: XmlAttributeValue) : PsiReferenceBase<XmlAttributeValue>(attribute) {
+class AureliaRequireReference(attribute: XmlAttributeValue) : PsiReferenceBase<XmlAttributeValue>(attribute) {
 
     override fun resolve(): PsiElement? {
         val tag = element.parent?.parent as? XmlTag ?: return null
