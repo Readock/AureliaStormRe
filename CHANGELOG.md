@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### [2.0.1] - 2025-04-04
+
+#### Fix
+
+* Reference detection getting called outside of aurelia projects
+
 ### [2.0.0] - 2025-04-04
 
 #### Features
