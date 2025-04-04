@@ -24,7 +24,7 @@ import com.intellij.xml.util.XmlUtil
  */
 class AureliaCustomElementDescriptor(private val tag: XmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
     private var myElementDecl: XmlElementDecl? = null
-    private var declaration: JSClass? = DeclarationResolverUtil.resolveComponentDeclaration(tag)
+    private var declaration: JSClass? = DeclarationResolverUtil.resolveCustomElementDeclaration(tag)
     private var attributeDescriptorsProvider = AureliaAttributeDescriptorsProvider()
     private var customAttributeDescriptorsProvider = AureliaCustomAttributeDescriptorsProvider()
 

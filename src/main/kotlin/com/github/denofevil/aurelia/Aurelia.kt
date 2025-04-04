@@ -10,12 +10,11 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.vfs.VfsUtilCore
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
-import com.intellij.psi.xml.XmlTag
-import javax.swing.text.html.HTML
 
 /**
  * Utility class and holder of aurelia syntax strings
@@ -44,7 +43,6 @@ object Aurelia {
     )
     val ATTRIBUTES_WITHOUT_VALUE = listOf("else", "disabled", "containerless")
     val COMPONENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
-    private val htmlTags = HTML.getAllTags().map { it.toString().lowercase() }
 
     fun isPresentFor(project: Project): Boolean = CachedValuesManager.getManager(project).getCachedValue(project) {
         val aureliaRootFolders = getAureliaRootFolders(project)
@@ -56,10 +54,18 @@ object Aurelia {
             )
     }
 
+    /**
+     * Weather this element is child of any aurelia root folders
+     */
+    fun isFrameworkCandidate(element: PsiElement): Boolean {
+        return isPresentFor(element.containingFile)
+    }
+
+    /**
+     * Weather this element is child of any aurelia root folders
+     */
     fun isPresentFor(element: PsiFile?): Boolean {
-        if (element == null) {
-            return false
-        }
+        if (element == null) return false
         return CachedValuesManager.getManager(element.project).getCachedValue(element) {
             var isPresent = false
             val project = element.project
@@ -75,13 +81,6 @@ object Aurelia {
 
     fun camelToKebabCase(camel: String): String {
         return camel.replace(Regex("([a-z])([A-Z])"), "$1-$2").lowercase()
-    }
-
-    fun isFrameworkCandidate(tag: XmlTag): Boolean {
-        val tagName = tag.name.lowercase()
-        val isExcludedTag = htmlTags.stream().anyMatch { it.equals(tagName) }
-                || CUSTOM_ELEMENTS.contains(tagName) || IMPORT_ELEMENTS.contains(tagName)
-        return !isExcludedTag && isPresentFor(tag.containingFile)
     }
 
     private fun isChildOf(source: VirtualFile, target: VirtualFile): Boolean {

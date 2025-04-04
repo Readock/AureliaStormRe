@@ -19,6 +19,7 @@ class AureliaRequireReferenceContributor : PsiReferenceContributor() {
                 XmlPatterns.xmlAttributeValue("from")
                     .with(object : PatternCondition<XmlAttributeValue>("ExcludeCSS") {
                         override fun accepts(attribute: XmlAttributeValue, context: ProcessingContext?): Boolean {
+                            if (!Aurelia.isFrameworkCandidate(attribute)) return false
                             // Currently css imports references are not properly detected :(
                             return !attribute.value.endsWith(".css") && !attribute.value.endsWith(".scss")
                         }

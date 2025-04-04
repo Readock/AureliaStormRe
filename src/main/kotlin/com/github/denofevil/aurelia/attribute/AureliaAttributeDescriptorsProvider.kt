@@ -17,6 +17,7 @@ class AureliaAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
     }
 
     override fun getAttributeDescriptor(name: String, xmlTag: XmlTag): XmlAttributeDescriptor? {
+        if (!Aurelia.isFrameworkCandidate(xmlTag)) return null
         return getHtmlAttributeWithoutInjectableDescriptor(name, xmlTag)
             ?: Aurelia.WHITE_LIST_ATTRIBUTES.firstOrNull { it == name }?.let { AureliaAttributeDescriptor(name) }
     }

@@ -16,13 +16,16 @@ import com.intellij.psi.util.PsiModificationTracker
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlTag
 
+/**
+ * Resolves declarations of custom elements and attributes by searching the project for matching files
+ */
 object DeclarationResolverUtil {
 
-    fun resolveComponentDeclaration(tag: XmlTag): JSClass? {
-        return resolveComponentDeclaration(tag, tag.name)
+    fun resolveCustomElementDeclaration(tag: XmlTag): JSClass? {
+        return resolveCustomElementDeclaration(tag, tag.name)
     }
 
-    fun resolveComponentDeclaration(element: PsiElement, name: String): JSClass? {
+    fun resolveCustomElementDeclaration(element: PsiElement, name: String): JSClass? {
         if (DumbService.getInstance(element.project).isDumb) return null
         val candidates = AureliaIndexUtil.resolveCustomElementClasses(name, element.project)
         return resolveClassDeclaration(element, name, candidates)

@@ -14,6 +14,7 @@ import com.intellij.xml.XmlAttributeDescriptorsProvider
 class AureliaCustomElementAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
 
     override fun getAttributeDescriptors(xmlTag: XmlTag): Array<XmlAttributeDescriptor> {
+        if (!Aurelia.isFrameworkCandidate(xmlTag)) return emptyArray()
         return (declarationPropertyBindings(xmlTag)).toTypedArray()
     }
 
@@ -22,7 +23,7 @@ class AureliaCustomElementAttributeDescriptorsProvider : XmlAttributeDescriptors
     }
 
     private fun declarationPropertyBindings(xmlTag: XmlTag): List<AureliaAttributeDescriptor> {
-        val declaration = DeclarationResolverUtil.resolveComponentDeclaration(xmlTag)
+        val declaration = DeclarationResolverUtil.resolveCustomElementDeclaration(xmlTag)
         if (declaration != null) {
             return DeclarationResolverUtil.resolveBindableAttributesOnlyWithAnnotation(declaration).map {
                 val descriptor = TypeScriptJSXTagUtil.createAttributeDescriptor(it, true)
