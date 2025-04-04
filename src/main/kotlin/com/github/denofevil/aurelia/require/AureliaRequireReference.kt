@@ -5,6 +5,9 @@ import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.psi.xml.XmlTag
 
+/**
+ * Reference for "from" attributes of <require from=""> tags
+ */
 class AureliaRequireReference(private val attribute: XmlAttributeValue) : PsiReferenceBase<XmlAttributeValue>(attribute) {
 
     override fun resolve(): PsiElement? {

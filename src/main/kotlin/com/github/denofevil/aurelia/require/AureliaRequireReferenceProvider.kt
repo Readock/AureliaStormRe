@@ -7,6 +7,9 @@ import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiReferenceProvider
 import com.intellij.psi.xml.XmlAttributeValue
 
+/**
+ * Provides references for <require from=""> tags by resolving the from attribute
+ */
 class AureliaRequireReferenceProvider : PsiReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: com.intellij.util.ProcessingContext): Array<PsiReference> {
         if (element is XmlAttributeValue) {

@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlFile
 import com.intellij.util.asSafely
 
+/**
+ * Utility for resolving imports
+ */
 object RequireImportUtil {
 
     fun resolveImportByPath(element: PsiElement, importPath: String): List<JSFile> {

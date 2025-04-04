@@ -8,7 +8,9 @@ import com.intellij.psi.PsiReferenceRegistrar
 import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.util.ProcessingContext
 
-
+/**
+ * Registers the ReferenceProviders for <require> or <import> tags
+ */
 class AureliaRequireReferenceContributor : PsiReferenceContributor() {
 
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
