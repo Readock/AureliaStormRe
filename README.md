@@ -6,12 +6,11 @@
 
 <!-- Plugin description -->
 
-> _This plugin brings improved support for [Aurelia Framework](https://aurelia.io) to
-the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide)_
+This plugin brings improved support for [Aurelia Framework](https://aurelia.io) to
+the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide) (_fork
+of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 
-## Features:
-
-#### Custom elements & attributes
+### Custom elements & attributes
 
 * Declaration resolving using `@customElement` and `@customAttribute` annotation or class names
 * Custom element property recognition (`@bindable` annotation)
@@ -19,17 +18,16 @@ the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js
 * Component and property navigation
 * Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
 
-#### Code injection (experimental)
+### Code injection
 
-* Has to be enabled in the plugin settings (enabling can lead to code warnings)
+* Has to be enabled in the **plugin settings** (enabling can lead to code warnings)
 * Code insight for `${}` and binding attributes
 * Controller properties completion and navigation
 
-Either `aurelia` (v2), or `aurelia-cli` (v1) must be present in the project npm dependencies
+<br>
 
----
+Either `aurelia`, `aurelia-cli` or `aurelia-framework` must be present in `package.json`
 
-_originally a fork of [Aurelia Storm Community](https://github.com/CollinHerber/AureliaStorm)_
 
 <!-- Plugin description end -->
 
