@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-### 2.0.0
+### [2.0.0] - 2025-04-04
 
 #### Features
 
@@ -16,11 +16,11 @@
 * Custom component bindable property recognition (by @bindable)
 * Suppress <template> and <require> element warnings
 
-### 1.2.1
+### [1.2.1]
 
 * Updated since build to support older versions
 
-### 1.2.0
+### [1.2.0]
 
 #### Features
 
