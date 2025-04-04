@@ -1,7 +1,7 @@
 <idea-plugin>
 	<name>AureliaStorm Re</name>
 	<id>AureliaStormRE</id>
-	<vendor url="https://github.com/Readock/AureliaIntelliJ">Felix Heitbrock</vendor>
+	<vendor url="https://github.com/Readock/AureliaStormRe">Felix Heitbrock</vendor>
 
 	<depends>com.intellij.modules.lang</depends>
 	<depends>JavaScript</depends>
