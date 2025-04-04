@@ -1,32 +1,35 @@
-<!-- Plugin description -->
-
-# AureliaStorm
+# AureliaStorm Re
 
 ![Build](https://github.com/%REPOSITORY%/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
 
-**This plugin brings support for [Aurelia](https://aurelia.io) framework to
-the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide).**
+<!-- Plugin description -->
 
-### Features:
+> _This plugin brings improved support for [Aurelia Framework](https://aurelia.io) to
+the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide)_
 
-* Custom element recognition (resolved using `@customElement` annotation)
-    * Custom element property recognition (`@bindable` annotation)
-* require and import tag reference detection and navigation (using ctrl + click)
+## Features:
+
+#### Custom elements & attributes
+
+* Declaration resolving using `@customElement` and `@customAttribute` annotation or class names
+* Custom element property recognition (`@bindable` annotation)
+* Require and import tag reference detection for typescript files
+* Component and property navigation
 * Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
+
+#### Code injection (experimental)
+
+* Has to be enabled in the plugin settings (enabling can lead to code warnings)
 * Code insight for `${}` and binding attributes
-    * Controller properties completion and navigation
-    * Has to be enabled in the plugin settings
-    * Does not support `repeat.for` and other aurelia features (enabling can lead to code warnings)
-* New project generation via aurelia-cli
-* Supports Aurelia 1 and 2
+* Controller properties completion and navigation
 
 Either `aurelia` (v2), or `aurelia-cli` (v1) must be present in the project npm dependencies
 
-### Limitations:
+---
 
-*
+_originally a fork of [Aurelia Storm Community](https://github.com/CollinHerber/AureliaStorm)_
 
 <!-- Plugin description end -->
 
