@@ -1,10 +1,12 @@
 package com.github.denofevil.aurelia.index
 
 import com.github.denofevil.aurelia.Aurelia
+import com.github.denofevil.aurelia.config.AureliaBundle
 import com.intellij.lang.javascript.psi.JSCallExpression
 import com.intellij.lang.javascript.psi.JSLiteralExpression
 import com.intellij.lang.javascript.psi.JSObjectLiteralExpression
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
+import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
@@ -17,23 +19,38 @@ import com.intellij.util.indexing.ID
 object AureliaIndexUtil {
 
     fun resolveCustomElementClasses(componentName: String, project: Project): List<JSClass> {
+        if (!canUseIndexes(project)) return emptyList()
         return resolveAnnotatedClasses(componentName, project, AureliaCustomElementIndex.KEY) {
             resolveClassCustomElementNameByAnnotation(it)
         }
     }
 
     fun resolveCustomAttributeClasses(attributeName: String, project: Project): List<JSClass> {
+        if (!canUseIndexes(project)) return emptyList()
         return resolveAnnotatedClasses(attributeName, project, AureliaCustomAttributeIndex.KEY) {
             resolveClassCustomAttributeNameByAnnotation(it)
         }
     }
 
     fun getAllCustomAttributeNames(project: Project): Collection<String> {
+        if (!canUseIndexes(project)) return emptyList()
         return FileBasedIndex.getInstance().getAllKeys(AureliaCustomAttributeIndex.KEY, project).filter {
             FileBasedIndex.getInstance().getContainingFiles(
                 AureliaCustomAttributeIndex.KEY, it, GlobalSearchScope.projectScope(project)
             ).isNotEmpty()
         }
+    }
+
+    fun canUseIndexes(project: Project): Boolean {
+        val dumbService = DumbService.getInstance(project)
+        if (dumbService.isDumb) {
+            dumbService.showDumbModeNotificationForAction(
+                AureliaBundle.get("index.notReadyYet"),
+                "aurelia.index.read"
+            )
+            return false;
+        }
+        return true;
     }
 
     private fun resolveAnnotatedClasses(

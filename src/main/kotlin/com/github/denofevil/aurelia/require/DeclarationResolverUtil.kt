@@ -7,6 +7,7 @@ import com.intellij.lang.javascript.psi.JSRecordType.PropertySignature
 import com.intellij.lang.javascript.psi.ecmal4.JSAttributeListOwner
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
 import com.intellij.openapi.module.ModuleUtil
+import com.intellij.openapi.project.DumbService
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.CachedValueProvider
@@ -22,12 +23,14 @@ object DeclarationResolverUtil {
     }
 
     fun resolveComponentDeclaration(element: PsiElement, name: String): JSClass? {
+        if (DumbService.getInstance(element.project).isDumb) return null
         val candidates = AureliaIndexUtil.resolveCustomElementClasses(name, element.project)
         return resolveClassDeclaration(element, name, candidates)
     }
 
     fun resolveBindableAttributesOnlyWithAnnotation(jsClass: JSClass?): List<PropertySignature> {
-        jsClass ?: return emptyList()
+        if (jsClass == null) return emptyList()
+        if (DumbService.getInstance(jsClass.project).isDumb) return emptyList()
         return CachedValuesManager.getCachedValue(jsClass) {
             val resolvedAttributes = resolveBindableAttributesImpl(jsClass, true)
             CachedValueProvider.Result.create(
@@ -39,6 +42,7 @@ object DeclarationResolverUtil {
 
     fun resolveBindableAttributes(jsClass: JSClass?): List<PropertySignature> {
         jsClass ?: return emptyList()
+        if (DumbService.getInstance(jsClass.project).isDumb) return emptyList()
         return CachedValuesManager.getCachedValue(jsClass) {
             val resolvedAttributes = resolveBindableAttributesImpl(jsClass, false)
             CachedValueProvider.Result.create(

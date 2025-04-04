@@ -9,6 +9,7 @@ import com.intellij.lang.javascript.psi.ecmal4.JSClass
 import com.intellij.lang.javascript.psi.resolve.JSTypeInfo
 import com.intellij.lang.javascript.psi.types.JSContext
 import com.intellij.lang.javascript.psi.types.JSNamedTypeFactory
+import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.resolve.FileContextUtil
@@ -16,9 +17,11 @@ import com.intellij.psi.util.PsiTreeUtil
 
 class FrameworkHandler : FrameworkIndexingHandler() {
     override fun addContextType(info: JSTypeInfo, context: PsiElement) {
-        val controller = findController(context) ?: return
-        val namespace = JSQualifiedNameImpl.buildProvidedNamespace(controller)
-        info.addType(JSNamedTypeFactory.createNamespace(namespace, JSContext.INSTANCE, null, true), false)
+        DumbService.getInstance(context.project).runReadActionInSmartMode {
+            val controller = findController(context) ?: return@runReadActionInSmartMode
+            val namespace = JSQualifiedNameImpl.buildProvidedNamespace(controller)
+            info.addType(JSNamedTypeFactory.createNamespace(namespace, JSContext.INSTANCE, null, true), false)
+        }
     }
 
     override fun addContextNames(context: PsiElement, names: MutableList<String>) {
