@@ -22,7 +22,7 @@ class AureliaCustomElementIndex : ScalarIndexExtension<String>() {
     override fun getKeyDescriptor(): KeyDescriptor<String> = EnumeratorStringDescriptor()
 
     override fun getInputFilter(): FileBasedIndex.InputFilter =
-        DefaultFileTypeSpecificInputFilter(JavaScriptFileType.INSTANCE, TypeScriptFileType.INSTANCE)
+        FileBasedIndex.InputFilter { file -> file.fileType is TypeScriptFileType || file.fileType is JavaScriptFileType }
 
     override fun getIndexer(): DataIndexer<String, Void, FileContent> {
         return DataIndexer { fileContent ->
