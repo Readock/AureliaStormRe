@@ -6,6 +6,7 @@
 	<depends>com.intellij.modules.lang</depends>
 	<depends>JavaScript</depends>
 	<depends>com.intellij.modules.xml</depends>
+	<depends>com.intellij.modules.json</depends>
 	<description><![CDATA[
 	> _This plugin brings support for [Aurelia](https://aurelia.io) framework to
 	the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide)._
