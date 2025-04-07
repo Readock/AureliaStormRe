@@ -1,7 +1,7 @@
 package com.github.denofevil.aurelia.attribute
 
 import com.github.denofevil.aurelia.Aurelia
-import com.github.denofevil.aurelia.component.AureliaBindingAttributeDescriptor
+import com.github.denofevil.aurelia.element.AureliaBindingAttributeDescriptor
 import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.lang.javascript.frameworks.jsx.tsx.TypeScriptJSXTagUtil
 import com.intellij.psi.xml.XmlTag

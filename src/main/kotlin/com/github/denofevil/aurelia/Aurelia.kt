@@ -42,7 +42,7 @@ object Aurelia {
         "name", "innerhtml", "containerless", "model", "element"
     )
     val ATTRIBUTES_WITHOUT_VALUE = listOf("else", "disabled", "containerless")
-    val COMPONENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
+    val CUSTOM_ELEMENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
 
     fun isPresentFor(project: Project): Boolean = CachedValuesManager.getManager(project).getCachedValue(project) {
         val aureliaRootFolders = getAureliaRootFolders(project)

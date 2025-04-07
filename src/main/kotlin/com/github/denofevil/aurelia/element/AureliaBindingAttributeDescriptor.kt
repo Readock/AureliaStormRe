@@ -1,4 +1,4 @@
-package com.github.denofevil.aurelia.component
+package com.github.denofevil.aurelia.element
 
 import com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptor
 import com.intellij.psi.PsiElement

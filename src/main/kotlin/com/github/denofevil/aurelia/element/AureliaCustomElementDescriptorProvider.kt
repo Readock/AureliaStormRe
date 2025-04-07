@@ -1,4 +1,4 @@
-package com.github.denofevil.aurelia.component
+package com.github.denofevil.aurelia.element
 
 import com.github.denofevil.aurelia.Aurelia
 import com.github.denofevil.aurelia.Aurelia.CUSTOM_ELEMENTS

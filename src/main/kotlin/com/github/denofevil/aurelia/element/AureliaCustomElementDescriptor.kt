@@ -1,4 +1,4 @@
-package com.github.denofevil.aurelia.component
+package com.github.denofevil.aurelia.element
 
 import com.github.denofevil.aurelia.Aurelia
 import com.github.denofevil.aurelia.attribute.AttributeUtil
@@ -79,7 +79,7 @@ class AureliaCustomElementDescriptor(private val tag: XmlTag) : BaseXmlElementDe
         attributeDescriptorsProvider.getAttributeDescriptor(attributeName, context)?.let { return it }
 
         // try to resolve checking additional attributes
-        Aurelia.COMPONENT_ATTRIBUTES.firstOrNull { it == attributeName }?.let { return AureliaAttributeDescriptor(attributeName) }
+        Aurelia.CUSTOM_ELEMENT_ATTRIBUTES.firstOrNull { it == attributeName }?.let { return AureliaAttributeDescriptor(attributeName) }
         return null
     }
 
