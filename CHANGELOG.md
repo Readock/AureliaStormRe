@@ -2,15 +2,15 @@
 
 ## [Unreleased]
 
-### [2.0.1] - 2025-04-04
+## 2.0.1
 
-#### Fix
+### Fixed
 
-* Reference detection getting called outside of aurelia projects
+* Reference detection getting called for files outside of aurelia
 
-### [2.0.0] - 2025-04-04
+## 2.0.0
 
-#### Features
+### Added
 
 * Custom component / attribute recognition
 * References gets resolved over <require from=""> tags
@@ -22,19 +22,21 @@
 * Custom component bindable property recognition (by @bindable)
 * Suppress <template> and <require> element warnings
 
-### [1.2.1]
+## 1.2.1
 
-* Updated since build to support older versions
+### Changed
 
-### [1.2.0]
+* Support older versions
 
-#### Features
+## 1.2.0
+
+### Added
 
 * Support <let> element recognition
 * Support the `else` attribute
 * Adds support for `promise.bind` recognition
 
-#### Fixes
+### Fixed
 
 * Remove deprecated getDependencies Call
 * Remove deprecated getBaseDir call

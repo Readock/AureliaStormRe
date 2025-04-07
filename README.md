@@ -18,10 +18,10 @@ of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 * Component and property navigation
 * Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
 
-### Code interpolation
+### Insight for bindings and interpolation
 
 * Has to be enabled in the **plugin settings** (enabling can lead to code warnings)
-* Code insight for `${}` and binding attributes
+* Code insight for `${}` and binding attribute values
 * Controller properties completion and navigation
 
 <br>
