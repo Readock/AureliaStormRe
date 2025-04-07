@@ -1,8 +1,8 @@
 # AureliaStorm Re
 
 ![Build](https://github.com/Readock/AureliaStormRe/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
+[![Version](https://img.shields.io/jetbrains/plugin/v/27000-aureliastorm-re.svg)](https://plugins.jetbrains.com/plugin/27000-aureliastorm-re)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/27000-aureliastorm-re.svg)](https://plugins.jetbrains.com/plugin/27000-aureliastorm-re)
 
 <!-- Plugin description -->
 
@@ -18,7 +18,7 @@ of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 * Component and property navigation
 * Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
 
-### Code injection
+### Code interpolation
 
 * Has to be enabled in the **plugin settings** (enabling can lead to code warnings)
 * Code insight for `${}` and binding attributes
