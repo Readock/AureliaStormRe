@@ -6,37 +6,43 @@
 
 ### Fixed
 
-* Reference detection getting called for files outside of aurelia
+- Reference detection getting called for files outside of aurelia
 
 ## [2.0.0]
 
 ### Added
 
-* Custom element / attribute recognition
-* References gets resolved over <require from=""> tags
-* Without require a class with matching @customElement will be taken (also works with name suffix)
-* Developer Note: Having custom elements with the same name might not recognize correctly in some instances
-* Require and import tag reference detection and navigation
-* Detecting bindable HTML attributes and events
-* Require and import tag support
-* Custom element bindable property recognition (by @bindable)
-* Suppress <template> and <require> element warnings
+- Custom element / attribute recognition
+- References gets resolved over <require from=""> tags
+- Without require a class with matching @customElement will be taken (also works with name suffix)
+- Developer Note: Having custom elements with the same name might not recognize correctly in some instances
+- Require and import tag reference detection and navigation
+- Detecting bindable HTML attributes and events
+- Require and import tag support
+- Custom element bindable property recognition (by @bindable)
+- Suppress <template> and <require> element warnings
 
 ## [1.2.1]
 
 ### Changed
 
-* Support older versions
+- Support older versions
 
 ## [1.2.0]
 
 ### Added
 
-* Support <let> element recognition
-* Support the `else` attribute
-* Adds support for `promise.bind` recognition
+- Support <let> element recognition
+- Support the `else` attribute
+- Adds support for `promise.bind` recognition
 
 ### Fixed
 
-* Remove deprecated getDependencies Call
-* Remove deprecated getBaseDir call
+- Remove deprecated getDependencies Call
+- Remove deprecated getBaseDir call
+
+[Unreleased]: https://github.com/Readock/AureliaStormRe/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/Readock/AureliaStormRe/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/Readock/AureliaStormRe/compare/v1.2.1...v2.0.0
+[1.2.1]: https://github.com/Readock/AureliaStormRe/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/Readock/AureliaStormRe/commits/v1.2.0
