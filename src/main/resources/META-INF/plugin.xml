@@ -17,6 +17,7 @@
     ]]></description>
     <depends>com.intellij.modules.lang</depends>
     <depends>JavaScript</depends>
+    <depends>NodeJS</depends>
     <depends>com.intellij.modules.xml</depends>
     <change-notes>
         <![CDATA[
