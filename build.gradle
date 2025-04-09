@@ -14,9 +14,8 @@ repositories {
 intellijPlatform {
   pluginConfiguration {
     name = "AureliaStorm Community"
-    version '1.3.3'
   }
-  version = 'IU-2024.3.5'
+  version = '1.3.3'
 }
 
 dependencies {
@@ -30,4 +29,5 @@ dependencies {
 patchPluginXml {
   sinceBuild = "232.0"
   untilBuild = "243.*"
+  pluginVersion = "1.3.3"
 }
