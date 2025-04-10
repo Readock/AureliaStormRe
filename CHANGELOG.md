@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [2.1.0]
+
+### Added
+
+- Support for 251
+
 ## [2.0.1]
 
 ### Fixed
@@ -42,7 +48,11 @@
 - Remove deprecated getBaseDir call
 
 [Unreleased]: https://github.com/Readock/AureliaStormRe/compare/v2.0.1...HEAD
+
 [2.0.1]: https://github.com/Readock/AureliaStormRe/compare/v2.0.0...v2.0.1
+
 [2.0.0]: https://github.com/Readock/AureliaStormRe/compare/v1.2.1...v2.0.0
+
 [1.2.1]: https://github.com/Readock/AureliaStormRe/compare/v1.2.0...v1.2.1
+
 [1.2.0]: https://github.com/Readock/AureliaStormRe/commits/v1.2.0
