@@ -24,6 +24,9 @@ object Aurelia {
 
     private val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view", "dispatch")
     val INJECTABLE = listOf("delegate", "trigger", "call", "for", "ref") + PROPERTY_BINDINGS
+    val REPEAT_FOR = listOf("repeat.for", "virtual-repeat.for", "reorderable-repeat.for")
+    const val REPEAT_FOR_OF_KEYWORD = " of "
+
 
     object CustomAttribute {
         const val ANNOTATION = "customAttribute"
