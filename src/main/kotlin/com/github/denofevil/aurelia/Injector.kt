@@ -37,7 +37,6 @@ class Injector : MultiHostInjector {
             }
         }
         JSInjectionBracesUtil.injectInXmlTextByDelimiters(registrar, host, JavascriptLanguage.INSTANCE, "\${", "}")
-
     }
 
     override fun elementsToInjectIn(): List<Class<out PsiElement>> {
