@@ -13,7 +13,7 @@
 ]]></description>
 	<extensions defaultExtensionNs="com.intellij">
 		<xml.xmlSuppressionProvider implementation="com.github.denofevil.aurelia.HtmlXmlSuppressionProvider" />
-		<multiHostInjector implementation="com.github.denofevil.aurelia.Injector" />
+		<multiHostInjector implementation="com.github.denofevil.aurelia.inject.Injector" />
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptorsProvider" order="first" />
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomElementAttributeDescriptorsProvider" order="first" />
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider" order="first" />
