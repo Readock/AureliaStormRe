@@ -19,6 +19,7 @@
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider" order="first" />
 		<xml.elementDescriptorProvider implementation="com.github.denofevil.aurelia.element.AureliaCustomElementDescriptorProvider" order="first" />
 		<psi.referenceContributor language="HTML" implementation="com.github.denofevil.aurelia.require.AureliaRequireReferenceContributor" order="first" />
+		<psi.referenceContributor language="JavaScript" implementation="com.github.denofevil.aurelia.inject.AureliaRepeatForVariableReferenceContributor" order="first" />
 		<javascript.rename.extension implementation="com.github.denofevil.aurelia.RenameExtension" />
 		<fileBasedIndex implementation="com.github.denofevil.aurelia.index.AureliaCustomElementIndex" />
 		<fileBasedIndex implementation="com.github.denofevil.aurelia.index.AureliaCustomAttributeIndex" />
