@@ -28,7 +28,7 @@ object InjectionUtils {
         if (wasInjected) {
             val host = InjectedLanguageManager.getInstance(element.project).getInjectionHost(element)
             if (!Aurelia.isPresentFor(host?.containingFile)) return null
-            if (host?.containingFile?.fileType is HtmlFileType) return host;
+            if (host?.containingFile?.fileType is HtmlFileType) return host
         }
         return null
     }
