@@ -42,6 +42,7 @@ class AttributesProvider : XmlAttributeDescriptorsProvider {
                 || Aurelia.VIRTUAL_REPEAT_FOR == name
                 || Aurelia.AURELIA_APP == name
                 || Aurelia.CASE == name
+                || Aurelia.ELSE == name
                 || Aurelia.REF == name
                 || Aurelia.PROMISE == name
                 || Aurelia.THEN == name

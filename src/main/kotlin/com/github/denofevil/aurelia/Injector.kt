@@ -31,7 +31,7 @@ class Injector : MultiHostInjector {
                 val name = parent.name
                 for (attr in Aurelia.INJECTABLE) {
                     if (name.endsWith(".$attr")) {
-                        registrar.startInjecting(JavascriptLanguage.INSTANCE)
+                        registrar.startInjecting(JavascriptLanguage)
                                 .addPlace(null, null, host as PsiLanguageInjectionHost, range)
                                 .doneInjecting()
                         return
@@ -61,7 +61,7 @@ class Injector : MultiHostInjector {
                     injectionCandidate.node.elementType !== XmlElementType.XML_COMMENT &&
                     injectionCandidate !is OuterLanguageElement) {
 
-                registrar.startInjecting(JavascriptLanguage.INSTANCE)
+                registrar.startInjecting(JavascriptLanguage)
                         .addPlace(null, null, host as PsiLanguageInjectionHost,
                                 TextRange(range.startOffset + start + 2, range.startOffset + end))
                         .doneInjecting()
