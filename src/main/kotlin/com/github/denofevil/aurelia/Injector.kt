@@ -28,7 +28,7 @@ class Injector : MultiHostInjector {
                 val name = parent.name
                 for (attr in Aurelia.INJECTABLE) {
                     if (name.endsWith(".$attr")) {
-                        registrar.startInjecting(JavascriptLanguage.INSTANCE)
+                        registrar.startInjecting(JavascriptLanguage)
                             .addPlace(null, null, host as PsiLanguageInjectionHost, range)
                             .doneInjecting()
                         return
@@ -36,7 +36,7 @@ class Injector : MultiHostInjector {
                 }
             }
         }
-        JSInjectionBracesUtil.injectInXmlTextByDelimiters(registrar, host, JavascriptLanguage.INSTANCE, "\${", "}")
+        JSInjectionBracesUtil.injectInXmlTextByDelimiters(registrar, host, JavascriptLanguage, "\${", "}")
     }
 
     override fun elementsToInjectIn(): List<Class<out PsiElement>> {
