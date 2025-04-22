@@ -37,7 +37,7 @@ class Injector : MultiHostInjector {
 
                 if (Aurelia.REPEAT_FOR.contains(name)) {
                     val trimmedRange = rangeWithoutBindingBehaviours(host.text, range)
-                    registrar.startInjecting(JavascriptLanguage.INSTANCE)
+                    registrar.startInjecting(JavascriptLanguage)
                         .addPlace("${injectBeforeAll}for(var ", ")", host as PsiLanguageInjectionHost, trimmedRange)
                         .doneInjecting()
                     return
@@ -58,7 +58,7 @@ class Injector : MultiHostInjector {
                     }
                     if (name.endsWith(".$attr")) {
                         val trimmedRange = rangeWithoutBindingBehaviours(host.text, range)
-                        registrar.startInjecting(JavascriptLanguage.INSTANCE)
+                        registrar.startInjecting(JavascriptLanguage)
                             .addPlace(before, null, host as PsiLanguageInjectionHost, trimmedRange)
                             .doneInjecting()
                         return
@@ -66,10 +66,10 @@ class Injector : MultiHostInjector {
                 }
             }
         }
-        injectInXmlTextByDelimiters(registrar, host, "\${", "}")
+        injectInXmlTextByDelimiters(registrar, host)
     }
 
-    private fun injectInXmlTextByDelimiters(registrar: MultiHostRegistrar, context: PsiElement, start: String, end: String) {
+    private fun injectInXmlTextByDelimiters(registrar: MultiHostRegistrar, context: PsiElement, start: String = "\${", end: String = "}") {
         if (context.textContains(start[0])) {
             val text: String = context.text
             var previousSearchStart = -1
@@ -103,7 +103,7 @@ class Injector : MultiHostInjector {
                             before += "var \$index;"
                         }
                         val range = rangeWithoutBindingBehaviours(text.substring(startIdx, endIndex), TextRange(startIdx, endIndex))
-                        registrar.startInjecting(JavascriptLanguage.INSTANCE)
+                        registrar.startInjecting(JavascriptLanguage)
                             .addPlace(before, null, context as PsiLanguageInjectionHost, range)
                             .doneInjecting()
                     }
