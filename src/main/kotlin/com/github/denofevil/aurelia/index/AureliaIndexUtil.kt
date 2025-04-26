@@ -28,6 +28,15 @@ object AureliaIndexUtil {
         }
     }
 
+    fun getAllCustomElementNames(project: Project): Collection<String> {
+        if (!canUseIndexes(project)) return emptyList()
+        return FileBasedIndex.getInstance().getAllKeys(CUSTOM_ELEMENT_INDEX_KEY, project).filter {
+            FileBasedIndex.getInstance().getContainingFiles(
+                CUSTOM_ELEMENT_INDEX_KEY, it, GlobalSearchScope.projectScope(project)
+            ).isNotEmpty()
+        }
+    }
+
     fun resolveCustomAttributeClasses(attributeName: String, project: Project): List<JSClass> {
         if (!canUseIndexes(project)) return emptyList()
         return resolveAnnotatedClasses(attributeName, project, CUSTOM_ATTRIBUTE_INDEX_KEY) {

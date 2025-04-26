@@ -22,9 +22,8 @@
 		<javascript.rename.extension implementation="com.github.denofevil.aurelia.RenameExtension" />
 		<fileBasedIndex implementation="com.github.denofevil.aurelia.index.AureliaCustomElementIndex" />
 		<fileBasedIndex implementation="com.github.denofevil.aurelia.index.AureliaCustomAttributeIndex" />
-		<lang.inspectionSuppressor language="JavaScript"
-			implementationClass="com.github.denofevil.aurelia.InspectionSuppressor"
-			order="first" />
+		<lang.inspectionSuppressor language="JavaScript" implementationClass="com.github.denofevil.aurelia.InspectionSuppressor" order="first" />
+		<completion.contributor language="HTML" implementationClass="com.github.denofevil.aurelia.completion.AureliaCompletionContributor" order="first" />
 
 		<directoryProjectGenerator
 			implementation="com.github.denofevil.aurelia.cli.ProjectGenerator" />  <!-- works in WebStorm and other SmallIDEs -->

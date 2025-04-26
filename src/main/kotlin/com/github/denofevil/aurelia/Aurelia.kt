@@ -17,10 +17,14 @@ import com.intellij.psi.util.CachedValuesManager
  */
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
+    val ATTRIBUTE_ICON = IconLoader.getIcon("/icons/aurelia-attribute.svg", Aurelia::class.java)
+    val CLASS_ICON = IconLoader.getIcon("/icons/aurelia-class.svg", Aurelia::class.java)
+    val PROPERTY_ICON = IconLoader.getIcon("/icons/aurelia-property.svg", Aurelia::class.java)
 
+    val PROPERTY_BINDING_DECLARATIONS = listOf("ref")
     val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view")
     val EVENT_BINDINGS = listOf("trigger", "delegate", "call")
-    val INJECTABLE = listOf("for", "ref") + PROPERTY_BINDINGS + EVENT_BINDINGS
+    val INJECTABLE = listOf("for") + PROPERTY_BINDING_DECLARATIONS + PROPERTY_BINDINGS + EVENT_BINDINGS
     val REPEAT_FOR = listOf("repeat.for", "virtual-repeat.for", "reorderable-repeat.for")
 
     object CustomAttribute {
