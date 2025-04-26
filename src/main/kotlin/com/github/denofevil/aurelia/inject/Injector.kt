@@ -54,7 +54,7 @@ class Injector : MultiHostInjector {
                     }
                     if (Aurelia.PROPERTY_BINDINGS.contains(attr)) {
                         // bindings should be values or lambdas
-                        before += "var __binding__="
+                        before += "\$this['__binding__']="
                     }
                     if (name.endsWith(".$attr")) {
                         val trimmedRange = rangeWithoutBindingBehaviours(host.text, range)
