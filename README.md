@@ -15,14 +15,17 @@ of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 * Declaration resolving using `@customElement` and `@customAttribute` annotation or class names
 * Custom element property recognition (`@bindable` annotation)
 * Require and import tag reference detection for typescript files
-* Component and property navigation
+* Component and property navigation (ctrl+click)
 * Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
+* Custom element/attribute and property suggestions (ctrl+space)
+* GoTo HTML/ts file action when in same folder (Default Alt+Ctrl+Shift+O)
 
 ### Insight for bindings and interpolation
 
 * Has to be enabled in the **plugin settings** (enabling can lead to code warnings)
 * Code insight for `${}` and binding attribute values
 * Controller properties completion and navigation
+* `$this`, `$parent`, `$index`, `$event` support
 
 <br>
 

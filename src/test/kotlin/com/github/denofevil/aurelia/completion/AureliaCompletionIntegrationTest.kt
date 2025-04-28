@@ -27,6 +27,21 @@ class AureliaCompletionIntegrationTest : BasePlatformTestCase() {
         TestCase.assertTrue(variants.any { it.lookupString == "private-property-with-binding" })
     }
 
+    fun testShouldNotCompleteExistingCustomElementAttribute() {
+        myFixture.copyFileToProject("package.json")
+        myFixture.copyFileToProject("completion-custom-element.ts")
+        myFixture.configureByText(
+            HtmlFileType.INSTANCE,
+            "<completion-custom-element <caret> public-property-with-binding.bind=\"true\"></completion-custom-element>"
+        )
+
+        val variants = myFixture.completeBasic()
+
+        TestCase.assertTrue(variants.isNotEmpty())
+        // only suggestion bindable
+        TestCase.assertTrue(variants.none { it.lookupString == "public-property-with-binding" })
+    }
+
     fun testShouldCompleteCustomAttribute() {
         myFixture.copyFileToProject("package.json")
         myFixture.copyFileToProject("annotation-custom-attribute.ts")
@@ -36,6 +51,17 @@ class AureliaCompletionIntegrationTest : BasePlatformTestCase() {
 
         TestCase.assertTrue(variants.isNotEmpty())
         TestCase.assertTrue(variants.any { it.lookupString == "annotation-custom-attribute" })
+    }
+
+    fun testShouldNotCompleteExistingCompleteCustomAttribute() {
+        myFixture.copyFileToProject("package.json")
+        myFixture.copyFileToProject("annotation-custom-attribute.ts")
+        myFixture.configureByText(HtmlFileType.INSTANCE, "<div <caret> annotation-custom-attribute></div>")
+
+        val variants = myFixture.completeBasic()
+
+        TestCase.assertTrue(variants.isNotEmpty())
+        TestCase.assertTrue(variants.none { it.lookupString == "annotation-custom-attribute" })
     }
 
     fun testShouldCompleteCustomElement() {
