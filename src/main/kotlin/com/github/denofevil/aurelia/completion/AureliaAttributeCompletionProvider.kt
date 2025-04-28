@@ -23,7 +23,7 @@ class AureliaAttributeCompletionProvider : CompletionProvider<CompletionParamete
             result.addElement(LookupElementBuilder.create(it).withIcon(Aurelia.ATTRIBUTE_ICON))
         }
         val jsClass = DeclarationResolverUtil.resolveCustomElementDeclaration(tag)
-        DeclarationResolverUtil.resolveBindableAttributes(jsClass).forEach {
+        DeclarationResolverUtil.resolveBindableAttributesOnlyWithAnnotation(jsClass).forEach {
             val text = Aurelia.camelToKebabCase(it.memberName).lowercase()
             result.addElement(LookupElementBuilder.create(text).withIcon(Aurelia.PROPERTY_ICON))
         }
