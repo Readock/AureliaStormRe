@@ -10,6 +10,7 @@
 - Ignoring binding behaviors and value converts for code injection
 - Suppressing of missing promise for aurelia js injected code
 - $this, $parent, $index, $event support for code injections
+- GoTo Declaration/definition (Default Alt+Ctrl+Shift+O)
 
 ## [2.1.0]
 

@@ -17,14 +17,14 @@ class FrameworkHandler : FrameworkIndexingHandler() {
     override fun addContextType(info: JSTypeInfo, context: PsiElement) {
         if (DumbService.getInstance(context.project).isDumb) return
         if (!AureliaSettings.getInstance().jsInjectionEnabled) return
-        val controller = InjectionUtils.findControllerOfHtmlElement(context) ?: return
+        val controller = InjectionUtils.findControllerOfInjectedElement(context) ?: return
         val namespace = JSQualifiedNameImpl.buildProvidedNamespace(controller)
         info.addType(JSNamedTypeFactory.createNamespace(namespace, JSContext.INSTANCE, null, true), false)
     }
 
     override fun addContextNames(context: PsiElement, names: MutableList<String>) {
         if (!AureliaSettings.getInstance().jsInjectionEnabled) return
-        val controller = InjectionUtils.findControllerOfHtmlElement(context) ?: return
+        val controller = InjectionUtils.findControllerOfInjectedElement(context) ?: return
         names.add(controller.qualifiedName!!)
     }
 }

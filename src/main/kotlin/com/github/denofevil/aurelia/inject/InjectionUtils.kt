@@ -1,14 +1,13 @@
 package com.github.denofevil.aurelia.inject
 
 import com.github.denofevil.aurelia.Aurelia
-import com.github.denofevil.aurelia.require.DeclarationResolverUtil
+import com.github.denofevil.aurelia.FileUtils
 import com.intellij.codeInsight.completion.CompletionUtil
 import com.intellij.ide.highlighter.HtmlFileType
 import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.lang.javascript.JavascriptLanguage
 import com.intellij.lang.javascript.psi.JSReferenceExpression
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
-import com.intellij.openapi.util.io.FileUtil
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.resolve.FileContextUtil
 import com.intellij.psi.util.PsiTreeUtil
@@ -47,7 +46,7 @@ object InjectionUtils {
         }
     }
 
-    fun findControllerOfHtmlElement(context: PsiElement): JSClass? {
+    fun findControllerOfInjectedElement(context: PsiElement): JSClass? {
         if (context !is JSReferenceExpression || context.qualifier != null) {
             return null
         }
@@ -57,12 +56,6 @@ object InjectionUtils {
         val hostFile =
             FileContextUtil.getContextFile(if (original !== context) original else context.getContainingFile().originalFile) ?: return null
 
-        val directory = hostFile.originalFile.parent ?: return null
-
-        val name = FileUtil.getNameWithoutExtension(hostFile.name)
-        DeclarationResolverUtil.resolveCustomElementDeclaration(context, name)?.let { return it }
-
-        val controllerFile = directory.findFile("$name.ts") ?: directory.findFile("$name.js")
-        return PsiTreeUtil.findChildOfType(controllerFile, JSClass::class.java)
+        return FileUtils.findControllerClassOfHtmlFile(hostFile)
     }
 }
