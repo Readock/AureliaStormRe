@@ -19,6 +19,7 @@ class AureliaAttributeCompletionProvider : CompletionProvider<CompletionParamete
     ) {
         val element = parameters.position.parent as? XmlAttribute ?: return
         val tag = element.parent ?: return
+        if (!Aurelia.isFrameworkCandidate(tag)) return
 
         AureliaIndexUtil.getAllCustomAttributeNames(tag.project).forEach {
             if (tag.attributes.any { atr -> AttributeUtil.withoutInjectable(atr.name) == it }) return@forEach

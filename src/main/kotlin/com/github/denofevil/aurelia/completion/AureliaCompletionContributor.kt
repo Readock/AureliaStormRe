@@ -15,6 +15,11 @@ class AureliaCompletionContributor : CompletionContributor() {
         )
         extend(
             CompletionType.BASIC,
+            PlatformPatterns.psiElement().withParent(XmlAttribute::class.java),
+            AureliaBindingCompletionProvider()
+        )
+        extend(
+            CompletionType.BASIC,
             PlatformPatterns.psiElement().withParent(XmlElement::class.java),
             AureliaElementCompletionProvider()
         )

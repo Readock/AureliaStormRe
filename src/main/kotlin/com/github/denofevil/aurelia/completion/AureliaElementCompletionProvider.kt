@@ -16,6 +16,7 @@ class AureliaElementCompletionProvider : CompletionProvider<CompletionParameters
         result: CompletionResultSet
     ) {
         val element = parameters.position.parent as? XmlText ?: return
+        if (!Aurelia.isFrameworkCandidate(element)) return
         AureliaIndexUtil.getAllCustomElementNames(element.project).forEach {
             result.addElement(
                 LookupElementBuilder.create(it).withIcon(Aurelia.CLASS_ICON)
