@@ -6,7 +6,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlFile
 
-object FileUtils {
+object AureliaFileUtil {
 
     fun findControllerClassOfHtmlFile(hostFile: PsiFile): JSClass? {
         val directory = hostFile.originalFile.parent ?: return null

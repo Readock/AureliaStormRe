@@ -1,7 +1,7 @@
 package com.github.denofevil.aurelia.inject
 
 import com.github.denofevil.aurelia.Aurelia
-import com.github.denofevil.aurelia.FileUtils
+import com.github.denofevil.aurelia.AureliaFileUtil
 import com.intellij.codeInsight.completion.CompletionUtil
 import com.intellij.ide.highlighter.HtmlFileType
 import com.intellij.lang.injection.InjectedLanguageManager
@@ -56,6 +56,6 @@ object InjectionUtils {
         val hostFile =
             FileContextUtil.getContextFile(if (original !== context) original else context.getContainingFile().originalFile) ?: return null
 
-        return FileUtils.findControllerClassOfHtmlFile(hostFile)
+        return AureliaFileUtil.findControllerClassOfHtmlFile(hostFile)
     }
 }

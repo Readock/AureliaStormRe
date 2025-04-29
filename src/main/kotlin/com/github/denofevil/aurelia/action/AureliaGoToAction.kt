@@ -1,6 +1,6 @@
 package com.github.denofevil.aurelia.action
 
-import com.github.denofevil.aurelia.FileUtils
+import com.github.denofevil.aurelia.AureliaFileUtil
 import com.github.denofevil.aurelia.config.AureliaBundle
 import com.intellij.ide.highlighter.HtmlFileType
 import com.intellij.lang.javascript.JavaScriptFileType
@@ -22,11 +22,11 @@ class AureliaGoToAction : AnAction() {
         val file = e.getData(CommonDataKeys.PSI_FILE) ?: return
 
         if (file.fileType is HtmlFileType) {
-            FileUtils.findControllerClassOfHtmlFile(file)?.let {
+            AureliaFileUtil.findControllerClassOfHtmlFile(file)?.let {
                 openFile(it.containingFile)
             }
         } else if (file.fileType is JavaScriptFileType || file.fileType is TypeScriptFileType) {
-            FileUtils.findViewOfControllerFile(file)?.let {
+            AureliaFileUtil.findViewOfControllerFile(file)?.let {
                 openFile(it)
             }
         }
