@@ -46,7 +46,7 @@ class Injector : MultiHostInjector {
                     var before: String? = injectBeforeAll
                     if (InjectionUtils.findParentRepeatForTag(host) != null) {
                         // events have a $event parameter
-                        before += "var \$index;"
+                        before += "var \$index;var \$first;var \$last;var \$odd;var \$even;"
                     }
                     if (Aurelia.EVENT_BINDINGS.contains(attr)) {
                         // events have a $event parameter
