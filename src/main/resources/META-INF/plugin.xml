@@ -12,18 +12,17 @@
 ]]></description>
 	<extensions defaultExtensionNs="com.intellij">
 		<xml.xmlSuppressionProvider implementation="com.github.denofevil.aurelia.HtmlXmlSuppressionProvider" />
-		<multiHostInjector implementation="com.github.denofevil.aurelia.Injector" />
+		<multiHostInjector implementation="com.github.denofevil.aurelia.inject.Injector" />
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptorsProvider" order="first" />
-		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomElementAttributeDescriptorsProvider" order="first" />
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider" order="first" />
 		<xml.elementDescriptorProvider implementation="com.github.denofevil.aurelia.element.AureliaCustomElementDescriptorProvider" order="first" />
 		<psi.referenceContributor language="HTML" implementation="com.github.denofevil.aurelia.require.AureliaRequireReferenceContributor" order="first" />
+		<psi.referenceContributor language="JavaScript" implementation="com.github.denofevil.aurelia.inject.AureliaRepeatForVariableReferenceContributor" order="first" />
 		<javascript.rename.extension implementation="com.github.denofevil.aurelia.RenameExtension" />
 		<fileBasedIndex implementation="com.github.denofevil.aurelia.index.AureliaCustomElementIndex" />
 		<fileBasedIndex implementation="com.github.denofevil.aurelia.index.AureliaCustomAttributeIndex" />
-		<lang.inspectionSuppressor language="JavaScript"
-			implementationClass="com.github.denofevil.aurelia.InspectionSuppressor"
-			order="first" />
+		<lang.inspectionSuppressor language="JavaScript" implementationClass="com.github.denofevil.aurelia.InspectionSuppressor" order="first" />
+		<completion.contributor language="HTML" implementationClass="com.github.denofevil.aurelia.completion.AureliaCompletionContributor" order="first" />
 
 		<directoryProjectGenerator
 			implementation="com.github.denofevil.aurelia.cli.ProjectGenerator" />  <!-- works in WebStorm and other SmallIDEs -->
@@ -42,4 +41,10 @@
 	<extensions defaultExtensionNs="JavaScript">
 		<frameworkIndexingHandler implementation="com.github.denofevil.aurelia.FrameworkHandler" />
 	</extensions>
+	<actions>
+		<action id="com.github.denofevil.aurelia.action.AureliaGoToAction" class="com.github.denofevil.aurelia.action.AureliaGoToAction" text="Go To Aurelia Declaration/Definition" description="Switch between html and ts files of aurelia components">
+			<add-to-group group-id="GoToMenu" anchor="last" />
+			<keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt O" />
+		</action>
+	</actions>
 </idea-plugin>

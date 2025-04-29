@@ -45,6 +45,7 @@ dependencies {
         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
 
         testFramework(TestFrameworkType.Platform)
+        pluginVerifier("1.383") // TODO: remove once a version > 1.384 is available (1.384 has a memory issue)
     }
 }
 

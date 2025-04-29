@@ -9,20 +9,18 @@ import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.lang.javascript.frameworks.jsx.tsx.TypeScriptJSXTagUtil
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
 import com.intellij.psi.PsiElement
+import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlElementDecl
 import com.intellij.psi.xml.XmlTag
-import com.intellij.xml.XmlAttributeDescriptor
-import com.intellij.xml.XmlCustomElementDescriptor
-import com.intellij.xml.XmlElementDescriptor
-import com.intellij.xml.XmlNSDescriptor
-import com.intellij.xml.impl.dtd.BaseXmlElementDescriptorImpl
+import com.intellij.xml.*
 import com.intellij.xml.util.XmlUtil
+
 
 /**
  * Describes custom elements and provides correct declaration of the component
  * - Make sure to call all AttributeDescriptors in this::getAttributeDescriptor
  */
-class AureliaCustomElementDescriptor(private val tag: XmlTag) : BaseXmlElementDescriptorImpl(), XmlCustomElementDescriptor {
+class AureliaCustomElementDescriptor(private val tag: XmlTag) : XmlElementDescriptor, XmlCustomElementDescriptor {
     private var myElementDecl: XmlElementDecl? = null
     private var declaration: JSClass? = DeclarationResolverUtil.resolveCustomElementDeclaration(tag)
     private var attributeDescriptorsProvider = AureliaAttributeDescriptorsProvider()
@@ -48,9 +46,34 @@ class AureliaCustomElementDescriptor(private val tag: XmlTag) : BaseXmlElementDe
         return tag.name
     }
 
+    override fun getElementsDescriptors(context: XmlTag?): Array<XmlElementDescriptor> {
+//        val xmlDocument = PsiTreeUtil.getParentOfType(context, XmlDocumentImpl::class.java)
+//            ?: return XmlElementDescriptor.EMPTY_ARRAY
+//        val descriptor = xmlDocument.rootTagNSDescriptor ?: return XmlElementDescriptor.EMPTY_ARRAY
+//        return descriptor.getRootElementsDescriptors(xmlDocument)
+        return XmlElementDescriptor.EMPTY_ARRAY
+    }
+
+    override fun getElementDescriptor(childTag: XmlTag?, contextTag: XmlTag?): XmlElementDescriptor? {
+//        val parent = contextTag!!.parentTag ?: return null
+//        val descriptor = parent.getNSDescriptor(childTag!!.namespace, true)
+//        return descriptor?.getElementDescriptor(childTag)
+        return null
+    }
+
+    override fun getAttributesDescriptors(tag: XmlTag?): Array<XmlAttributeDescriptor> {
+        return emptyArray()
+//        if (tag == null) return emptyArray()
+//        return customElementAttributeDescriptorsProvider.getAttributeDescriptors(tag) +
+//                attributeDescriptorsProvider.getAttributeDescriptors(tag) +
+//                customAttributeDescriptorsProvider.getAttributeDescriptors(tag)
+    }
+
     override fun getNSDescriptor(): XmlNSDescriptor? {
         return getNsDescriptorFrom(this.myElementDecl)
     }
+
+    override fun getTopGroup(): XmlElementsGroup? = null
 
     private fun getNsDescriptorFrom(elementDecl: PsiElement?): XmlNSDescriptor? {
         val file = XmlUtil.getContainingFile(elementDecl)
@@ -83,12 +106,8 @@ class AureliaCustomElementDescriptor(private val tag: XmlTag) : BaseXmlElementDe
         return null
     }
 
-    public override fun collectAttributeDescriptors(tag: XmlTag?): Array<XmlAttributeDescriptor> {
-        return emptyArray() // handled by other descriptors
-    }
-
-    override fun collectAttributeDescriptorsMap(tag: XmlTag?): HashMap<String, XmlAttributeDescriptor> {
-        return HashMap() // handled by other descriptors
+    override fun getAttributeDescriptor(attribute: XmlAttribute?): XmlAttributeDescriptor? {
+        return getAttributeDescriptor(attribute?.name, attribute?.parent)
     }
 
     override fun getQualifiedName(): String {
@@ -97,9 +116,11 @@ class AureliaCustomElementDescriptor(private val tag: XmlTag) : BaseXmlElementDe
 
     override fun isCustomElement() = true
 
-    override fun getContentType() = CONTENT_TYPE_ANY
+    override fun getContentType() = XmlElementDescriptor.CONTENT_TYPE_ANY
 
-    override fun doCollectXmlDescriptors(tag: XmlTag?) = emptyArray<XmlElementDescriptor>()
+    override fun getDefaultValue(): String? = myElementDecl?.name
 
-    override fun collectElementDescriptorsMap(tag: XmlTag?) = hashMapOf<String, XmlElementDescriptor>()
+    override fun toString(): String {
+        return this.qualifiedName
+    }
 }

@@ -12,8 +12,7 @@ import com.intellij.xml.XmlAttributeDescriptorsProvider
 class AureliaCustomAttributeDescriptorsProvider : XmlAttributeDescriptorsProvider {
 
     override fun getAttributeDescriptors(element: XmlTag): Array<XmlAttributeDescriptor> {
-        if (!Aurelia.isFrameworkCandidate(element)) return emptyArray()
-        return customAttributes(element).toTypedArray()
+        return emptyArray()
     }
 
     override fun getAttributeDescriptor(attributeName: String, tag: XmlTag): XmlAttributeDescriptor? {
@@ -22,12 +21,5 @@ class AureliaCustomAttributeDescriptorsProvider : XmlAttributeDescriptorsProvide
             return AureliaCustomAttributeDescriptor(attributeName, it, true)
         }
         return null
-    }
-
-    private fun customAttributes(xmlTag: XmlTag): List<XmlAttributeDescriptor> {
-        return AureliaIndexUtil.getAllCustomAttributeNames(xmlTag.project).map {
-            val decl = AureliaIndexUtil.resolveCustomAttributeClasses(it, xmlTag.project).firstOrNull()
-            return@map AureliaCustomAttributeDescriptor(it, decl, true)
-        }
     }
 }

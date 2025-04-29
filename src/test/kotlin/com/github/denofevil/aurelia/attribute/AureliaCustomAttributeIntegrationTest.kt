@@ -1,6 +1,6 @@
 package com.github.denofevil.aurelia.attribute
 
-import com.intellij.ide.highlighter.XmlFileType
+import com.intellij.ide.highlighter.HtmlFileType
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
@@ -18,7 +18,7 @@ class AureliaCustomAttributeIntegrationTest : BasePlatformTestCase() {
     fun testShouldFindCustomAttributeDeclaration_ResolvedByAnnotation() {
         myFixture.copyFileToProject("package.json")
         myFixture.copyFileToProject("annotation-custom-attribute.ts")
-        val psiFile = myFixture.configureByText(XmlFileType.INSTANCE, "<div annotation-custom-attribute></div>")
+        val psiFile = myFixture.configureByText(HtmlFileType.INSTANCE, "<div annotation-custom-attribute></div>")
         val htmlFile = assertInstanceOf(psiFile, XmlFile::class.java)
 
         val tag: XmlTag = htmlFile.rootTag!!
@@ -34,7 +34,7 @@ class AureliaCustomAttributeIntegrationTest : BasePlatformTestCase() {
     fun testShouldFindCustomElementDeclaration_ResolvedByName() {
         myFixture.copyFileToProject("package.json")
         myFixture.copyFileToProject("name-custom-attribute.ts")
-        val psiFile = myFixture.configureByText(XmlFileType.INSTANCE, "<div name-custom-attribute></div>")
+        val psiFile = myFixture.configureByText(HtmlFileType.INSTANCE, "<div name-custom-attribute></div>")
         val htmlFile = assertInstanceOf(psiFile, XmlFile::class.java)
 
         val tag: XmlTag = htmlFile.rootTag!!
@@ -49,7 +49,7 @@ class AureliaCustomAttributeIntegrationTest : BasePlatformTestCase() {
 
     fun testShouldIgnoreCustomElementDeclarationOutsideOfAureliaProjects() {
         myFixture.copyFileToProject("annotation-custom-attribute.ts")
-        val psiFile = myFixture.configureByText(XmlFileType.INSTANCE, "<div annotation-custom-attribute></div>")
+        val psiFile = myFixture.configureByText(HtmlFileType.INSTANCE, "<div annotation-custom-attribute></div>")
         val htmlFile = assertInstanceOf(psiFile, XmlFile::class.java)
 
         val tag: XmlTag = htmlFile.rootTag!!

@@ -15,14 +15,17 @@ of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 * Declaration resolving using `@customElement` and `@customAttribute` annotation or class names
 * Custom element property recognition (`@bindable` annotation)
 * Require and import tag reference detection for typescript files
-* Component and property navigation
+* Component and property navigation (ctrl+click)
 * Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
+* Custom element/attribute and property suggestions (ctrl+space)
+* GoTo HTML/ts file action when in same folder (Default Alt+Ctrl+Shift+O)
 
 ### Insight for bindings and interpolation
 
 * Has to be enabled in the **plugin settings** (enabling can lead to code warnings)
 * Code insight for `${}` and binding attribute values
 * Controller properties completion and navigation
+* `$this`, `$parent`, `$index`, `$event` support
 
 <br>
 
@@ -33,13 +36,8 @@ Either `aurelia`, `aurelia-cli` or `aurelia-framework` must be present in `packa
 
 ## Contributing
 
-### Prerequisites
-
-* JDK version 17 or later suggested
-
-### Running the plugin
-
-In order to test your plugin use the [runIde](https://plugins.jetbrains.com/docs/intellij/configuring-plugin-project.html#run-ide-task)
-Gradle. This will launch an instance of intellij with the plugin loaded.
+You can run the plugin using the [Run Plugin](/.run/Run%20Plugin.run.xml) configuration. This will launch an instance of intellij with
+the plugin loaded (for more information
+check [here](https://github.com/JetBrains/intellij-platform-plugin-template?tab=readme-ov-file#gradle-configuration)).
 
 > this project is based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)

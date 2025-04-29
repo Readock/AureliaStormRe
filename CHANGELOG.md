@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [2.2.0]
+
+### Added
+
+- Proper `repeat.for` detection and reference resolving
+- Ignoring binding behaviors and value converts for code injection
+- Suppressing of missing promise for aurelia js injected code
+- `$this`, `$parent`, `$index`, `$event` support for code injections
+- GoTo Declaration/definition (Default Alt+Ctrl+Shift+O)
+- Custom element completion (ctrl+space)
+- Property and custom attribute completion (ctrl+space)
+
 ## [2.1.0]
 
 ### Added
