@@ -1,8 +1,6 @@
 package com.github.denofevil.aurelia.completion
 
 import com.github.denofevil.aurelia.Aurelia
-import com.github.denofevil.aurelia.index.AureliaIndexUtil
-import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -24,12 +22,6 @@ class AureliaBindingCompletionProvider : CompletionProvider<CompletionParameters
         if (!attribute.name.contains(".")) return
 
         val name = attribute.name.substringBeforeLast(".")
-        val declaration = DeclarationResolverUtil.resolveCustomElementDeclaration(tag)
-        val signatures = DeclarationResolverUtil.resolveBindableAttributes(declaration)
-
-        val isCustomAttribute = AureliaIndexUtil.resolveCustomAttributeClasses(name, tag.project).isNotEmpty()
-        val isPropertyBinding = signatures.any { Aurelia.camelToKebabCase(it.memberName) == name }
-        if (!isPropertyBinding && !isCustomAttribute) return // skip because we cant bind it
 
         Aurelia.ATTRIBUTE_BINDING_SUGGESTIONS.forEach {
             result.addElement(

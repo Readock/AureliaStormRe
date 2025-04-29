@@ -23,7 +23,7 @@ object Aurelia {
 
     val PROPERTY_BINDING_DECLARATIONS = listOf("ref")
     val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view")
-    val EVENT_BINDINGS = listOf("trigger", "delegate", "call")
+    val EVENT_BINDINGS = listOf("trigger", "delegate", "call", "capture")
     val ATTRIBUTE_BINDING_SUGGESTIONS = PROPERTY_BINDINGS + EVENT_BINDINGS
     val INJECTABLE = listOf("for") + PROPERTY_BINDING_DECLARATIONS + PROPERTY_BINDINGS + EVENT_BINDINGS
     val REPEAT_FOR = listOf("repeat.for", "virtual-repeat.for", "reorderable-repeat.for")

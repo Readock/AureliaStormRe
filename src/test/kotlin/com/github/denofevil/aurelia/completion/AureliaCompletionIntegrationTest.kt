@@ -21,10 +21,10 @@ class AureliaCompletionIntegrationTest : BasePlatformTestCase() {
 
         TestCase.assertTrue(variants.isNotEmpty())
         // only suggestion bindable
-        TestCase.assertTrue(variants.none { it.lookupString == "public-property" })
-        TestCase.assertTrue(variants.none { it.lookupString == "private-property" })
-        TestCase.assertTrue(variants.any { it.lookupString == "public-property-with-binding" })
-        TestCase.assertTrue(variants.any { it.lookupString == "private-property-with-binding" })
+        TestCase.assertEquals(0, variants.count { it.lookupString == "public-property" })
+        TestCase.assertEquals(0, variants.count { it.lookupString == "private-property" })
+        TestCase.assertEquals(1, variants.count { it.lookupString == "public-property-with-binding" })
+        TestCase.assertEquals(1, variants.count { it.lookupString == "private-property-with-binding" })
     }
 
     fun testShouldNotCompleteCustomElementAttributeWithoutAurelia() {
@@ -58,7 +58,19 @@ class AureliaCompletionIntegrationTest : BasePlatformTestCase() {
         val variants = myFixture.completeBasic()
 
         TestCase.assertTrue(variants.isNotEmpty())
-        TestCase.assertTrue(variants.any { it.lookupString == "annotation-custom-attribute" })
+        TestCase.assertEquals(1, variants.count { it.lookupString == "annotation-custom-attribute" })
+    }
+
+    fun testShouldCompleteCustomAttributeForCustomElement() {
+        myFixture.copyFileToProject("package.json")
+        myFixture.copyFileToProject("completion-custom-element.ts")
+        myFixture.copyFileToProject("annotation-custom-attribute.ts")
+        myFixture.configureByText(HtmlFileType.INSTANCE, "<completion-custom-element <caret>></completion-custom-element>")
+
+        val variants = myFixture.completeBasic()
+
+        TestCase.assertTrue(variants.isNotEmpty())
+        TestCase.assertEquals(1, variants.count { it.lookupString == "annotation-custom-attribute" })
     }
 
     fun testShouldNotCompleteCustomAttributeWithoutAurelia() {
@@ -89,8 +101,8 @@ class AureliaCompletionIntegrationTest : BasePlatformTestCase() {
         val variants = myFixture.completeBasic()
 
         TestCase.assertTrue(variants.isNotEmpty())
-        TestCase.assertTrue(variants.any { it.lookupString == "name-custom-element" })
-        TestCase.assertTrue(variants.any { it.lookupString == "annotation-custom-element" })
+        TestCase.assertEquals(1, variants.count { it.lookupString == "name-custom-element" })
+        TestCase.assertEquals(1, variants.count { it.lookupString == "annotation-custom-element" })
     }
 
     fun testShouldNotCompleteCustomElementWithoutAurelia() {
@@ -99,7 +111,7 @@ class AureliaCompletionIntegrationTest : BasePlatformTestCase() {
         myFixture.configureByText(HtmlFileType.INSTANCE, "<div><caret></div>")
 
         val variants = myFixture.completeBasic()
-        
+
         TestCase.assertTrue(variants.none { it.lookupString == "name-custom-element" })
         TestCase.assertTrue(variants.none { it.lookupString == "annotation-custom-element" })
     }

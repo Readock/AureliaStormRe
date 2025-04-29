@@ -14,7 +14,6 @@
 		<xml.xmlSuppressionProvider implementation="com.github.denofevil.aurelia.HtmlXmlSuppressionProvider" />
 		<multiHostInjector implementation="com.github.denofevil.aurelia.inject.Injector" />
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptorsProvider" order="first" />
-		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomElementAttributeDescriptorsProvider" order="first" />
 		<xml.attributeDescriptorsProvider implementation="com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider" order="first" />
 		<xml.elementDescriptorProvider implementation="com.github.denofevil.aurelia.element.AureliaCustomElementDescriptorProvider" order="first" />
 		<psi.referenceContributor language="HTML" implementation="com.github.denofevil.aurelia.require.AureliaRequireReferenceContributor" order="first" />

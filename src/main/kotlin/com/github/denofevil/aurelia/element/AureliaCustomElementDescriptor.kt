@@ -1,7 +1,10 @@
 package com.github.denofevil.aurelia.element
 
 import com.github.denofevil.aurelia.Aurelia
-import com.github.denofevil.aurelia.attribute.*
+import com.github.denofevil.aurelia.attribute.AttributeUtil
+import com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptor
+import com.github.denofevil.aurelia.attribute.AureliaAttributeDescriptorsProvider
+import com.github.denofevil.aurelia.attribute.AureliaCustomAttributeDescriptorsProvider
 import com.github.denofevil.aurelia.require.DeclarationResolverUtil
 import com.intellij.lang.javascript.frameworks.jsx.tsx.TypeScriptJSXTagUtil
 import com.intellij.lang.javascript.psi.ecmal4.JSClass
@@ -22,7 +25,6 @@ class AureliaCustomElementDescriptor(private val tag: XmlTag) : XmlElementDescri
     private var declaration: JSClass? = DeclarationResolverUtil.resolveCustomElementDeclaration(tag)
     private var attributeDescriptorsProvider = AureliaAttributeDescriptorsProvider()
     private var customAttributeDescriptorsProvider = AureliaCustomAttributeDescriptorsProvider()
-    private var customElementAttributeDescriptorsProvider = AureliaCustomElementAttributeDescriptorsProvider()
 
     override fun getDeclaration(): PsiElement? {
         return this.declaration
@@ -98,7 +100,6 @@ class AureliaCustomElementDescriptor(private val tag: XmlTag) : XmlElementDescri
         // try to resolve using other descriptors
         customAttributeDescriptorsProvider.getAttributeDescriptor(attributeName, context)?.let { return it }
         attributeDescriptorsProvider.getAttributeDescriptor(attributeName, context)?.let { return it }
-        customElementAttributeDescriptorsProvider.getAttributeDescriptor(attributeName, context)?.let { return it }
 
         // try to resolve checking additional attributes
         Aurelia.CUSTOM_ELEMENT_ATTRIBUTES.firstOrNull { it == attributeName }?.let { return AureliaAttributeDescriptor(attributeName) }
