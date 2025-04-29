@@ -45,7 +45,6 @@
 		<action id="com.github.denofevil.aurelia.action.AureliaGoToAction" class="com.github.denofevil.aurelia.action.AureliaGoToAction" text="Go To Aurelia Declaration/Definition" description="Switch between html and ts files of aurelia components">
 			<add-to-group group-id="GoToMenu" anchor="last" />
 			<keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt O" />
-			<keyboard-shortcut keymap="$default" first-keystroke="ctrl K" second-keystroke="O" />
 		</action>
 	</actions>
 </idea-plugin>
