@@ -36,13 +36,8 @@ Either `aurelia`, `aurelia-cli` or `aurelia-framework` must be present in `packa
 
 ## Contributing
 
-### Prerequisites
-
-* JDK version 17 or later suggested
-
-### Running the plugin
-
-In order to test your plugin use the [runIde](https://plugins.jetbrains.com/docs/intellij/configuring-plugin-project.html#run-ide-task)
-Gradle. This will launch an instance of intellij with the plugin loaded.
+You can run the plugin using the [Run Plugin](/.run/Run%20Plugin.run.xml) configuration. This will launch an instance of intellij with
+the plugin loaded (for more information
+check [here](https://github.com/JetBrains/intellij-platform-plugin-template?tab=readme-ov-file#gradle-configuration)).
 
 > this project is based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
