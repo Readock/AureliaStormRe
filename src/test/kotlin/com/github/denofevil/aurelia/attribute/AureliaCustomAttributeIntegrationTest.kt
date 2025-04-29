@@ -24,7 +24,7 @@ class AureliaCustomAttributeIntegrationTest : BasePlatformTestCase() {
         val tag: XmlTag = htmlFile.rootTag!!
         val provider = AureliaCustomAttributeDescriptorsProvider()
 
-        val descriptor = provider.getAttributeDescriptors(tag).firstOrNull()
+        val descriptor = provider.getAttributeDescriptor("annotation-custom-attribute", tag)
         assertNotNull(descriptor)
         val declaration = descriptor!!.declaration as? JSClass
         assertNotNull(declaration)
@@ -40,7 +40,7 @@ class AureliaCustomAttributeIntegrationTest : BasePlatformTestCase() {
         val tag: XmlTag = htmlFile.rootTag!!
         val provider = AureliaCustomAttributeDescriptorsProvider()
 
-        val descriptor = provider.getAttributeDescriptors(tag).firstOrNull()
+        val descriptor = provider.getAttributeDescriptor("name-custom-attribute", tag)
         assertNotNull(descriptor)
         val declaration = descriptor!!.declaration as? JSClass
         assertNotNull(declaration)

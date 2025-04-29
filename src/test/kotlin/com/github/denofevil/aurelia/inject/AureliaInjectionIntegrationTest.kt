@@ -1,5 +1,6 @@
 package com.github.denofevil.aurelia.inject
 
+import com.github.denofevil.aurelia.config.AureliaSettings
 import com.intellij.ide.highlighter.HtmlFileType
 import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.lang.javascript.psi.JSExpression
@@ -24,6 +25,7 @@ class AureliaInjectionIntegrationTest : BasePlatformTestCase() {
     fun testShouldInjectBinding() {
         myFixture.copyFileToProject("package.json")
         myFixture.copyFileToProject("annotation-custom-element.ts", "annotation-custom-element.ts")
+        AureliaSettings.getInstance().jsInjectionEnabled = true
         val psiFile = myFixture.configureByText(
             HtmlFileType.INSTANCE, """
             <annotation-custom-element my-prop.bind="name"></annotation-custom-element>
@@ -37,7 +39,7 @@ class AureliaInjectionIntegrationTest : BasePlatformTestCase() {
             .getInjectedPsiFiles(attribute.valueElement!!)
             ?.firstOrNull()
             ?.first as? PsiFile
-        val reference = PsiTreeUtil.findChildOfType(injectedPsi, JSReferenceExpression::class.java)
+        val reference = PsiTreeUtil.findChildrenOfType(injectedPsi, JSReferenceExpression::class.java).firstOrNull { it.text == "name" }
 
         TestCase.assertNotNull(reference)
         TestCase.assertTrue(InjectionUtils.isAureliaInjected(reference!!))
@@ -46,6 +48,7 @@ class AureliaInjectionIntegrationTest : BasePlatformTestCase() {
     fun testShouldInjectExpression() {
         myFixture.copyFileToProject("package.json")
         myFixture.copyFileToProject("annotation-custom-element.ts", "annotation-custom-element.ts")
+        AureliaSettings.getInstance().jsInjectionEnabled = true
         val psiFile = myFixture.configureByText(
             HtmlFileType.INSTANCE, "<template>\${var test = 'test'}</template>"
         )
@@ -66,6 +69,7 @@ class AureliaInjectionIntegrationTest : BasePlatformTestCase() {
     fun testShouldResolveRepeatForVariableReference() {
         myFixture.copyFileToProject("package.json")
         myFixture.copyFileToProject("annotation-custom-element.ts", "annotation-custom-element.ts")
+        AureliaSettings.getInstance().jsInjectionEnabled = true
         val psiFile = myFixture.configureByText(
             HtmlFileType.INSTANCE, """
             <template repeat.for="name of ['a','b']">
@@ -81,7 +85,7 @@ class AureliaInjectionIntegrationTest : BasePlatformTestCase() {
             .getInjectedPsiFiles(attribute.valueElement!!)
             ?.firstOrNull()
             ?.first as? PsiFile
-        val reference = PsiTreeUtil.findChildOfType(injectedPsi, JSReferenceExpression::class.java)
+        val reference = PsiTreeUtil.findChildrenOfType(injectedPsi, JSReferenceExpression::class.java).firstOrNull { it.text == "name" }
 
         TestCase.assertNotNull(reference)
         TestCase.assertTrue(InjectionUtils.isAureliaInjected(reference!!))
@@ -95,6 +99,7 @@ class AureliaInjectionIntegrationTest : BasePlatformTestCase() {
 
     fun testShouldIgnoreInjectionsOutsideOfAureliaProjects() {
         myFixture.copyFileToProject("annotation-custom-element.ts", "annotation-custom-element.ts")
+        AureliaSettings.getInstance().jsInjectionEnabled = true
         val psiFile = myFixture.configureByText(
             HtmlFileType.INSTANCE, """
             <annotation-custom-element my-prop.bind="name"></annotation-custom-element>

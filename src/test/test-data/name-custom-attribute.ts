@@ -1,2 +1,2 @@
-export class NameCustomElementCustomAttribute {
+export class NameCustomAttributeCustomAttribute {
 }
