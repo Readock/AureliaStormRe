@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Added
+
+- Hook support for components (eg. `attached`,`detached` functions)
+- Change callback detection (only works for `propertyChanged` methods)
+
 ## [2.2.0]
 
 ### Added
@@ -60,8 +65,13 @@
 - Remove deprecated getBaseDir call
 
 [Unreleased]: https://github.com/Readock/AureliaStormRe/compare/v2.1.0...HEAD
+
 [2.1.0]: https://github.com/Readock/AureliaStormRe/compare/v2.0.1...v2.1.0
+
 [2.0.1]: https://github.com/Readock/AureliaStormRe/compare/v2.0.0...v2.0.1
+
 [2.0.0]: https://github.com/Readock/AureliaStormRe/compare/v1.2.1...v2.0.0
+
 [1.2.1]: https://github.com/Readock/AureliaStormRe/compare/v1.2.0...v1.2.1
+
 [1.2.0]: https://github.com/Readock/AureliaStormRe/commits/v1.2.0

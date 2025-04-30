@@ -26,7 +26,6 @@ class AureliaHookLineMarkerProvider : LineMarkerProvider {
 
     private fun collectLineMarkerInfo(element: PsiElement): LineMarkerInfo<*>? {
         val method = element as? JSFunction ?: return null
-//        if (method.nameIdentifier != element) return null
         if (!Aurelia.isFrameworkCandidate(element)) return null
 
         checkLifecycleMethod(method, element)?.let { return it }

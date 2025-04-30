@@ -16,6 +16,7 @@ of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 * Custom element property recognition (`@bindable` annotation)
 * Require and import tag reference detection for typescript files
 * Component and property navigation (ctrl+click)
+* Component lifecycle hooks (like `attached`, `detached`)
 * Detecting bindable HTML attributes and events (such as `class.bind` or `click.delegate`)
 * Custom element/attribute and property suggestions (ctrl+space)
 * GoTo HTML/ts file action when in same folder (Default Alt+Ctrl+Shift+O)
