@@ -29,7 +29,7 @@ class AureliaCustomElementIndex : ScalarIndexExtension<String>() {
             val result = mutableMapOf<String, Void?>()
             val psiFile = fileContent.psiFile
             PsiTreeUtil.findChildrenOfType(psiFile, JSClass::class.java).forEach { jsClass ->
-                AureliaIndexUtil.resolveClassCustomElementNameByAnnotation(jsClass)?.lowercase()?.let {
+                AureliaIndexUtil.resolveClassCustomElementName(jsClass)?.lowercase()?.let {
                     result[it] = null
                 }
             }

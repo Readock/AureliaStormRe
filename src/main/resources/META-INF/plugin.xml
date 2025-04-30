@@ -24,6 +24,11 @@
 		<lang.inspectionSuppressor language="JavaScript" implementationClass="com.github.denofevil.aurelia.InspectionSuppressor" order="first" />
 		<completion.contributor language="HTML" implementationClass="com.github.denofevil.aurelia.completion.AureliaCompletionContributor" order="first" />
 
+		<codeInsight.lineMarkerProvider language="JavaScript"
+			implementationClass="com.github.denofevil.aurelia.hook.AureliaHookLineMarkerProvider" />
+		<implicitUsageProvider implementation="com.github.denofevil.aurelia.hook.AureliaHookUsageProvider" />
+
+
 		<directoryProjectGenerator
 			implementation="com.github.denofevil.aurelia.cli.ProjectGenerator" />  <!-- works in WebStorm and other SmallIDEs -->
 		<projectTemplatesFactory

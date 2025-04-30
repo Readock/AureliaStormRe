@@ -24,7 +24,7 @@ object AureliaIndexUtil {
     fun resolveCustomElementClasses(componentName: String, project: Project): List<JSClass> {
         if (!canUseIndexes(project)) return emptyList()
         return resolveAnnotatedClasses(componentName, project, CUSTOM_ELEMENT_INDEX_KEY) {
-            resolveClassCustomElementNameByAnnotation(it)
+            resolveClassCustomElementName(it)
         }
     }
 
@@ -40,7 +40,7 @@ object AureliaIndexUtil {
     fun resolveCustomAttributeClasses(attributeName: String, project: Project): List<JSClass> {
         if (!canUseIndexes(project)) return emptyList()
         return resolveAnnotatedClasses(attributeName, project, CUSTOM_ATTRIBUTE_INDEX_KEY) {
-            resolveClassCustomAttributeNameByAnnotation(it)
+            resolveClassCustomAttributeName(it)
         }
     }
 
@@ -91,11 +91,14 @@ object AureliaIndexUtil {
         return result
     }
 
-    fun resolveClassCustomAttributeNameByAnnotation(jsClass: JSClass): String? {
+    fun isCustomAttributeClass(jsClass: JSClass): Boolean = resolveClassCustomElementName(jsClass) != null
+    fun isCustomElementClass(jsClass: JSClass): Boolean = resolveClassCustomElementName(jsClass) != null
+
+    fun resolveClassCustomAttributeName(jsClass: JSClass): String? {
         return resolveClassNameByAnnotation(jsClass, Aurelia.CustomAttribute.ANNOTATION, Aurelia.CustomAttribute.CLASS_SUFFIX)
     }
 
-    fun resolveClassCustomElementNameByAnnotation(jsClass: JSClass): String? {
+    fun resolveClassCustomElementName(jsClass: JSClass): String? {
         return resolveClassNameByAnnotation(jsClass, Aurelia.CustomElement.ANNOTATION, Aurelia.CustomElement.CLASS_SUFFIX)
     }
 

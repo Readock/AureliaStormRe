@@ -27,6 +27,14 @@ object Aurelia {
     val ATTRIBUTE_BINDING_SUGGESTIONS = PROPERTY_BINDINGS + EVENT_BINDINGS
     val INJECTABLE = listOf("for") + PROPERTY_BINDING_DECLARATIONS + PROPERTY_BINDINGS + EVENT_BINDINGS
     val REPEAT_FOR = listOf("repeat.for", "virtual-repeat.for", "reorderable-repeat.for")
+    val LIFECYCLE_METHODS = listOf(
+        // Aurelia 1
+        "created", "bind", "unbind", "attached", "detached", "activate", "deactivate",
+        // Aurelia 2
+        "hydrating", "hydrated", "attaching", "attached",
+        "detaching", "detached", "binding", "bound",
+        "unbinding", "unbound"
+    )
 
     object CustomAttribute {
         const val ANNOTATION = "customAttribute"
@@ -48,14 +56,16 @@ object Aurelia {
     val CUSTOM_ELEMENT_ATTRIBUTES = listOf("element.ref", "controller.ref", "view.ref", "view-model.ref", "component.ref")
 
 
-    fun isPresentFor(project: Project): Boolean = CachedValuesManager.getManager(project).getCachedValue(project) {
-        val aureliaRootFolders = getAureliaRootFolders(project)
-        CachedValueProvider.Result
-            .create(
-                aureliaRootFolders.isNotEmpty(),
-                VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS,
-                ProjectRootModificationTracker.getInstance(project)
-            )
+    fun isPresentFor(project: Project): Boolean {
+        return CachedValuesManager.getManager(project).getCachedValue(project) {
+            val aureliaRootFolders = getAureliaRootFolders(project)
+            CachedValueProvider.Result
+                .create(
+                    aureliaRootFolders.isNotEmpty(),
+                    VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS,
+                    ProjectRootModificationTracker.getInstance(project)
+                )
+        }
     }
 
     /**
