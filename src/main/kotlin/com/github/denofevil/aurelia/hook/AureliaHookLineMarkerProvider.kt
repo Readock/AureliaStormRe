@@ -8,6 +8,7 @@ import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.lang.javascript.psi.JSFunction
 import com.intellij.openapi.project.DumbService
 import com.intellij.psi.PsiElement
+import com.intellij.psi.impl.source.tree.LeafPsiElement
 
 
 class AureliaHookLineMarkerProvider : LineMarkerProvider {
@@ -25,7 +26,8 @@ class AureliaHookLineMarkerProvider : LineMarkerProvider {
     }
 
     private fun collectLineMarkerInfo(element: PsiElement): LineMarkerInfo<*>? {
-        val method = element as? JSFunction ?: return null
+        if (element !is LeafPsiElement) return null
+        val method = element.parent as? JSFunction ?: return null
         if (!Aurelia.isFrameworkCandidate(element)) return null
 
         checkLifecycleMethod(method, element)?.let { return it }
@@ -36,7 +38,7 @@ class AureliaHookLineMarkerProvider : LineMarkerProvider {
     private fun checkLifecycleMethod(method: JSFunction, element: PsiElement): LineMarkerInfo<*>? {
         if (!HookUtil.isLifecycleMethod(method)) return null
 
-        return NavigationGutterIconBuilder.create(Aurelia.ICON)
+        return NavigationGutterIconBuilder.create(Aurelia.HOOK_ICON)
             .setTooltipText(AureliaBundle.get("hint.lifecycleMethod"))
             .setTarget(method.parent)
             .createLineMarkerInfo(element)
@@ -45,7 +47,7 @@ class AureliaHookLineMarkerProvider : LineMarkerProvider {
     private fun checkChangeHandler(method: JSFunction, element: PsiElement): LineMarkerInfo<*>? {
         val observable = HookUtil.findChangeCallbackTarget(method) ?: return null
 
-        return NavigationGutterIconBuilder.create(Aurelia.ICON)
+        return NavigationGutterIconBuilder.create(Aurelia.OBSERVER_ICON)
             .setTooltipText(AureliaBundle.get("hint.observableCallbackMethod"))
             .setTarget(observable)
             .createLineMarkerInfo(element)

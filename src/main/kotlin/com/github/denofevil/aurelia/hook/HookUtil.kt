@@ -9,7 +9,7 @@ import com.intellij.psi.util.PsiTreeUtil
 
 object HookUtil {
     fun isLifecycleMethod(method: JSFunction): Boolean {
-        val methodClass = PsiTreeUtil.findFirstParent(method) { it is JSClass } as JSClass
+        val methodClass = PsiTreeUtil.findFirstParent(method) { it is JSClass } as JSClass? ?: return false
         if (!AureliaIndexUtil.isCustomElementClass(methodClass)) return false
         return Aurelia.LIFECYCLE_METHODS.contains(method.name)
     }
