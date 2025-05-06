@@ -18,6 +18,7 @@ import com.intellij.psi.util.CachedValuesManager
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
     val HOOK_ICON = IconLoader.getIcon("/icons/aurelia-hook.svg", Aurelia::class.java)
+    val ANNOTATION_ICON = IconLoader.getIcon("/icons/aurelia-annotation.svg", Aurelia::class.java)
     val OBSERVER_ICON = IconLoader.getIcon("/icons/aurelia-listener.svg", Aurelia::class.java)
     val ATTRIBUTE_ICON = IconLoader.getIcon("/icons/aurelia-attribute.svg", Aurelia::class.java)
     val CLASS_ICON = IconLoader.getIcon("/icons/aurelia-class.svg", Aurelia::class.java)
@@ -25,7 +26,7 @@ object Aurelia {
 
     val BINDABLE_ANNOTATIONS = listOf("bindable")
     val OBSERVABLE_ANNOTATIONS = listOf("observable") + BINDABLE_ANNOTATIONS
-    
+
     val PROPERTY_BINDING_DECLARATIONS = listOf("ref")
     val PROPERTY_BINDINGS = listOf("bind", "one-way", "two-way", "one-time", "from-view", "to-view")
     val EVENT_BINDINGS = listOf("trigger", "delegate", "call", "capture")

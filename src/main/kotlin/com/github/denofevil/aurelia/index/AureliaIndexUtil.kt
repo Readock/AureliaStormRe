@@ -91,7 +91,7 @@ object AureliaIndexUtil {
         return result
     }
 
-    fun isCustomAttributeClass(jsClass: JSClass): Boolean = resolveClassCustomElementName(jsClass) != null
+    fun isCustomAttributeClass(jsClass: JSClass): Boolean = resolveClassCustomAttributeName(jsClass) != null
     fun isCustomElementClass(jsClass: JSClass): Boolean = resolveClassCustomElementName(jsClass) != null
 
     fun resolveClassCustomAttributeName(jsClass: JSClass): String? {
