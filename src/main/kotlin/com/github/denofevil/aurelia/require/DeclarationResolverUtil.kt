@@ -1,5 +1,6 @@
 package com.github.denofevil.aurelia.require
 
+import com.github.denofevil.aurelia.Aurelia
 import com.github.denofevil.aurelia.config.AureliaSettings
 import com.github.denofevil.aurelia.index.AureliaIndexUtil
 import com.intellij.lang.javascript.psi.JSElement
@@ -84,6 +85,6 @@ object DeclarationResolverUtil {
 
     private fun hasBindableAnnotation(member: JSElement): Boolean {
         if (member !is JSAttributeListOwner) return false
-        return member.attributeList?.decorators?.any { it.decoratorName == "bindable" } ?: false
+        return member.attributeList?.decorators?.any { Aurelia.BINDABLE_ANNOTATIONS.contains(it.decoratorName) } ?: false
     }
 }

@@ -5,6 +5,7 @@ import com.github.denofevil.aurelia.config.AureliaBundle
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
+import com.intellij.lang.javascript.JSElementType
 import com.intellij.lang.javascript.psi.JSFunction
 import com.intellij.openapi.project.DumbService
 import com.intellij.psi.PsiElement
@@ -26,7 +27,7 @@ class AureliaHookLineMarkerProvider : LineMarkerProvider {
     }
 
     private fun collectLineMarkerInfo(element: PsiElement): LineMarkerInfo<*>? {
-        if (element !is LeafPsiElement) return null
+        if (element !is LeafPsiElement || element.elementType !is JSElementType) return null
         val method = element.parent as? JSFunction ?: return null
         if (!Aurelia.isFrameworkCandidate(element)) return null
 
