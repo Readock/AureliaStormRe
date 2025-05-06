@@ -18,7 +18,7 @@ import com.intellij.psi.util.CachedValuesManager
 object Aurelia {
     val ICON = IconLoader.getIcon("/icons/aurelia-icon.svg", Aurelia::class.java)
     val HOOK_ICON = IconLoader.getIcon("/icons/aurelia-hook.svg", Aurelia::class.java)
-    val OBSERVER_ICON = IconLoader.getIcon("/icons/aurelia-observer.svg", Aurelia::class.java)
+    val OBSERVER_ICON = IconLoader.getIcon("/icons/aurelia-listener.svg", Aurelia::class.java)
     val ATTRIBUTE_ICON = IconLoader.getIcon("/icons/aurelia-attribute.svg", Aurelia::class.java)
     val CLASS_ICON = IconLoader.getIcon("/icons/aurelia-class.svg", Aurelia::class.java)
     val PROPERTY_ICON = IconLoader.getIcon("/icons/aurelia-property.svg", Aurelia::class.java)
