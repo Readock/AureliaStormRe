@@ -39,6 +39,6 @@ Either `aurelia`, `aurelia-cli` or `aurelia-framework` must be present in `packa
 
 You can run the plugin using the [Run Plugin](/.run/Run%20Plugin.run.xml) configuration. This will launch an instance of intellij with
 the plugin loaded (for more information
-check [here](https://github.com/JetBrains/intellij-platform-plugin-template?tab=readme-ov-file#gradle-configuration)).
+check out the template).
 
 > this project is based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
