@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Description has now a gif showing some features
+- Lifecycle method detection for all exported js classes
+
 ### Added
 
 - Hook support for components (eg. `attached`,`detached` functions)
@@ -65,7 +70,9 @@
 - Remove deprecated getBaseDir call
 
 [Unreleased]: https://github.com/Readock/AureliaStormRe/compare/v2.2.0...HEAD
+
 [2.2.0]: https://github.com/Readock/AureliaStormRe/compare/v2.1.0...v2.2.0
+
 [2.1.0]: https://github.com/Readock/AureliaStormRe/compare/v2.0.1...v2.1.0
 
 [2.0.1]: https://github.com/Readock/AureliaStormRe/compare/v2.0.0...v2.0.1

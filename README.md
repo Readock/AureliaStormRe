@@ -10,6 +10,8 @@ This plugin brings improved support for [Aurelia Framework](https://aurelia.io) 
 the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide) (_fork
 of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 
+![](./plugin-demo.gif)
+
 ### Custom elements & attributes
 
 * Declaration resolving using `@customElement` and `@customAttribute` annotation or class names
@@ -28,17 +30,15 @@ of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 * Controller properties completion and navigation
 * `$this`, `$parent`, `$index`, `$event` support
 
-<br>
+### Prerequisites
 
 Either `aurelia`, `aurelia-cli` or `aurelia-framework` must be present in `package.json`
-
 
 <!-- Plugin description end -->
 
 ## Contributing
 
 You can run the plugin using the [Run Plugin](/.run/Run%20Plugin.run.xml) configuration. This will launch an instance of intellij with
-the plugin loaded (for more information
-check out the template).
+the plugin loaded (for more information check out the IntelliJ Template).
 
 > this project is based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
