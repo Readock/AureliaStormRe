@@ -26,7 +26,7 @@ object DeclarationResolverUtil {
         return resolveCustomElementDeclaration(tag, tag.name)
     }
 
-    fun resolveCustomElementDeclaration(element: PsiElement, name: String): JSClass? {
+    private fun resolveCustomElementDeclaration(element: PsiElement, name: String): JSClass? {
         if (DumbService.getInstance(element.project).isDumb) return null
         val candidates = AureliaIndexUtil.resolveCustomElementClasses(name, element.project)
         return resolveClassDeclaration(element, name, candidates)

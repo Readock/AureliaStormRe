@@ -15,7 +15,9 @@ import com.intellij.openapi.project.DumbService
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 
-
+/**
+ * Line markers to show aurelia hooks
+ */
 class AureliaHookLineMarkerProvider : LineMarkerProvider {
 
     override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>, result: MutableCollection<in LineMarkerInfo<*>>) {

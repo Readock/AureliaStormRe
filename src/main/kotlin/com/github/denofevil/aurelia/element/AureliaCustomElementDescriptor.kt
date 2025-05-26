@@ -47,26 +47,15 @@ class AureliaCustomElementDescriptor(private val tag: XmlTag) : XmlElementDescri
     }
 
     override fun getElementsDescriptors(context: XmlTag?): Array<XmlElementDescriptor> {
-//        val xmlDocument = PsiTreeUtil.getParentOfType(context, XmlDocumentImpl::class.java)
-//            ?: return XmlElementDescriptor.EMPTY_ARRAY
-//        val descriptor = xmlDocument.rootTagNSDescriptor ?: return XmlElementDescriptor.EMPTY_ARRAY
-//        return descriptor.getRootElementsDescriptors(xmlDocument)
         return XmlElementDescriptor.EMPTY_ARRAY
     }
 
     override fun getElementDescriptor(childTag: XmlTag?, contextTag: XmlTag?): XmlElementDescriptor? {
-//        val parent = contextTag!!.parentTag ?: return null
-//        val descriptor = parent.getNSDescriptor(childTag!!.namespace, true)
-//        return descriptor?.getElementDescriptor(childTag)
         return null
     }
 
     override fun getAttributesDescriptors(tag: XmlTag?): Array<XmlAttributeDescriptor> {
         return emptyArray()
-//        if (tag == null) return emptyArray()
-//        return customElementAttributeDescriptorsProvider.getAttributeDescriptors(tag) +
-//                attributeDescriptorsProvider.getAttributeDescriptors(tag) +
-//                customAttributeDescriptorsProvider.getAttributeDescriptors(tag)
     }
 
     override fun getNSDescriptor(): XmlNSDescriptor? {
