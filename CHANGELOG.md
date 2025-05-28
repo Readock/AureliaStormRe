@@ -5,6 +5,7 @@
 ### Changed
 
 - Combining plugins AureliaStorm Re and AureliaStorm Community
+- Injection now enables as a default
 
 ## [2.3.1] - 2025-05-26
 

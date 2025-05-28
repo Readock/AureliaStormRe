@@ -24,7 +24,7 @@ the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js
 
 ### Insight for bindings and interpolation
 
-* Has to be enabled in the **plugin settings** (enabling can lead to code warnings)
+* Can be enabled/disabled in the **plugin settings** (ony works with public members and can sometimes resolve references wrong)
 * Code insight for `${}` and binding attribute values
 * Controller properties completion and navigation
 * `$this`, `$parent`, `$index`, `$event` support
