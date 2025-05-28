@@ -1,8 +1,8 @@
 # AureliaStorm Community
 
 ![Build](https://github.com/CollinHerber/AureliaStorm/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/27000-aureliastorm-re.svg)](https://plugins.jetbrains.com/plugin/21949-aureliastorm-community)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/27000-aureliastorm-re.svg)](https://plugins.jetbrains.com/plugin/21949-aureliastorm-community)
+[![Version](https://img.shields.io/jetbrains/plugin/v/21949-aureliastorm-community.svg)](https://plugins.jetbrains.com/plugin/21949-aureliastorm-community)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/21949-aureliastorm-community.svg)](https://plugins.jetbrains.com/plugin/21949-aureliastorm-community)
 
 <!-- Plugin description -->
 
@@ -37,6 +37,7 @@ Either `aurelia`, `aurelia-cli` or `aurelia-framework` must be present in `packa
 
 ## Contributing
 
-You can run the plugin using the [Run Plugin](/.run/Run%20Plugin.run.xml) configuration. This will launch an instance of intellij with the plugin loaded (for more information check out the IntelliJ Template).
+You can run the plugin using the [Run Plugin](/.run/Run%20Plugin.run.xml) configuration. This will launch an instance of intellij with the
+plugin loaded (for more information check out the IntelliJ Template).
 
 > this project is based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
