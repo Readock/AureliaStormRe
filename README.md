@@ -1,16 +1,15 @@
-# AureliaStorm Re
+# AureliaStorm Community
 
-![Build](https://github.com/Readock/AureliaStormRe/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/27000-aureliastorm-re.svg)](https://plugins.jetbrains.com/plugin/27000-aureliastorm-re)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/27000-aureliastorm-re.svg)](https://plugins.jetbrains.com/plugin/27000-aureliastorm-re)
+![Build](https://github.com/CollinHerber/AureliaStorm/workflows/Build/badge.svg)
+[![Version](https://img.shields.io/jetbrains/plugin/v/27000-aureliastorm-re.svg)](https://plugins.jetbrains.com/plugin/21949-aureliastorm-community)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/27000-aureliastorm-re.svg)](https://plugins.jetbrains.com/plugin/21949-aureliastorm-community)
 
 <!-- Plugin description -->
 
 This plugin brings improved support for [Aurelia Framework](https://aurelia.io) to
-the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide) (_fork
-of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
+the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide)
 
-![](./plugin-demo.gif)
+![](https://github.com/CollinHerber/AureliaStorm/blob/master/plugin-demo.gif)
 
 ### Custom elements & attributes
 

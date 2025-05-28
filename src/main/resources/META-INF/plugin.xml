@@ -1,11 +1,12 @@
 <idea-plugin>
-	<name>AureliaStorm Re</name>
-	<id>AureliaStormRE</id>
-	<vendor url="https://github.com/Readock/AureliaStormRe">Felix Heitbrock</vendor>
+	<name>AureliaStorm Community</name>
+	<id>AureliaStormCommunity</id>
+	<vendor email="rustaddicts@gmail.com" url="https://github.com/CollinHerber/AureliaStorm">Collin Herber</vendor>
 
 	<depends>com.intellij.modules.lang</depends>
 	<depends>JavaScript</depends>
 	<depends>com.intellij.modules.xml</depends>
+	<!-- Description will ge generated from the readme file on build -->
 	<description><![CDATA[
 	> _This plugin brings support for [Aurelia](https://aurelia.io) framework to
 	the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide)._
