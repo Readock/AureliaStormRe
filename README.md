@@ -9,7 +9,10 @@
 This plugin brings improved support for [Aurelia Framework](https://aurelia.io) to
 the [IntelliJ platform](https://www.jetbrains.com/products.html?fromMenu#lang=js&type=ide)
 
-![](https://github.com/CollinHerber/AureliaStorm/blob/master/plugin-demo.gif)
+Plugin Supports Aurelia 1.x and 2.x
+
+Either aurelia (v2), or aurelia-cli (v1) must be present in the project npm dependencies
+![](./plugin-demo.gif)
 
 ### Custom elements & attributes
 
