@@ -12,6 +12,9 @@ of [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm)_)
 
 ![](./plugin-demo.gif)
 
+> [!IMPORTANT]  
+> This plugin has been merged with the [AureliaStorm Community](https://github.com/CollinHerber/AureliaStorm) Plugin!
+
 ### Custom elements & attributes
 
 * Declaration resolving using `@customElement` and `@customAttribute` annotation or class names
@@ -38,6 +41,7 @@ Either `aurelia`, `aurelia-cli` or `aurelia-framework` must be present in `packa
 
 ## Contributing
 
-You can run the plugin using the [Run Plugin](/.run/Run%20Plugin.run.xml) configuration. This will launch an instance of intellij with the plugin loaded (for more information check out the IntelliJ Template).
+You can run the plugin using the [Run Plugin](/.run/Run%20Plugin.run.xml) configuration. This will launch an instance of intellij with the
+plugin loaded (for more information check out the IntelliJ Template).
 
 > this project is based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
